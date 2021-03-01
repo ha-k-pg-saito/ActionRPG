@@ -4,8 +4,7 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-	
-	Player player;
+	Player player;  // PlayerClassのローカル変数
 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
@@ -21,6 +20,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	player.Update();
 
+
 	//ゲームループ
 	while (true)
 	{
@@ -32,9 +32,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
 
+
 		player.Draw();
 		
 		ScreenFlip();						//画面更新
+
+
+		//clsDx();
+
+		//画面更新
+		ScreenFlip();
 
 	}
 
