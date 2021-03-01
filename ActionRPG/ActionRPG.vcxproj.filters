@@ -5,13 +5,38 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{f292984a-ee42-4f40-ac3d-0343b99f43b5}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\cpp">
+      <UniqueIdentifier>{72b84973-ede7-424a-893d-5a8da6bc9f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\h">
+      <UniqueIdentifier>{199005c5-06f7-478b-be6e-69f44773a03e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\Camera.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Base.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="h\Camera.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Base.h">
+      <Filter>ソース ファイル\h</Filter>
+	</ClInclude>
+    <ClCompile Include="cpp\Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="h\Player.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
