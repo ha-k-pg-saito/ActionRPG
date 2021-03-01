@@ -1,15 +1,17 @@
-#include"DxLib.h"
+#include "DxLib.h"
+#include "h/Player.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-	int ModelHandle;
+	
+	Player player;
 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);				//ウィンドウモード
 	SetGraphMode(640, 480, 32);		//画面モード変更
-	SetBackgroundColor(125, 125, 125);	//背景色
+	SetBackgroundColor(0, 0, 0);	//背景色
 	SetFontSize(75);					//フォントサイズ
 	SetCameraNearFar(1.f,150.f);
 
@@ -18,9 +20,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		return -1;   // エラーが起きたら直ちに終了
 	}
 
-	SetDrawScreen(DX_SCREEN_BACK);
-
-	
+	player.Update();
 
 	//ゲームループ
 	while (true)
@@ -30,24 +30,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		ModelHandle = MV1LoadModel("image/unitychan.mv1");
-
-		MV1SetPosition(ModelHandle, VGet(320.0f, -300.0f, 600.0f));
-
 		//画面クリア
 		ClearDrawScreen();
-		clsDx();
+
+		player.Draw();
+
+		//clsDx();
 
 		//画面更新
 		ScreenFlip();
 
 	}
 
-	// ３Ｄモデルの描画
-	MV1DrawModel(ModelHandle);
-
-	// モデルハンドルの削除
-	MV1DeleteModel(ModelHandle);
+	SetDrawScreen(DX_SCREEN_BACK);
 
 	DxLib_End();    // ＤＸライブラリ使用の終了処理
 
