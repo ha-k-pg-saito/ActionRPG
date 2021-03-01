@@ -19,7 +19,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	ModelHandle = MV1LoadModel("image/unitychan.mv1");
+	
 
 	//ÉQÅ[ÉÄÉãÅ[Év
 	while (true)
@@ -28,6 +28,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		{
 			break;
 		}
+
+		ModelHandle = MV1LoadModel("image/unitychan.mv1");
 
 		MV1SetPosition(ModelHandle, VGet(320.0f, -300.0f, 600.0f));
 
