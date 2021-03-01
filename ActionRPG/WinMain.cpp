@@ -9,7 +9,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);				//ウィンドウモード
 	SetGraphMode(640, 480, 32);		//画面モード変更
-	SetBackgroundColor(125, 125, 125);	//背景色
+	SetBackgroundColor(0, 0, 0);	//背景色
 	SetFontSize(75);					//フォントサイズ
 	SetCameraNearFar(1.f,150.f);
 
