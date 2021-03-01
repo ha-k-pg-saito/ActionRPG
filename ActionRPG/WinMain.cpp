@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"h/Camera.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
@@ -7,20 +8,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
-	ChangeWindowMode(TRUE);				//ウィンドウモード
-	SetGraphMode(640, 480, 32);		//画面モード変更
-	SetBackgroundColor(125, 125, 125);	//背景色
-	SetFontSize(75);					//フォントサイズ
-	SetCameraNearFar(1.f,150.f);
+	ChangeWindowMode(TRUE);					//ウィンドウモード
+	SetGraphMode(640, 480, 32);				//画面モード変更
+	SetBackgroundColor(0, 0, 0);			//背景色
+	SetFontSize(75);						//フォントサイズ
 
-	if (DxLib_Init() == -1)  // ＤＸライブラリ初期化処理
+	if (DxLib_Init() == -1)					//ＤＸライブラリ初期化処理
 	{
-		return -1;   // エラーが起きたら直ちに終了
+		return -1;							//エラーが起きたら直ちに終了
 	}
 
-	SetDrawScreen(DX_SCREEN_BACK);
-
-	ModelHandle = MV1LoadModel("image/unitychan.mv1");
+	SetDrawScreen(DX_SCREEN_BACK);			//裏面に描画
 
 	//ゲームループ
 	while (true)
@@ -30,24 +28,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		MV1SetPosition(ModelHandle, VGet(320.0f, -300.0f, 600.0f));
+		ClearDrawScreen();					//描画されたもの削除
+		clsDx();							//文字描画
 
-		//画面クリア
-		ClearDrawScreen();
-		clsDx();
-
-		//画面更新
-		ScreenFlip();
+		
+		ScreenFlip();						//画面更新
 
 	}
 
-	// ３Ｄモデルの描画
-	MV1DrawModel(ModelHandle);
+	DxLib_End();							 // ＤＸライブラリ使用の終了処理
 
-	// モデルハンドルの削除
-	MV1DeleteModel(ModelHandle);
-
-	DxLib_End();    // ＤＸライブラリ使用の終了処理
-
-	return 0;    // ソフトの終了 
+	return 0;								 // ソフトの終了 
 }
