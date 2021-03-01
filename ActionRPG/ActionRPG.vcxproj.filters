@@ -16,7 +16,6 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="cpp\Camera.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
@@ -30,7 +29,7 @@
     </ClInclude>
     <ClInclude Include="h\Base.h">
       <Filter>ソース ファイル\h</Filter>
-=======
+	</ClInclude>
     <ClCompile Include="cpp\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -38,7 +37,6 @@
   <ItemGroup>
     <ClInclude Include="h\Player.h">
       <Filter>ソース ファイル</Filter>
->>>>>>> cd424402c48c74a7e30de5e110a747f3ccfdff7d
     </ClInclude>
   </ItemGroup>
 </Project>
