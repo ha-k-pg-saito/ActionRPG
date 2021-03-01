@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="cpp\Base.cpp" />
     <ClCompile Include="cpp\Camera.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -158,6 +159,13 @@
   <ItemGroup>
     <ClInclude Include="h\Base.h" />
     <ClInclude Include="h\Camera.h" />
+=======
+    <ClCompile Include="cpp\Player.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="h\Player.h" />
+>>>>>>> cd424402c48c74a7e30de5e110a747f3ccfdff7d
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
