@@ -1,0 +1,30 @@
+#include "../h/Player.h"
+#include"DxLib.h"
+
+Player::Player()
+{
+	
+}
+
+Player::~Player()
+{
+	// モデルハンドルの削除
+	MV1DeleteModel(m_Player);
+}
+
+void Player::Update()
+{
+	// モデルの読み込み
+	m_Player = MV1LoadModel("Tex/unitychan.mv1");
+
+	// 画面に移るモデルの移動
+	MV1SetPosition(m_Player, VGet(320.0f, -300.0f, 600.0f));
+
+	
+}
+
+void Player::Draw()
+{
+	// 3Dモデルの描画
+	MV1DrawModel(m_Player);
+}
