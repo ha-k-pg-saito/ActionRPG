@@ -3,6 +3,8 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
+	int ModelHandle;
+
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);				//ウィンドウモード
@@ -18,6 +20,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	ModelHandle = MV1LoadModel("image/unitychan.mv1");
+
 	//ゲームループ
 	while (true)
 	{
@@ -25,6 +29,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		{
 			break;
 		}
+
+		MV1SetPosition(ModelHandle, VGet(320.0f, -300.0f, 600.0f));
 
 		//画面クリア
 		ClearDrawScreen();
@@ -34,6 +40,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		ScreenFlip();
 
 	}
+
+	// ３Ｄモデルの描画
+	MV1DrawModel(ModelHandle);
+
+	// モデルハンドルの削除
+	MV1DeleteModel(ModelHandle);
+
 	DxLib_End();    // ＤＸライブラリ使用の終了処理
 
 	return 0;    // ソフトの終了 
