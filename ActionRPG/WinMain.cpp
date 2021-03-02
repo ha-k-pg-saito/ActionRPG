@@ -11,7 +11,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);					//ウィンドウモード
-	SetGraphMode(1920, 1080, 32);				//画面モード変更
+	SetGraphMode(1920, 1020, 32);				//画面モード変更
 	SetBackgroundColor(0, 0, 0);			//背景色
 	SetFontSize(75);						//フォントサイズ
 	if (DxLib_Init() == -1)					//ＤＸライブラリ初期化処理
