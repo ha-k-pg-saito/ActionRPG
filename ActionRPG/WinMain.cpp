@@ -41,9 +41,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		//MV1DrawModel(m_Player);
 
 		player.Draw();
-		
-		ScreenFlip();						//画面更新
 
+		ScreenFlip();						//画面更新
 
 		//clsDx();
 
