@@ -3,10 +3,10 @@
 
 Camera::Camera()
 {
-    m_Pos = VGet(0.f, 85.f, 200.f);		//VGetによってm_Posにx,y,zの値代入
+    m_Pos = VGet(0.f, 9.f, 0.f);		//VGetによってm_Posにx,y,zの値代入
     m_Radius = 0.f;                     //半径
     m_Angle = 0.f;                      //角度
-    m_Length = 200.f;                   //半径の長さ
+    m_Length = 20.f;                   //半径の長さ
 }
 
 void Camera::Update()
@@ -43,6 +43,6 @@ void Camera::Update()
     SetCameraNearFar(1.f, 1500.f);			//カメラの手前と億クリップの距離
     SetCameraPositionAndTarget_UpVecY(
         m_Pos,
-        VGet(0.f, 85.f, 0.f));				//注視点は原点
+        VGet(0.f, 9.f, 0.f));				//注視点は原点
 
 }
