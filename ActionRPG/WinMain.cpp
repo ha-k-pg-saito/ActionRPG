@@ -5,7 +5,8 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	Player player;  // PlayerClassのローカル変数
-
+	//int m_Player = 0;
+	 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);					//ウィンドウモード
@@ -16,10 +17,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	{
 		return -1;							//エラーが起きたら直ちに終了
 	}
-
+	// モデルハンドルの削除
+	//MV1DeleteModel(m_Player);
 
 	player.Update();
+	// モデルの読み込み
+	//m_Player = MV1LoadModel("Tex/unitychan.mv1");
 
+	// 画面に移るモデルの移動
+	//MV1SetPosition(m_Player, VGet(320.0f, -300.0f, 600.0f));
 
 	//ゲームループ
 	while (true)
@@ -31,7 +37,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
-
+		// 3Dモデルの描画
+		//MV1DrawModel(m_Player);
 
 		player.Draw();
 		
@@ -39,9 +46,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 
 		//clsDx();
-
-		//画面更新
-		ScreenFlip();
 
 	}
 
