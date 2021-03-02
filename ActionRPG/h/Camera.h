@@ -3,16 +3,18 @@
 
 #include"Base.h"
 
-class Camera:public Base
+class Camera :public Base
 {
 public:
 	Camera();
 	~Camera() {}
 
-private:
 	void Update();
-	void Move();
-	void Draw();
+
+private:
+	float	m_Radius;
+	float	m_Angle;
+	float	m_Length;
 
 };
 
