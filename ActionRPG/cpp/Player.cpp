@@ -15,7 +15,7 @@ Player::~Player()
 void Player::Update()
 {
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
-	m_Player = MV1LoadModel("Tex/unitychan.mv1");
+	m_Player = MV1LoadModel("Tex/sister.mv1");
 
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
 	MV1SetPosition(m_Player, VGet(320.0f, -300.0f, 600.0f));
