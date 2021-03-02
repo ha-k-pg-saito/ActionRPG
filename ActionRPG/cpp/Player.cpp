@@ -18,7 +18,7 @@ void Player::Update()
 	m_Player = MV1LoadModel("Tex/sister.mv1");
 
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
-	MV1SetPosition(m_Player, VGet(320.0f, -300.0f, 600.0f));
+	MV1SetPosition(m_Player, VGet(0.f, 0.f, 0.f));
 
 	
 }

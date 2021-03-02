@@ -19,21 +19,21 @@
     <ClCompile Include="cpp\Player.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Base.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\Camera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Base.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="h\Base.h">
+    <ClInclude Include="h\Player.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Camera.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\Player.h">
+    <ClInclude Include="h\Base.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
