@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "h/Player.h"
 #include"h/Camera.h"
+#include"h/Scene.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
@@ -14,12 +15,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetGraphMode(1920, 980, 32);				//画面モード変更
 	SetBackgroundColor(0, 0, 0);			//背景色
 	SetFontSize(75);						//フォントサイズ
+
 	if (DxLib_Init() == -1)					//ＤＸライブラリ初期化処理
 	{
 		return -1;							//エラーが起きたら直ちに終了
 	}
-	// モデルハンドルの削除
-	//MV1DeleteModel(m_Player);
 
 	player.Update();
 	
@@ -32,12 +32,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		}
 
 		camera.Update();
-		
+
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
-
 		
-
+		SceneUpdate();
 		player.Draw();
 
 		ScreenFlip();						//画面更新
