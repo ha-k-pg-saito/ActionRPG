@@ -25,6 +25,18 @@
     <ClCompile Include="cpp\Base.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\Scene.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\TitleScene.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\GameScene.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\ResultScene.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Player.h">
@@ -34,6 +46,18 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Base.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\TitleScene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\GameScene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\ResultScene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Scene.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
