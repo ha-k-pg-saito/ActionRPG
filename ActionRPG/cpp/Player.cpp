@@ -1,16 +1,16 @@
 #include "../h/Player.h"
 #include"DxLib.h"
 
-Player::Player()
-{
-	
-}
-
-Player::~Player()
-{
-	// モデルハンドルの削除
-	MV1DeleteModel(m_Player);
-}
+//Player::Player()
+//{
+//	
+//}
+//
+//Player::~Player()
+//{
+//	// モデルハンドルの削除
+//	MV1DeleteModel(m_Player);
+//}
 
 void Player::Update()
 {
@@ -19,7 +19,6 @@ void Player::Update()
 
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_Player, VGet(0.f, 0.f, 0.f));
-
 	
 }
 

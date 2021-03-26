@@ -6,8 +6,7 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-	Player player;		//PlayerClassのローカル変数
-	Camera camera;		//Cameraのインスタンス化
+	
 	 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
@@ -21,7 +20,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		return -1;							//エラーが起きたら直ちに終了
 	}
 
-	player.Update();
+	Player::Instance()->Update();
 	
 	//ゲームループ
 	while (true)
@@ -31,13 +30,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		camera.Update();
+		Camera::Instance()->Update();
 
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
 		
 		SceneUpdate();
-		player.Draw();
+		Player::Instance()->Draw();
 
 		ScreenFlip();						//画面更新
 

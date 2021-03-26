@@ -6,16 +6,19 @@
 class Camera :public Base
 {
 public:
-	Camera();
-	~Camera() {}
-
+	static Camera* Instance()
+	{
+		static Camera instance;
+		return&instance;
+	}
 	void Update();
 
 private:
+	
 	float	m_Radius;
 	float	m_Angle;
 	float	m_Length;
-
+	Camera();
 };
 
 
