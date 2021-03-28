@@ -1,5 +1,7 @@
 #include "../h/GameScene.h"
 #include"../h/Scene.h"
+#include"../h/Player.h"
+#include"../h/Camera.h"
 
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
@@ -11,17 +13,25 @@ GameScene::GameScene()
 
 void GameScene::InitGameScene()
 {
+	Player::Instance()->Update();
+	
+	
 	g_SceneStep = SceneStep::Run;
 }
 
 void GameScene::RunGameScene()
 {
+	
+	Camera::Instance()->Update();
+
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
 
 	if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
 	{
 		g_SceneStep = SceneStep::Finish;
 	}
+
+	Player::Instance()->Draw();
 }
 
 void GameScene::FinishGameScene()

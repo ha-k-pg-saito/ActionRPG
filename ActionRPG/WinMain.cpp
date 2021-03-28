@@ -1,6 +1,4 @@
 #include "DxLib.h"
-#include "h/Player.h"
-#include"h/Camera.h"
 #include"h/Scene.h"
 
 // プログラムは WinMain から始まります
@@ -19,8 +17,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	{
 		return -1;							//エラーが起きたら直ちに終了
 	}
-
-	Player::Instance()->Update();
 	
 	//ゲームループ
 	while (true)
@@ -30,16 +26,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		Camera::Instance()->Update();
-
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
 		
 		SceneUpdate();
-		Player::Instance()->Draw();
 
 		ScreenFlip();						//画面更新
-
 
 	}
 

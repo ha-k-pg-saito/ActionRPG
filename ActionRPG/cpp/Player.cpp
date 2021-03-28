@@ -1,17 +1,6 @@
 #include "../h/Player.h"
 #include"DxLib.h"
 
-//Player::Player()
-//{
-//	
-//}
-//
-//Player::~Player()
-//{
-//	// モデルハンドルの削除
-//	MV1DeleteModel(m_Player);
-//}
-
 void Player::Update()
 {
 	// モデルの読み込み
