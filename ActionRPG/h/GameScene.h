@@ -16,6 +16,9 @@ public:
 
 public:
 	void GameSceneUpdate();
+
+private:
+	bool Push;
 };
 
 #endif

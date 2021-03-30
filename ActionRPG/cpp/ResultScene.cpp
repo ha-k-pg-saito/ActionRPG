@@ -12,6 +12,8 @@ ResultScene::ResultScene()
 void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;
+
+	Push = true;
 }
 
 void ResultScene::RunResultScene()
@@ -21,7 +23,15 @@ void ResultScene::RunResultScene()
 
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
-		g_SceneStep = SceneStep::Finish;
+		if (Push == false)
+		{
+			Push = true;
+			g_SceneStep = SceneStep::Finish;
+		}
+	}
+	else
+	{
+		Push = false;
 	}
 }
 

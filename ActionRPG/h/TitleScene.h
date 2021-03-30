@@ -17,6 +17,8 @@ public:
 public:
 	void TitleSceneUpdate();
 
+private:
+	bool Push;
 };
 
 #endif

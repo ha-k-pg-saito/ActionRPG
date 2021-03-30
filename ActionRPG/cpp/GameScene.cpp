@@ -15,8 +15,9 @@ void GameScene::InitGameScene()
 {
 	Player::Instance()->Update();
 	
-	
 	g_SceneStep = SceneStep::Run;
+
+	Push = true;
 }
 
 void GameScene::RunGameScene()
@@ -26,9 +27,17 @@ void GameScene::RunGameScene()
 
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
 
-	if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
+	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
-		g_SceneStep = SceneStep::Finish;
+		if (Push == false)
+		{
+			Push = true;
+			g_SceneStep = SceneStep::Finish;
+		}
+	}
+	else
+	{
+		Push = false;
 	}
 
 	Player::Instance()->Draw();

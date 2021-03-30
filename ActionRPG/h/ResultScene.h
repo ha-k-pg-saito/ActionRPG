@@ -17,6 +17,8 @@ public:
 public:
 	void ResultSceneUpdate();
 
+private:
+	bool Push;
 };
 
 #endif
