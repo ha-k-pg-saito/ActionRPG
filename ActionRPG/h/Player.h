@@ -1,9 +1,8 @@
 #ifndef Player_h_
 #define Player_h_
+#include"Base.h"
 
-#include"DxLib.h"
-
-class Player
+class Player:public Base
 {
 	//シングルトン
 public :
@@ -20,6 +19,7 @@ public:
 private:
 	// モデルを保存する変数
 	int m_Player;
+	Player() {}
 };
 
 
