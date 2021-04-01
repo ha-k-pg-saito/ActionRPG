@@ -48,9 +48,6 @@
     <ClInclude Include="h\Base.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\TitleScene.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\GameScene.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Scene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\TitleScene.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
