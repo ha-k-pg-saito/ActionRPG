@@ -1,13 +1,18 @@
 #include "../h/Player.h"
 #include"DxLib.h"
 
+Player::Player()
+{
+	m_Pos = { 0.f };
+}
+
 void Player::Update()
 {
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	m_Player = MV1LoadModel("Tex/sister.mv1");
 
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
-	MV1SetPosition(m_Player, VGet(0.f, 0.f, 0.f));
+	MV1SetPosition(m_Player, m_Pos);
 	
 }
 
