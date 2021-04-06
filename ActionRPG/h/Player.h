@@ -19,7 +19,7 @@ public:
 private:
 	// ƒ‚ƒfƒ‹‚ğ•Û‘¶‚·‚é•Ï”
 	int m_Player;
-	Player() {}
+	Player();
 };
 
 
