@@ -13,8 +13,8 @@ GameScene::GameScene()
 
 void GameScene::InitGameScene()
 {
-	Player::Instance()->Update();
 	
+	Player::Instance()->Update();
 	
 	g_SceneStep = SceneStep::Run;
 }
@@ -23,10 +23,11 @@ void GameScene::RunGameScene()
 {
 	
 	Camera::Instance()->Update();
+	
+	Player::Instance()->Move();
 
 	//Ç«ÇÃÉVÅ[ÉìÇ©ÇÌÇ©ÇÈÇÊÇ§Ç…
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
-
 
 	if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
 	{
