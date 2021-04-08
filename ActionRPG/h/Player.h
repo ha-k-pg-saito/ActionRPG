@@ -15,10 +15,12 @@ public :
 public:
 	void Update();
 	void Draw();
+	void Move();
 
 private:
 	// ƒ‚ƒfƒ‹‚ğ•Û‘¶‚·‚é•Ï”
 	int m_Player;
+	float m_Angle;
 	Player();
 };
 

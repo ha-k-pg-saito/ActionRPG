@@ -3,7 +3,8 @@
 
 Player::Player()
 {
-	m_Pos = { 0.f };
+	m_Pos = VGet(0.f, 0.9f, 0.f);
+	m_Angle = (0.f);
 }
 
 void Player::Update()
@@ -13,7 +14,7 @@ void Player::Update()
 
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
 	MV1SetPosition(m_Player, m_Pos);
-	
+
 }
 
 void Player::Draw()
