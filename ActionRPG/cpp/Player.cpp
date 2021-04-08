@@ -4,8 +4,9 @@
 
 Player::Player()
 {
-	m_Pos = VGet(0.f, 0.9f, 0.f);
+	m_Pos = VGet(0.f, 0.9f, 0.f );
 	m_Angle = (0.f);
+	m_Speed = (0.5f);
 }
 
 void Player::Update()
@@ -27,9 +28,9 @@ void Player::Move()
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
 	MV1SetPosition(m_Player, m_Pos);
 
-	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= 0.5f; }
-	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += 0.5f; }
-	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x -= 0.5f; }
-	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x += 0.5f; }
+	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= m_Speed; }
+	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += m_Speed; }
+	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x -= m_Speed; }
+	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x += m_Speed; }
 
 }
