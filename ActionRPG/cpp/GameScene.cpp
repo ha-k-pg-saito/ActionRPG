@@ -24,6 +24,8 @@ void GameScene::RunGameScene()
 {
 	
 	Camera::Instance()->Update();
+	
+	Player::Instance()->Move();
 
 	//‚Ç‚ÌƒV[ƒ“‚©‚í‚©‚é‚æ‚¤‚É
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
