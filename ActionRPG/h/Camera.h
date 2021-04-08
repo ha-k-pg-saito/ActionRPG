@@ -13,12 +13,12 @@ public:
 	void Update();
 
 private:
+	Camera();
 	
-	VECTOR m_Camera_Pos;
+	VECTOR  m_Pos;
 	float	m_Radius;
 	float	m_Angle;
 	float	m_Length;
-	Camera();
 };
 
 

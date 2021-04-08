@@ -60,5 +60,4 @@ void GameScene::GameSceneUpdate()
 	case SceneStep::Run:    RunGameScene();    break;
 	case SceneStep::Finish: FinishGameScene(); break;
 	}
-
 }

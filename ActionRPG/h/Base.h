@@ -13,7 +13,6 @@ protected:				//継承関連はprotectedを使用
 	VECTOR m_Pos;		//ポジション
 	float  m_Hp;		//Hp
 	float  m_Speed;		//スピード
-
 };
 
 

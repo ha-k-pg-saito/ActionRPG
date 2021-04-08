@@ -18,7 +18,6 @@ void ResultScene::InitResultScene()
 
 void ResultScene::RunResultScene()
 {
-
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "ResultScene");
 
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
@@ -43,12 +42,10 @@ void ResultScene::FinishResultScene()
 
 void ResultScene::ResultSceneUpdate()
 {
-
 	switch (g_SceneStep)
 	{
 	case SceneStep::Init:   InitResultScene();   break;
 	case SceneStep::Run:    RunResultScene();    break;
 	case SceneStep::Finish: FinishResultScene(); break;
 	}
-
 }

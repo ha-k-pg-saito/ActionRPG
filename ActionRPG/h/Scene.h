@@ -16,6 +16,6 @@ enum SceneStep
 	Finish
 };
 
-	void SceneUpdate();
+void SceneUpdate();
 
 #endif

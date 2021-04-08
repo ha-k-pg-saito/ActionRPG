@@ -3,9 +3,7 @@
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{
-	
-	 
+{ 
 	//ウインドウモードに変更
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);					//ウィンドウモード
@@ -32,7 +30,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		SceneUpdate();
 
 		ScreenFlip();						//画面更新
-
 	}
 
 	DxLib_End();							 // ＤＸライブラリ使用の終了処理
