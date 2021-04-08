@@ -25,6 +25,7 @@ void GameScene::RunGameScene()
 	
 	Camera::Instance()->Update();
 
+	//Ç«ÇÃÉVÅ[ÉìÇ©ÇÌÇ©ÇÈÇÊÇ§Ç…
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
 
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
