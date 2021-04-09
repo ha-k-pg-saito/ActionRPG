@@ -25,12 +25,18 @@ void Player::Draw()
 void Player::Move()
 {
 
+	m_Digree_X = cosf(m_Radian);
+	m_Digree_Y = sinf(m_Radian);
+	
 	// ‰æ–Ê‚ÉˆÚ‚éƒ‚ƒfƒ‹‚ÌˆÚ“®
 	MV1SetPosition(m_Player, m_Pos);
 
+	//ƒ‚ƒfƒ‹‚Ì‰ñ“]
+	MV1SetRotationXYZ(m_Player, VGet(m_Angle * DX_PI_F / 180.f, 0.f, 0.f));
+
 	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= m_Speed; }
 	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += m_Speed; }
-	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x -= m_Speed; }
-	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x += m_Speed; }
+	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x += m_Speed; m_Angle += m_Digree_X; }
+	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x -= m_Speed; m_Angle -= m_Digree_X; }
 
 }

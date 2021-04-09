@@ -44,6 +44,7 @@ void GameScene::RunGameScene()
 	}
 
 	Player::Instance()->Draw();
+	DrawCircle(940.f, 480.f,5.f, GetColor(0, 255, 0),TRUE);
 }
 
 void GameScene::FinishGameScene()
