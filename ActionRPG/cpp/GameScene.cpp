@@ -24,7 +24,7 @@ void GameScene::InitGameScene()
 void GameScene::RunGameScene()
 {
 	
-	Camera::Instance()->Update();
+	camera.Update();
 	player.Move();
 
 	//‚Ç‚ÌƒV[ƒ“‚©‚í‚©‚é‚æ‚¤‚É

@@ -3,6 +3,7 @@
 
 #include"DxLib.h"
 #include"Player.h"
+#include"Camera.h"
 
 class GameScene
 {
@@ -21,6 +22,7 @@ public:
 private:
 	bool Push;
 	Player player;
+	Camera camera;
 };
 
 #endif
