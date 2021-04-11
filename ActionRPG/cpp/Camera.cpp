@@ -7,6 +7,8 @@ Camera::Camera()
     m_Radius = 0.f;                     //”¼Œa
     m_Angle = 0.f;                      //Šp“x
     m_Length = 20.f;                   //”¼Œa‚Ì’·‚³
+
+    SetMousePoint(960, 510);
 }
 
 Camera::~Camera()
@@ -15,7 +17,6 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-    SetMousePoint(0, 0);
     if (CheckHitKey(KEY_INPUT_LEFT) == 1)
     {
         m_Angle -= 8.f;
