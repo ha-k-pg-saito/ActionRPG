@@ -13,8 +13,9 @@ GameScene::GameScene()
 
 void GameScene::InitGameScene()
 {
-	Player::Instance()->Update();
 	
+	player.Update();
+
 	g_SceneStep = SceneStep::Run;
 
 	Push = true;
@@ -24,8 +25,7 @@ void GameScene::RunGameScene()
 {
 	
 	Camera::Instance()->Update();
-	
-	Player::Instance()->Move();
+	player.Move();
 
 	//‚Ç‚ÌƒV[ƒ“‚©‚í‚©‚é‚æ‚¤‚É
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
@@ -43,7 +43,7 @@ void GameScene::RunGameScene()
 		Push = false;
 	}
 
-	Player::Instance()->Draw();
+	player.Draw();
 	DrawCircle(940.f, 480.f,5.f, GetColor(0, 255, 0),TRUE);
 }
 

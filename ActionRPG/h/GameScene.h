@@ -2,6 +2,7 @@
 #define GameScene_h_
 
 #include"DxLib.h"
+#include"Player.h"
 
 class GameScene
 {
@@ -19,6 +20,7 @@ public:
 
 private:
 	bool Push;
+	Player player;
 };
 
 #endif

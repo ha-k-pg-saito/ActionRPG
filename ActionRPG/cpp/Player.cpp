@@ -9,17 +9,21 @@ Player::Player()
 	m_Speed = (0.5f);
 }
 
+Player::~Player()
+{
+}
+
 void Player::Update()
 {
 	// モデルの読み込み
-	m_Player = MV1LoadModel("Tex/sister.mv1");
+	m_ModelHandle = MV1LoadModel("Tex/sister.mv1");
 	
 }
 
 void Player::Draw()
 {
 	// 3Dモデルの描画
-	MV1DrawModel(m_Player);
+	MV1DrawModel(m_ModelHandle);
 }
 
 void Player::Move()
@@ -29,10 +33,10 @@ void Player::Move()
 	m_Digree_Y = sinf(m_Radian);
 	
 	// 画面に移るモデルの移動
-	MV1SetPosition(m_Player, m_Pos);
+	MV1SetPosition(m_ModelHandle, m_Pos);
 
 	//モデルの回転
-	MV1SetRotationXYZ(m_Player, VGet(m_Angle * DX_PI_F / 180.f, 0.f, 0.f));
+	MV1SetRotationXYZ(m_ModelHandle, VGet(m_Angle * DX_PI_F / 180.f, 0.f, 0.f));
 
 	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= m_Speed; }
 	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += m_Speed; }
