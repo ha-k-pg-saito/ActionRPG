@@ -5,16 +5,12 @@
 class Camera 
 {
 public:
-	static Camera* Instance()
-	{
-		static Camera instance;
-		return&instance;
-	}
+	Camera();
+	~Camera();
+
 	void Update();
 
 private:
-	Camera();
-	
 	VECTOR  m_Pos;
 	float	m_Radius;
 	float	m_Angle;

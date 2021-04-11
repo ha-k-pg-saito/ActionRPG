@@ -9,8 +9,13 @@ Camera::Camera()
     m_Length = 20.f;                   //”¼Œa‚Ì’·‚³
 }
 
+Camera::~Camera()
+{
+}
+
 void Camera::Update()
 {
+    SetMousePoint(0, 0);
     if (CheckHitKey(KEY_INPUT_LEFT) == 1)
     {
         m_Angle -= 8.f;
