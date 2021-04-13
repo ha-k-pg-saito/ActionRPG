@@ -14,7 +14,7 @@ GameScene::GameScene()
 void GameScene::InitGameScene()
 {
 	
-	player.Update();
+	player.Init();
 
 	g_SceneStep = SceneStep::Run;
 
@@ -25,7 +25,7 @@ void GameScene::RunGameScene()
 {
 	
 	camera.Update();
-	player.Move();
+	player.Update();
 
 	//Ç«ÇÃÉVÅ[ÉìÇ©ÇÌÇ©ÇÈÇÊÇ§Ç…
 	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");

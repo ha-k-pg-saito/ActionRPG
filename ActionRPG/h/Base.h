@@ -7,6 +7,11 @@ class Base
 {
 public:
 	Base();				//コンストラクタ
+
+	Base(float x, float y, float z);
+
+	Base(VECTOR pos);
+
 	~Base() {}			//デストラクタ
 
 protected:				//継承関連はprotectedを使用
