@@ -7,7 +7,7 @@ Player::Player():
 	m_Angle{90.f},
 	m_PlayTime{0}
 {
-	m_Speed = (0.3f);	
+	m_Speed = (20.f);	
 }
 
 void Player::Init()
@@ -43,13 +43,14 @@ void Player::Move()
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 
-	//X軸の向きベクトル算出
-	m_Digree_X = cosf(m_Radian);
+	//向きベクトル算出(単位ベクトル＝１)
+	m_Digree_X = cosf(m_Radian) + sinf(m_Radian);
+	m_Digree_Z = -sinf(m_Radian) + cosf(m_Radian);
 
 	//特定のキーを押したときにプレイヤーを移動させる
-	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= m_Speed; }
-	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += m_Speed; }
-	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x += m_Digree_X; }
-	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x -= m_Digree_X; }
+	if (CheckHitKey(KEY_INPUT_W)) { m_Pos.z -= m_Digree_Z * (m_Speed * 1 / 60); }
+	if (CheckHitKey(KEY_INPUT_S)) { m_Pos.z += m_Digree_Z * (m_Speed * 1 / 60); }
+	if (CheckHitKey(KEY_INPUT_A)) { m_Pos.x += m_Digree_X * (m_Speed * 1 / 60); }
+	if (CheckHitKey(KEY_INPUT_D)) { m_Pos.x -= m_Digree_X * (m_Speed * 1 / 60); }
 }
 

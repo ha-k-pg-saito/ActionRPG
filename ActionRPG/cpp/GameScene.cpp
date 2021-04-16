@@ -23,12 +23,12 @@ void GameScene::InitGameScene()
 
 void GameScene::RunGameScene()
 {
-	
+
 	camera.Update();
 	player.Update();
 
 	//Ç«ÇÃÉVÅ[ÉìÇ©ÇÌÇ©ÇÈÇÊÇ§Ç…
-	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
+	DrawFormatString(0.f, 100.f, color, "GameScene");
 
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
