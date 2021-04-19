@@ -34,10 +34,8 @@ void GameScene::RunGameScene()
 	}
 
 	player.Draw();
-
-	//‚Ü‚Æ‚ß‚½ŠÖ”‚ğì‚é//
 	//’†S“_->(íœ‚Ì‰Â”\«‚à‚ ‚è)
-	DrawCircle(960.f, 510.f,5.f, GetColor(0,255,0),TRUE);		
+	DrawCircle(960.f, 510.f,5.f, GetColor(255,255,255),TRUE);		
 }
 
 void GameScene::FinishGameScene()
