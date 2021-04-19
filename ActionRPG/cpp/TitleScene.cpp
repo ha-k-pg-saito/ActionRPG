@@ -19,7 +19,7 @@ void TitleScene::InitTitleScene()
 void TitleScene::RunTitleScene()
 {
 
-	DrawFormatString(0.f, 100.f, color, "TitleScene");
+	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "TitleScene");
 
 	if (CheckHitKey(KEY_INPUT_RETURN)!=0)
 	{
