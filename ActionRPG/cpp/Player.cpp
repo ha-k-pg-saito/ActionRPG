@@ -38,8 +38,8 @@ void Player::Move()
 	MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f,m_Radian * DX_PI_F / 180.0f, 0.0f));
 
 	//３Dの向きベクトル算出(単位ベクトル＝１)
-	m_Digree_X = cosf(m_Radian) + sinf(m_Radian);
-	m_Digree_Z = -sinf(m_Radian) + cosf(m_Radian);
+	m_Digree_X = sinf(m_Radian);
+	m_Digree_Z = cosf(m_Radian);
 
 	//特定のキーを押したときにプレイヤー向いている方向にを移動させる
 	if (CheckHitKey(KEY_INPUT_W)) { Move_Vec.z -= m_Digree_Z * (m_Speed * 1 / 60); }

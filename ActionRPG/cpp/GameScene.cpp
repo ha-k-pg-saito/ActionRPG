@@ -17,9 +17,9 @@ void GameScene::InitGameScene()
 
 void GameScene::RunGameScene()
 {
-	camera.Update();
 	player.Update();
-
+	camera.Update();
+	
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
 		if (Push == false)
