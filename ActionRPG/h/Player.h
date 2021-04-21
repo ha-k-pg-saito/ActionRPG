@@ -22,6 +22,9 @@ public:
 		m_AnimHandle{ 0 }
 	{
 		m_Speed = (20.f);
+		m_Radian = (0);
+		m_Digree_X = (0);
+		m_Digree_Z = (0);
 	}
 
 	Player(VECTOR pos) :
@@ -38,6 +41,7 @@ public:
 	void DrawHP(); 
 
 public:
+	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 
 private:
@@ -48,7 +52,7 @@ private:
 	int   m_AnimHandle[ANIM_NUM];
 	int   m_AnimAttachIndex[ANIM_NUM];
 	int   m_AnimTotalTime[ANIM_NUM];
-	int   m_PlayTime;						//アニメーション時間
+	float m_PlayTime;						//アニメーション時間
 
 	//計算で使う変数
 	float m_Radian;						

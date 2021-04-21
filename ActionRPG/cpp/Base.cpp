@@ -20,4 +20,4 @@ Base::Base(VECTOR pos) :
 	m_Speed{ 0.f }
 {
 }
-;
+

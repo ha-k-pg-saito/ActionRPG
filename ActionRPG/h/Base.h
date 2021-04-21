@@ -12,6 +12,8 @@ public:
 
 	Base(VECTOR pos);
 
+	Base(float speed);
+
 	virtual ~Base() {}		
 
 //Œp³ŠÖ˜A‚Íprotected‚ğg—p
