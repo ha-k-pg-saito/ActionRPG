@@ -19,14 +19,12 @@ public:
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0 },
-		m_AnimHandle{ 0 }
+		m_AnimHandle{ 0 },
+		m_Direction{0}
 	{
 		m_Speed = (20.f);
 		m_Radian = (0);
-		m_Digree_X = (0);
-		m_Digree_Z = (0);
 	}
-
 	Player(VECTOR pos) :
 		Base(pos)
 	{}
@@ -55,9 +53,9 @@ private:
 	float m_PlayTime;						//アニメーション時間
 
 	//計算で使う変数
-	float m_Radian;						
-	float m_Digree_X, m_Digree_Z;		//向きベクトルの保存
-
+	float  m_Radian;		
+	float  m_Digree_Y;	
+	VECTOR m_Direction;		//向いている方向
 };
 
 

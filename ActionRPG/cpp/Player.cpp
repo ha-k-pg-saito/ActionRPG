@@ -32,21 +32,48 @@ void Player::Move()
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 
-	VECTOR Move_Vec{ 0.f,0.f,0.f };
-
-	//モデルの回転
-	MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f,m_Radian * DX_PI_F / 180.0f, 0.0f));
-
-	//３Dの向きベクトル算出(単位ベクトル＝１)
-	m_Digree_X = cosf(m_Radian);
-	m_Digree_Z = cosf(m_Radian);
+	float Digree = 0.f;
 
 	//特定のキーを押したときにプレイヤー向いている方向にを移動させる
-	if (CheckHitKey(KEY_INPUT_W)) { Move_Vec.z -= m_Digree_Z * (m_Speed * 1 / 60); }
-	if (CheckHitKey(KEY_INPUT_S)) { Move_Vec.z += m_Digree_Z * (m_Speed * 1 / 60); }
-	if (CheckHitKey(KEY_INPUT_A)) { Move_Vec.x += m_Digree_X * (m_Speed * 1 / 60); }
-	if (CheckHitKey(KEY_INPUT_D)) { Move_Vec.x -= m_Digree_X * (m_Speed * 1 / 60); }
+	if (CheckHitKey(KEY_INPUT_LEFT))  { Digree -= 10; }
+	if (CheckHitKey(KEY_INPUT_RIGHT)) { Digree += 10; }
 
+	if (Digree!=0.f)
+	{
+		m_Digree_Y += Digree;
+
+		float Rad = m_Digree_Y * DX_PI_F / 180.0f;
+
+		//３Dの向きベクトル算出(単位ベクトル＝１)
+		m_Direction.x = sinf(Rad);
+		m_Direction.z = cosf(Rad);
+		//モデルの回転
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
+	}
+
+	VECTOR Move_Vec{ 0.f,0.f,0.f };
+
+	if (CheckHitKey(KEY_INPUT_W))
+	{ 
+		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
+		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
+	}
+	if (CheckHitKey(KEY_INPUT_S)) 
+	{
+		Move_Vec.x += m_Direction.x * (m_Speed * 1 / 60);
+		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60);
+	}
+	if (CheckHitKey(KEY_INPUT_A)) 
+	{	
+		Move_Vec.x += m_Direction.x * (m_Speed * 1 / 60);
+		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
+	}
+	if (CheckHitKey(KEY_INPUT_D))
+	{
+		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60); 
+		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60); 
+	}
+	
 	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
 	{
 		//アニメーション
