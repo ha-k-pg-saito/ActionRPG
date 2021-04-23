@@ -15,7 +15,11 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-    if (CheckHitKey(KEY_INPUT_LEFT) == 1)
+    int X, Y;
+    GetMousePoint(&X, &Y);
+    DrawCircle(X, Y, 5.f, GetColor(0, 255, 0), TRUE);
+
+    /*if (CheckHitKey(KEY_INPUT_LEFT) == 1)
     {
         m_Angle -= 8.f;
         if (m_Angle < 0.f)
@@ -30,7 +34,7 @@ void Camera::Update()
         {
             m_Angle -= 360.f;
         }
-    }
+    }*/
 
     m_Radius = m_Angle * 3.14 / 180.f;      //度数法をラジアンに直す
 
@@ -40,7 +44,7 @@ void Camera::Update()
     m_Pos.x = 0.f + Add_x;
     m_Pos.z = 0.f + Add_z;
 
-    SetCameraNearFar(1.f, 1500.f);			//カメラの手前と億クリップの距離
+    SetCameraNearFar(1.f, 1500.f);			//カメラの手前と奥クリップの距離
     SetCameraPositionAndTarget_UpVecY(
         m_Pos,
         VGet(0.f, 9.f, 0.f));				//注視点は原点
