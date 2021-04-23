@@ -17,5 +17,4 @@ enum SceneStep
 };
 
 void SceneUpdate();
-
 #endif

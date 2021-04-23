@@ -1,7 +1,6 @@
 #ifndef GameScene_h_
 #define GameScene_h_
 
-#include"DxLib.h"
 #include"Player.h"
 #include"Camera.h"
 

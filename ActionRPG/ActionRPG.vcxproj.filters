@@ -37,6 +37,12 @@
     <ClCompile Include="cpp\ResultScene.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\Texture.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Graphics.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Player.h">
@@ -58,6 +64,12 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\TitleScene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Graphics.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Texture.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,35 +1,25 @@
 #include "../h/GameScene.h"
 #include"../h/Scene.h"
-#include"../h/Player.h"
-#include"../h/Camera.h"
 
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
 
 GameScene::GameScene()
 {
-
 }
 
 void GameScene::InitGameScene()
 {
-	
-	player.Update();
-
-	g_SceneStep = SceneStep::Run;
-
+	player.Init();
 	Push = true;
+	g_SceneStep = SceneStep::Run;
 }
 
 void GameScene::RunGameScene()
 {
-	
+	player.Update();
 	camera.Update();
-	player.Move();
-
-	//どのシーンかわかるように
-	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "GameScene");
-
+	
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
 		if (Push == false)
@@ -44,7 +34,8 @@ void GameScene::RunGameScene()
 	}
 
 	player.Draw();
-	DrawCircle(960.f, 510.f,5.f, GetColor(0, 255, 0),TRUE);
+	//中心点->(削除の可能性もあり)
+	DrawCircle(960, 510,5, GetColor(255,255,255),TRUE);		
 }
 
 void GameScene::FinishGameScene()
