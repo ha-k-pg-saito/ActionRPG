@@ -19,7 +19,7 @@ void Camera::Update()
     GetMousePoint(&X, &Y);
     DrawCircle(X, Y, 5.f, GetColor(0, 255, 0), TRUE);
 
-    if (CheckHitKey(KEY_INPUT_LEFT) == 1)
+    /*if (CheckHitKey(KEY_INPUT_LEFT) == 1)
     {
         m_Angle -= 8.f;
         if (m_Angle < 0.f)
@@ -34,7 +34,7 @@ void Camera::Update()
         {
             m_Angle -= 360.f;
         }
-    }
+    }*/
 
     m_Radius = m_Angle * 3.14 / 180.f;      //度数法をラジアンに直す
 
