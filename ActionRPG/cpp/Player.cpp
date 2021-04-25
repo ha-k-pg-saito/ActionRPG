@@ -11,6 +11,7 @@ void Player::Init()
 void Player::Update()
 {
 	Move();
+	
 	m_PlayTime++;
 
 	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
@@ -20,6 +21,7 @@ void Player::Update()
 	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 }
 
+//プレイヤー描画
 void Player::Draw()
 {
 	// 3Dモデルの描画
@@ -27,18 +29,16 @@ void Player::Draw()
 	DrawHP();
 }
 
-void Player::Move()
+//プレイヤーの回転
+void Player::Rotate()
 {
-	// 画面に移るモデルの移動
-	MV1SetPosition(m_ModelHandle, m_Pos);
-
 	float Digree = 0.f;
 
 	//特定のキーを押したときにプレイヤー向いている方向にを移動させる
-	if (CheckHitKey(KEY_INPUT_LEFT))  { Digree -= 10; }
+	if (CheckHitKey(KEY_INPUT_LEFT)) { Digree -= 10; }
 	if (CheckHitKey(KEY_INPUT_RIGHT)) { Digree += 10; }
 
-	if (Digree!=0.f)
+	if (Digree != 0.f)
 	{
 		m_Digree_Y += Digree;
 
@@ -50,7 +50,15 @@ void Player::Move()
 		//モデルの回転
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 	}
+}
 
+void Player::Move()
+{
+	Rotate();
+	// 画面に移るモデルの移動
+	MV1SetPosition(m_ModelHandle, m_Pos);
+
+	//一時的に移動量を保存する
 	VECTOR Move_Vec{ 0.f,0.f,0.f };
 
 	if (CheckHitKey(KEY_INPUT_W))
@@ -74,6 +82,7 @@ void Player::Move()
 		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60); 
 	}
 	
+	//移動したのかを調べて移動していたならアニメーションする
 	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
 	{
 		//アニメーション

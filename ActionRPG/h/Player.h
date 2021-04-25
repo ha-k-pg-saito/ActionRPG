@@ -35,9 +35,12 @@ public:
 	void Init();
 	void Update();
 	void Draw();
-	void Move();
 	void DrawHP(); 
 
+private:
+	void Rotate();
+	void Move();
+	
 public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
