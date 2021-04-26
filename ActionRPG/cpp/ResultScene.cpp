@@ -18,7 +18,7 @@ void ResultScene::InitResultScene()
 
 void ResultScene::RunResultScene()
 {
-	DrawFormatString(0.f, 100.f, GetColor(255, 255, 255), "ResultScene");
+	DrawFormatString(0, 100, GetColor(255, 255, 255), "ResultScene");
 
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
