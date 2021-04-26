@@ -31,7 +31,8 @@ void Camera::Update(Player* player)
     DrawSphere3D(VGet(20.0f, 0.0f, 0.0f), 8.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
     
     //カメラの上下左右移動
-    if (CheckHitKey(KEY_INPUT_UP) == 1)
+    //if (CheckHitKey(KEY_INPUT_UP) == 1)
+    if (CheckHitKey(KEY_INPUT_T) == 1)
     {
         m_AngleV += m_Speed;
         // ある一定角度以上にはならないようにする
@@ -40,7 +41,8 @@ void Camera::Update(Player* player)
             m_AngleV = DX_PI_F / 2.0f - 1.0f;
         }
     }
-    if (CheckHitKey(KEY_INPUT_DOWN) == 1)
+    //if (CheckHitKey(KEY_INPUT_DOWN) == 1)
+    if (CheckHitKey(KEY_INPUT_G) == 1)
     {
         m_AngleV -= m_Speed;
         // ある一定角度以下にはならないようにする
@@ -49,11 +51,13 @@ void Camera::Update(Player* player)
             m_AngleV = -DX_PI_F / 2.0f + 1.0f;
         }
     }
-    if (CheckHitKey(KEY_INPUT_LEFT) == 1)
+    //if (CheckHitKey(KEY_INPUT_LEFT) == 1)
+    if (CheckHitKey(KEY_INPUT_F) == 1)
     {
         m_AngleH += m_Speed;
     }
-    if (CheckHitKey(KEY_INPUT_RIGHT) == 1)
+    //if (CheckHitKey(KEY_INPUT_RIGHT) == 1)
+    if (CheckHitKey(KEY_INPUT_H) == 1)
     {
         m_AngleH -= m_Speed;
     }
