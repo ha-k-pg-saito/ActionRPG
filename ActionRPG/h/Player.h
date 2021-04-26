@@ -18,12 +18,12 @@ public:
 	Player():
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
-		m_PlayTime{ 0 },
+		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
 		m_Direction{0}
 	{
 		m_Speed = (20.f);
-		m_Radian = (0);
+		m_Hp = (3.f);
 	}
 	Player(VECTOR pos) :
 		Base(pos)
