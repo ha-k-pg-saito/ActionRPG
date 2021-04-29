@@ -33,10 +33,11 @@ void Player::Draw()
 void Player::Rotate()
 {
 	float Digree = 0.f;
+	float RotateSpeed = 10.f;
 
 	//特定のキーを押したときにプレイヤー向いている方向にを移動させる
-	if (CheckHitKey(KEY_INPUT_LEFT)) { Digree -= 10; }
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { Digree += 10; }
+	if (CheckHitKey(KEY_INPUT_LEFT)==1) { Digree -= RotateSpeed; }
+	if (CheckHitKey(KEY_INPUT_RIGHT)==1) { Digree += RotateSpeed; }
 
 	if (Digree != 0.f)
 	{

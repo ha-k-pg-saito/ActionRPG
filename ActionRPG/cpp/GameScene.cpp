@@ -10,6 +10,7 @@ GameScene::GameScene()
 
 void GameScene::InitGameScene()
 {
+	map.Init();
 	player.Init();
 	Push = true;
 	g_SceneStep = SceneStep::Run;
@@ -33,9 +34,11 @@ void GameScene::RunGameScene()
 		Push = false;
 	}
 
-	player.Draw();
+	
 	//’†S“_->(íœ‚Ì‰Â”\«‚à‚ ‚è)
 	DrawCircle(960, 510,5, GetColor(255,255,255),TRUE);		
+	map.Draw();
+	player.Draw();
 }
 
 void GameScene::FinishGameScene()

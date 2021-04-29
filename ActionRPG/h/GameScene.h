@@ -4,6 +4,7 @@
 #include"Player.h"
 #include"Camera.h"
 #include"Sound.h"
+#include"Map.h"
 
 class GameScene
 {
@@ -23,6 +24,7 @@ private:
 	bool Push;
 	Player player;
 	Camera camera;
+	Map    map;
 };
 
 #endif

@@ -40,10 +40,10 @@
     <ClCompile Include="cpp\Sound.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="h\Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\Enemy.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Map.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,6 +73,9 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Enemy.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Map.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
