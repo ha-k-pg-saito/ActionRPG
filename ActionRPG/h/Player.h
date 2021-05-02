@@ -46,6 +46,8 @@ public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 
+	int GetModel() { return m_ModelHandle; }
+
 private:
 	// モデルを保存する変数
 	int m_ModelHandle;
