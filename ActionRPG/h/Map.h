@@ -13,11 +13,12 @@ public:
 	~Map() {}
 
 public:
-	void Init();
+	void Init(int maphandle,int grhandle);
 	void Draw();
 
 private:
 	int    m_MapHandle;
+	int    m_GrHandle[7];
 	VECTOR m_Pos;
 };
 

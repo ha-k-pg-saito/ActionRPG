@@ -11,11 +11,12 @@ GameScene::GameScene()
 void GameScene::InitGameScene()
 {
 	// モデルのテクスチャ読み込み
-	int PlayerGrHandle = LoadGraph("Tex/sister_body.png");
+	int PlayerGrHandle    = LoadGraph("Tex/sister_body.png");
 	// モデルの読み込み
 	int PlayerModelHandle = MV1LoadModel("Tex/sister.mv1");
-	
-	map.Init();
+	int MapHandle         = MV1LoadModel("Tex/map.mv1");
+	int MapGrHandle       = LoadGraph("Tex/rock.jpg");
+	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
 	Push = true;
 	g_SceneStep = SceneStep::Run;

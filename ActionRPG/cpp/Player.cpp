@@ -14,7 +14,6 @@ void Player::Init(int modelhandle,int grhandle)
 	m_GrHandle[5] = LoadGraph("Tex/sister_hair.png");
 	m_GrHandle[6] = LoadGraph("Tex/sister_ahoge.png");
 	m_GrHandle[7] = LoadGraph("Tex/sister_rod.png");
-
 #pragma endregion 
 
 	for (int i=0;i<8;i++)
@@ -44,6 +43,7 @@ void Player::Update()
 //プレイヤー描画
 void Player::Draw()
 {
+	DrawLine3D(m_Pos, VGet(0.f, 0.9f, 10.f), GetColor(0, 0, 255));
 	MV1DrawModel(m_ModelHandle);
 	DrawHP();
 }
@@ -76,7 +76,7 @@ void Player::Move()
 {
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
-
+	
 	//一時的に移動量を保存する
 	VECTOR Move_Vec{ 0.f,0.f,0.f };
 	
