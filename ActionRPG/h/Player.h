@@ -30,23 +30,26 @@ public:
 		Base(pos)
 	{}
 
-	~Player() { }
+	~Player() { Release(); }
 
 public:
 	void Init(int modelhandle, int grhandle);
 	void Update();
 	void Draw();
 	void DrawHP(); 
+	void Release();
 
-private:
-	void Rotate();
-	void Move();
+
 	
 public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 
 	int GetModel() { return m_ModelHandle; }
+
+private:
+	void Rotate();
+	void Move();
 
 private:
 	// モデルを保存する変数

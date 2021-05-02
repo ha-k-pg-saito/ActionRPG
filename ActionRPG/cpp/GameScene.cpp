@@ -59,8 +59,3 @@ void GameScene::GameSceneUpdate()
 	case SceneStep::Finish: FinishGameScene(); break;
 	}
 }
-
-void GameScene::Release()
-{
-
-}

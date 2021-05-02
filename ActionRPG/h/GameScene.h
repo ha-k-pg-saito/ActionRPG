@@ -10,7 +10,7 @@ class GameScene
 {
 public:
 	GameScene();
-	~GameScene() { Release(); }
+	~GameScene() {  }
 
 public:
 	void InitGameScene();
@@ -19,9 +19,6 @@ public:
 
 public:
 	void GameSceneUpdate();
-
-private:
-	void Release();
 
 private:
 	bool Push;

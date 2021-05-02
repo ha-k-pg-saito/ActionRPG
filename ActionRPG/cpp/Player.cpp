@@ -124,3 +124,9 @@ void Player::DrawHP()
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
 }
 
+void Player::Release()
+{
+	MV1DeleteModel(m_ModelHandle);
+	DeleteGraph(m_GrHandle[8]);
+}
+
