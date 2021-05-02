@@ -10,8 +10,13 @@ GameScene::GameScene()
 
 void GameScene::InitGameScene()
 {
+	// モデルのテクスチャ読み込み
+	int PlayerGrHandle = LoadGraph("Tex/sister_body.png");
+	// モデルの読み込み
+	int PlayerModelHandle = MV1LoadModel("Tex/sister.mv1");
+	
 	map.Init();
-	player.Init();
+	player.Init(PlayerModelHandle, PlayerGrHandle);
 	Push = true;
 	g_SceneStep = SceneStep::Run;
 }
@@ -34,9 +39,6 @@ void GameScene::RunGameScene()
 		Push = false;
 	}
 
-	
-	//中心点->(削除の可能性もあり)
-	DrawCircle(960, 510,5, GetColor(255,255,255),TRUE);		
 	map.Draw();
 	player.Draw();
 }
@@ -55,4 +57,9 @@ void GameScene::GameSceneUpdate()
 	case SceneStep::Run:    RunGameScene();    break;
 	case SceneStep::Finish: FinishGameScene(); break;
 	}
+}
+
+void GameScene::Release()
+{
+
 }

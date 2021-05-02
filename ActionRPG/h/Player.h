@@ -16,6 +16,7 @@ class Player :public Base
 
 public:
 	Player():
+		//Base()で初期化しているのはポジション変数
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
@@ -29,10 +30,10 @@ public:
 		Base(pos)
 	{}
 
-	~Player() {}		
+	~Player() { }
 
 public:
-	void Init();
+	void Init(int modelhandle, int grhandle);
 	void Update();
 	void Draw();
 	void DrawHP(); 
@@ -47,7 +48,8 @@ public:
 
 private:
 	// モデルを保存する変数
-	int   m_ModelHandle;
+	int m_ModelHandle;
+	int m_GrHandle[8];
 
 	//アニメーションに使用する変数
 	int   m_AnimHandle[ANIM_NUM];
