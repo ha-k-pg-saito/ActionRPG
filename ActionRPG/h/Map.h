@@ -15,6 +15,7 @@ public:
 public:
 	void Init(int maphandle,int grhandle);
 	void Draw();
+	int GetModel(){ return m_MapHandle; }
 
 private:
 	int    m_MapHandle;
