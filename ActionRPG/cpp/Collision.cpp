@@ -15,7 +15,7 @@ Collision::~Collision()
     MV1CollResultPolyDimTerminate(HitPolyDim);
 }
 
-void Collision::Update(Player* player)
+void Collision::Update(Player* player, Map* map)
 {
 	// ３Ｄモデルの移動位置を上下に移動させる
 	y += Add;
@@ -24,6 +24,9 @@ void Collision::Update(Player* player)
 
 	// モデル全体のコリジョン情報構築
 	MV1SetupCollInfo(player->GetModel(), -1, 8, 8, 8);
+
+    // モデルとマップの当たり判定
+    MV1SetupCollInfo(map->GetModel(), -1, 8, 8, 8);
 
 	// 当たり判定を行う球の位置をセット（仮）
 	SpherePos = VGet(250.0f, y, 600.0f);
