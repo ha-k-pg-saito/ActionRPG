@@ -47,7 +47,7 @@
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
     <ClCompile Include="cpp\Collision.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +81,8 @@
     <ClInclude Include="h\Map.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\Collision.h" />
+    <ClInclude Include="h\Collision.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

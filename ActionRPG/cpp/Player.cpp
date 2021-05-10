@@ -43,7 +43,6 @@ void Player::Update()
 //プレイヤー描画
 void Player::Draw()
 {
-	DrawLine3D(m_Pos, VGet(0.f, 0.9f, 10.f), GetColor(0, 0, 255));
 	MV1DrawModel(m_ModelHandle);
 	DrawHP();
 }
@@ -55,8 +54,8 @@ void Player::Rotate()
 	float RotateSpeed = 5.f;
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_LEFT)) { Digree -= RotateSpeed; }
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { Digree += RotateSpeed; }
+	if (CheckHitKey(KEY_INPUT_Q)) { Digree -= RotateSpeed; }
+	if (CheckHitKey(KEY_INPUT_E)) { Digree += RotateSpeed; }
 
 	if (Digree != 0.f)
 	{
@@ -74,6 +73,10 @@ void Player::Rotate()
 
 void Player::Move()
 {
+	Collision();
+	//レイの描画
+	m_Line = VAdd(GetPos(), VGet(0.f, 0.f, 5.f));
+	DrawLine3D(m_Pos, m_Line,GetColor(0, 0, 255));
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	
@@ -84,6 +87,7 @@ void Player::Move()
 	//向いている方向に移動
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
+		//60で割ることで60フレームで進むベクトルを出している
 		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
 		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}
@@ -130,3 +134,17 @@ void Player::Release()
 	DeleteGraph(m_GrHandle[8]);
 }
 
+void Player::Collision()
+{
+	MV1SetupCollInfo(m_ModelHandle, 0, 8, 8, 8);
+	MV1RefreshCollInfo(m_ModelHandle, 0);
+	HitPoly= MV1CollCheck_Line(m_ModelHandle, 0, m_Pos, m_Line);
+
+	//当たったならその位置をレイの終点とする
+	if (HitPoly.HitFlag == 1)
+	{
+		m_Line = HitPoly.HitPosition;
+	}
+	// 当たったかどうかを表示する
+	DrawFormatString(900, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
+}

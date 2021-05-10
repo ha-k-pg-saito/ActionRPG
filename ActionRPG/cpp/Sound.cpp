@@ -8,6 +8,11 @@ void Sound::Load()
 	m_SoundHandle[2] = LoadSoundMem("音声ファイル");
 }
 
+void Sound::Init()
+{
+	Load();
+}
+
 void Sound::play()
 {
 	//サウンド再生(ループ)

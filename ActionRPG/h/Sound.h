@@ -15,6 +15,7 @@ public:
 
 public:
 	void Load();
+	void Init();
 	void play();
 	void stop();
 
@@ -24,7 +25,6 @@ public:
 
 private:
 	Sound() {}
-	~Sound() {}
 };
 
 

@@ -17,7 +17,9 @@ public:
 	void Draw();
 
 private:
+	//マップモデル保存用変数
 	int    m_MapHandle;
+	//マップに貼るテクスチャ保存変数
 	int    m_GrHandle[7];
 	VECTOR m_Pos;
 };

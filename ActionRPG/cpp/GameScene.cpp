@@ -14,8 +14,10 @@ void GameScene::InitGameScene()
 	int PlayerGrHandle    = LoadGraph("Tex/sister_body.png");
 	// モデルの読み込み
 	int PlayerModelHandle = MV1LoadModel("Tex/sister.mv1");
-	int MapHandle         = MV1LoadModel("Tex/map.mv1");
+	//マップのテクスチャ読み込み
 	int MapGrHandle       = LoadGraph("Tex/rock.jpg");
+	//マップモデルの読み込み
+	int MapHandle         = MV1LoadModel("Tex/map.mv1");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
 	Push = true;

@@ -33,14 +33,14 @@ public:
 	~Player() { Release(); }
 
 public:
+	//Initの引数はモデル読み込む時に使う
 	void Init(int modelhandle, int grhandle);
 	void Update();
 	void Draw();
 	void DrawHP(); 
 	void Release();
-
-
 	
+
 public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
@@ -50,10 +50,12 @@ public:
 private:
 	void Rotate();
 	void Move();
+	void Collision();
 
 private:
-	// モデルを保存する変数
+	// 3Dモデルを保存する変数
 	int m_ModelHandle;
+	//3Dモデルに貼るテクスチャ保存変数
 	int m_GrHandle[8];
 
 	//アニメーションに使用する変数
@@ -65,7 +67,12 @@ private:
 	//計算で使う変数
 	float  m_Radian;		
 	float  m_Digree_Y;	
-	VECTOR m_Direction;		//向いている方向
+	VECTOR m_Direction;		
+
+	//レイの描画に使う変数
+	VECTOR m_Line;
+
+	MV1_COLL_RESULT_POLY HitPoly;
 };
 
 
