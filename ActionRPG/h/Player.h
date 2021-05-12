@@ -71,7 +71,7 @@ private:
 
 	//レイの描画に使う変数
 	VECTOR m_Line;
-
+	//DxLibにあるあたり判定用の戻り値
 	MV1_COLL_RESULT_POLY HitPoly;
 };
 

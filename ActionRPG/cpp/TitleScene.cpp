@@ -11,15 +11,15 @@ TitleScene::TitleScene()
 
 void TitleScene::InitTitleScene()
 {
-	g_SceneStep = SceneStep::Run;
-
+	m_GrHandle = LoadGraph("Tex/Title.png");
 	Push = true;
+	g_SceneStep = SceneStep::Run;
 }
 
 void TitleScene::RunTitleScene()
 {
 
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "TitleScene");
+	DrawGraph(0, 0, m_GrHandle, FALSE);
 
 	if (CheckHitKey(KEY_INPUT_RETURN)!=0)
 	{
@@ -37,6 +37,7 @@ void TitleScene::RunTitleScene()
 
 void TitleScene::FinishTitleScene()
 {
+	DeleteGraph(m_GrHandle);
 	g_SceneKind = SceneKind::SceneKind_Game;
 	g_SceneStep = SceneStep::Init;
 }

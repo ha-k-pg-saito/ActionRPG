@@ -19,6 +19,7 @@ public:
 
 private:
 	bool Push;
+	int  m_GrHandle;
 };
 
 #endif
