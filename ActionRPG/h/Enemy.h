@@ -17,10 +17,7 @@ public:
 
 public:
 	Enemy() :
-		Base(0.f, 0.9f, 10.f),
-		m_Radian(0.f),
-		m_Digree_Y(0.f),
-		m_Direction{0}
+		Base(0.f, 0.9f, 10.f)
 	{
 		m_Speed = (10.f);
 		m_Hp = (3.f);
@@ -33,19 +30,36 @@ public:
 		~Enemy() {}
 
 public:
-	void Init();
-	void Update();
+	void Init(VECTOR value);
+	void Update(VECTOR player_pos);
 	void Draw();
 	void DrawHp();
 
+	bool IsActive;
+
 private:
 	//モデル情報保存する変数
-	int m_MHandle;
+	int    Enemy_ModelHandle;
 
 	//計算で使う変数
-	float  m_Radian;
-	float  m_Digree_Y;
-	VECTOR m_Direction;
+	float  Enemy_Angle;
+	float  Initial_EnemyAngle;
+	float  Enemy_AnimTotalTime;
+	float  Enemy_AnimNowTime;
+	int    Enemy_AnimAttachIndex;
+	int    Enemy_RunFlag;
+	int    Enemy_MoveFlag;
+	int    Enemy_MoveAnimFrameIndex;
+	VECTOR Enemy_Position;
+	VECTOR Enemy_InitialPosition;
+	VECTOR SubVector;
+	VECTOR Initial_EnemyVector;
+
+	VECTOR Distance_Pos;
+	VECTOR SetEnemy_Pos;
+	// 座標の+-の修正
+	int Enemy_direction_x, Enemy_direction_z;
+	int Setenemy_direction_x, Setenemy_direction_z;
 
 };
 
