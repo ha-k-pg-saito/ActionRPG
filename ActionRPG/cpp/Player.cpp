@@ -7,13 +7,13 @@ void Player::Init(int modelhandle,int grhandle)
 	m_ModelHandle = modelhandle;
 #pragma region モデルテクスチャ読み込み
 	m_GrHandle[0] = grhandle;
-	m_GrHandle[1] = LoadGraph("Tex/sister_hood.png");
-	m_GrHandle[2] = LoadGraph("Tex/sister_juel.png");
-	m_GrHandle[3] = LoadGraph("Tex/sister_flame.png");
-	m_GrHandle[4] = LoadGraph("Tex/sister_pierce.png");
-	m_GrHandle[5] = LoadGraph("Tex/sister_hair.png");
-	m_GrHandle[6] = LoadGraph("Tex/sister_ahoge.png");
-	m_GrHandle[7] = LoadGraph("Tex/sister_rod.png");
+	m_GrHandle[1] = LoadGraph("Tex/Player/sister_hood.png");
+	m_GrHandle[2] = LoadGraph("Tex/Player/sister_juel.png");
+	m_GrHandle[3] = LoadGraph("Tex/Player/sister_flame.png");
+	m_GrHandle[4] = LoadGraph("Tex/Player/sister_pierce.png");
+	m_GrHandle[5] = LoadGraph("Tex/Player/sister_hair.png");
+	m_GrHandle[6] = LoadGraph("Tex/Player/sister_ahoge.png");
+	m_GrHandle[7] = LoadGraph("Tex/Player/sister_rod.png");
 #pragma endregion 
 
 	for (int i=0;i<8;i++)
@@ -32,10 +32,9 @@ void Player::Update()
 	Move();
 	
 	m_PlayTime++;
-
 	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
 	{
-		m_PlayTime = 0;
+		m_PlayTime = 0.f;
 	}
 	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 }
@@ -72,13 +71,13 @@ void Player::Rotate()
 
 void Player::Move()
 {
+	//このCollisionはレイとマップのあたり判定を行っている
 	Collision();
 	
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	//一時的に移動量を保存する
 	VECTOR Move_Vec{ 0.f,0.f,0.f };
-	
 	
 #pragma region 移動処理 
 	//向いている方向に移動
@@ -103,11 +102,23 @@ void Player::Move()
 	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
 	{
 		//待機状態から走るモーションに切り替える
-		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/unitychan_RUN00_F.mv1");
+		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/catwalk.mv1");
+		//指定したモデルにアニメーションをアタッチする
+		//アタッチー＞付着させるetc...
 		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], TRUE);
+		//アタッチしたアニメーションの総時間を取得する
 		m_AnimTotalTime[ANIM_LIST::ANIM_RUN] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
+		//本来のポジション変数に一時的に保存していた値を加算する
 		m_Pos.x += Move_Vec.x;
 		m_Pos.z += Move_Vec.z;
+	}
+	else 
+	{
+		//動いてなければ待機モーション
+		m_PlayTime = 0.f;
+		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/catwait.mv1");
+		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], TRUE);
+		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
 	}
 }
 
@@ -121,14 +132,19 @@ void Player::DrawHP()
 
 void Player::Release()
 {
+	//3Dモデルの削除
 	MV1DeleteModel(m_ModelHandle);
+	//テクスチャの削除
 	DeleteGraph(m_GrHandle[8]);
 }
 
 void Player::Collision()
 {
+	//モデル全体のコリジョン情報構築
 	MV1SetupCollInfo(m_ModelHandle, 0, 8, 8, 8);
+	//0番目のフレームのコリジョン情報を更新する
 	MV1RefreshCollInfo(m_ModelHandle, 0);
+	//0番フレームとレイ都のあたり判定
 	HitPoly= MV1CollCheck_Line(m_ModelHandle, 0, m_Pos, m_Line);
 
 	//当たったならその位置をレイの終点とする
@@ -137,5 +153,5 @@ void Player::Collision()
 		m_Line = HitPoly.HitPosition;
 	}
 	// 当たったかどうかを表示する
-	DrawFormatString(900, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
+	DrawFormatString(1500, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
 }

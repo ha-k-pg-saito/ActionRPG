@@ -15,7 +15,7 @@ public:
 
 public:
 	void Load();
-	void Init();
+	void Init(int sound);
 	void play();
 	void stop();
 

@@ -8,19 +8,19 @@ void Map::Init(int maphandle,int grhandle,int lastmaphandle,int lastgrhandle)
 	m_MapHandle = maphandle;
 	//初期マップテクスチャ
 	m_GrHandle[0] = grhandle;
-	m_GrHandle[1] =  LoadGraph("Tex/grass.jpg");
-	m_GrHandle[2] =  LoadGraph("Tex/ground.jpg");
-	m_GrHandle[3] =  LoadGraph("Tex/bridge.jpg");
-	m_GrHandle[4] =  LoadGraph("Tex/water.jpg");
-	m_GrHandle[5] =  LoadGraph("Tex/wood.jpg");
-	m_GrHandle[6] =  LoadGraph("Tex/bark.jpg");
+	m_GrHandle[1] =  LoadGraph("Tex/Stage/grass.jpg");
+	m_GrHandle[2] =  LoadGraph("Tex/Stage/ground.jpg");
+	m_GrHandle[3] =  LoadGraph("Tex/Stage/bridge.jpg");
+	m_GrHandle[4] =  LoadGraph("Tex/Stage/water.jpg");
+	m_GrHandle[5] =  LoadGraph("Tex/Stage/wood.jpg");
+	m_GrHandle[6] =  LoadGraph("Tex/Stage/bark.jpg");
 	//ボス戦のマップモデル
 	m_LastMHandle = lastmaphandle;
 	//ボス戦のマップテクスチャ
 	m_LastMGrHandle[0] = lastgrhandle;
-	m_LastMGrHandle[1] = LoadGraph("Tex/wood kawa.jpg");
-	m_LastMGrHandle[2] = LoadGraph("Tex/wood yuka.jpg");
-	m_LastMGrHandle[3] = LoadGraph("Tex/wood kabe.jpg");
+	m_LastMGrHandle[1] = LoadGraph("Tex/Stage/wood kawa.jpg");
+	m_LastMGrHandle[2] = LoadGraph("Tex/Stage/wood yuka.jpg");
+	m_LastMGrHandle[3] = LoadGraph("Tex/Stage/wood kabe.jpg");
 #pragma endregion
 	//モデルに貼るテクスチャの数分だけfor文を回す
 	for (int i = 0; i <7 ; i++)

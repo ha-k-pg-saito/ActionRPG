@@ -16,14 +16,14 @@ class Player :public Base
 
 public:
 	Player():
-		//Base()で初期化しているのはポジション変数
+		//Base()内で初期化しているのはポジション変数
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
 		m_Direction{0}
 	{
-		m_Speed = (20.f);
+		m_Speed = (10.f);
 		m_Hp = (3.f);
 	}
 	Player(VECTOR pos) :
@@ -71,7 +71,7 @@ private:
 
 	//レイの描画に使う変数
 	VECTOR m_Line;
-	//DxLibにあるあたり判定用の戻り値
+	//DxLibにあるあたり判定用の戻り値+変数
 	MV1_COLL_RESULT_POLY HitPoly;
 };
 
