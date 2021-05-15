@@ -23,7 +23,7 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{0}
 	{
-		m_Speed = (10.f);
+		m_Speed = (20.f);
 		m_Hp = (3.f);
 	}
 	Player(VECTOR pos) :

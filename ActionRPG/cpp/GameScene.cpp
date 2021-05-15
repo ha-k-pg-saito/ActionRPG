@@ -20,7 +20,7 @@ void GameScene::InitGameScene()
 	int MapGrHandle       = LoadGraph("Tex/Stage/rock.jpg");
 	int LastMGrHandle     = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み
-	int MapHandle         = MV1LoadModel("Tex/Stag/map.mv1");
+	int MapHandle         = MV1LoadModel("Tex/Stage/map.mv1");
 	int LastMHandle       = MV1LoadModel("Tex/Stage/lastmap.mv1");
 	int SoundHandle = LoadSoundMem("Sound/");
 	map.Init(MapHandle, MapGrHandle,LastMHandle,LastMGrHandle);

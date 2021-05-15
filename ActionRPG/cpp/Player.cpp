@@ -59,6 +59,7 @@ void Player::Rotate()
 	if (Digree != 0.f)
 	{
 		m_Digree_Y += Digree;
+		//度数法からラジアンに変換
 		float Rad = m_Digree_Y * DX_PI_F / 180.0f;
 
 		//３Dの向きベクトル算出(単位ベクトル＝１)
