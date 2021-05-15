@@ -11,11 +11,6 @@ public:
 	void Update(Player* player);
 
 private:
-	//VECTOR  m_Pos;
-	//float	m_Radius;
-	//float	m_Angle;
-	//float	m_Length;
-
 	float	m_AngleH;			// …•½Šp“x
 	float	m_AngleV;			// ‚’¼Šp“x
 	float   m_Speed;			// ˆÚ“®‘¬“x
