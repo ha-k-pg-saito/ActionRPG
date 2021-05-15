@@ -30,7 +30,8 @@ void Player::Update()
 {
 	Rotate();
 	Move();
-	
+	Attack();
+
 	m_PlayTime++;
 	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
 	{
@@ -126,7 +127,7 @@ void Player::Move()
 void Player::DrawHP()
 {
 	//HPバー描画（四角形）
-	DrawBox(75, 65, 920, 140, GetColor(0,255,0), TRUE);
+	m_Hp = DrawBox(75, 65, 920, 140, GetColor(0, 255, 0), TRUE);
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
 }
@@ -137,6 +138,20 @@ void Player::Release()
 	MV1DeleteModel(m_ModelHandle);
 	//テクスチャの削除
 	DeleteGraph(m_GrHandle[8]);
+}
+
+void Player::Attack()
+{
+	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0)
+	{
+		//別の状態から攻撃モーションに切り替える
+		m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/catattack.mv1");
+		//指定したモデルにアニメーションをアタッチする
+		//アタッチー＞付着させるetc...
+		m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
+		//アタッチしたアニメーションの総時間を取得する
+		m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
+	}
 }
 
 void Player::Collision()
@@ -155,4 +170,16 @@ void Player::Collision()
 	}
 	// 当たったかどうかを表示する
 	DrawFormatString(1500, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
+}
+
+void Player::Damage()
+{
+	//当たった回数を保存する変数
+	int HitCount = 0;
+	if ("敵とあたった"&&HitCount==1)
+	{
+		m_Hp = DrawBox(75, 65, 920, 140, GetColor(0, 255, 0), TRUE);
+	}
+
+
 }

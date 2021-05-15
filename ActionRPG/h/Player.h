@@ -10,7 +10,7 @@ class Player :public Base
 	{
 		//走るアニメーション
 		ANIM_RUN,
-
+		ANIM_ATTACK,
 		ANIM_NUM,
 	};
 
@@ -39,7 +39,7 @@ public:
 	void Draw();
 	void DrawHP(); 
 	void Release();
-	
+	void Attack();
 
 public:
 	//プレイヤーの座標取取得
@@ -51,6 +51,7 @@ private:
 	void Rotate();
 	void Move();
 	void Collision();
+	void Damage();
 
 private:
 	// 3Dモデルを保存する変数

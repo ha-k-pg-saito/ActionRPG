@@ -1,5 +1,6 @@
 #include "../h/ResultScene.h"
 #include"../h/Scene.h"
+#include"../h/Sound.h"
 
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
@@ -11,6 +12,8 @@ ResultScene::ResultScene()
 
 void ResultScene::InitResultScene()
 {
+	int SoundHandle       = LoadSoundMem("Sound/•|‚¢‰\‚Ì‚ ‚é”pšÐ.mp3");
+	Sound::Instance()->Init(SoundHandle);
 	g_SceneStep = SceneStep::Run;
 
 	Push = true;
@@ -32,10 +35,12 @@ void ResultScene::RunResultScene()
 	{
 		Push = false;
 	}
+	Sound::Instance()->play();
 }
 
 void ResultScene::FinishResultScene()
 {
+	Sound::Instance()->stop();
 	g_SceneKind = SceneKind::SceneKind_Title;
 	g_SceneStep = SceneStep::Init;
 }

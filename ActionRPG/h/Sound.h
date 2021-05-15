@@ -21,7 +21,7 @@ public:
 
 public:
 	//サウンドのハンドルを保存する変数
-	int m_SoundHandle[3];
+	int m_SoundHandle;
 
 private:
 	Sound() {}

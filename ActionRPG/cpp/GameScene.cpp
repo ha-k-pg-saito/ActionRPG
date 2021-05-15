@@ -22,7 +22,7 @@ void GameScene::InitGameScene()
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	int MapHandle         = MV1LoadModel("Tex/Stage/map.mv1");
 	int LastMHandle       = MV1LoadModel("Tex/Stage/lastmap.mv1");
-	int SoundHandle = LoadSoundMem("Sound/");
+	int SoundHandle       = LoadSoundMem("Sound/•|‚¢‰\‚Ì‚ ‚é”pšÐ.mp3");
 	map.Init(MapHandle, MapGrHandle,LastMHandle,LastMGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
 	Sound::Instance()->Init(SoundHandle);
@@ -49,10 +49,12 @@ void GameScene::RunGameScene()
 
 	map.Draw();
 	player.Draw();
+	Sound::Instance()->play();
 }
 
 void GameScene::FinishGameScene()
 {
+	Sound::Instance()->stop();
 	g_SceneKind = SceneKind::SceneKind_Result;
 	g_SceneStep = SceneStep::Init;
 }
