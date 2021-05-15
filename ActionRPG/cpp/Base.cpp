@@ -1,5 +1,6 @@
 #include"../h/Base.h"
 
+//メンバイニシャライザにてメンバ変数初期化
 Base::Base() :
 	m_Pos{0.f},
 	m_Hp{0.f},

@@ -10,7 +10,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetGraphMode(1920, 1020, 32);			//画面モード変更
 	SetBackgroundColor(120, 120, 120);			//背景色
 	SetFontSize(75);						//フォントサイズ
-
+	SetUseLighting(TRUE);					//ライト
+	SetLightDifColor(GetColorF(0.f, 0.f, 1.f, 0.f));
 	if (DxLib_Init() == -1)					//ＤＸライブラリ初期化処理
 	{
 		return -1;							//エラーが起きたら直ちに終了
