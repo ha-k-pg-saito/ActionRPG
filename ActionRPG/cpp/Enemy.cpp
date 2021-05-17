@@ -31,10 +31,10 @@ void Enemy::Init(VECTOR pos)
 	IsActive = false;
 }
 
-void Enemy::Update(VECTOR Position)
+void Enemy::Update(VECTOR player_pos)
 {
 	// ３Ｄモデル２から３Ｄモデル１に向かうベクトルを算出
-	SubVector = VSub(Position, Enemy_Position);
+	SubVector = VSub(player_pos, Enemy_Position);
 	// ３Ｄモデル２から初期地点へのベクトルを算出
 	Initial_EnemyVector = VSub(Enemy_InitialPosition, Enemy_Position);
 
@@ -43,8 +43,8 @@ void Enemy::Update(VECTOR Position)
 	Initial_EnemyAngle = atan2(Initial_EnemyVector.x, Initial_EnemyVector.z);
 
 	// プレイヤーとエネミーの距離
-	Distance_Pos.x = Position.x - Enemy_Position.x;
-	Distance_Pos.z = Position.z - Enemy_Position.z;
+	Distance_Pos.x = player_pos.x - Enemy_Position.x;
+	Distance_Pos.z = player_pos.z - Enemy_Position.z;
 	// エネミーの初期位置とエネミーの距離
 	SetEnemy_Pos.x = Enemy_InitialPosition.x - Enemy_Position.x;
 	SetEnemy_Pos.z = Enemy_InitialPosition.z - Enemy_Position.z;
