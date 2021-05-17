@@ -10,7 +10,7 @@ class GameScene
 {
 public:
 	GameScene();
-	~GameScene() {  }
+	~GameScene() {}
 
 public:
 	void InitGameScene();
@@ -21,10 +21,11 @@ public:
 	void GameSceneUpdate();
 
 private:
-	bool Push;
+	bool   Push;
 	Player player;
 	Camera camera;
 	Map    map;
+	//Sound  sound;
 };
 
 #endif

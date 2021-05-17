@@ -27,7 +27,7 @@ public:
 		Base(pos)
 	{}
 
-		~Enemy() {}
+	~Enemy() {}
 
 public:
 	void Init(VECTOR value);

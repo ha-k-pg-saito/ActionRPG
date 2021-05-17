@@ -3,6 +3,7 @@
 
 #include "DxLib.h"
 #include "../h/Player.h"
+#include "../h/Map.h"
 
 class Collision
 {
@@ -10,7 +11,7 @@ public:
 	Collision();
 	~Collision();
 
-	void Update(Player *player);
+	void Update(Player *player, Map *map);
 	void Draw();
 
 private:

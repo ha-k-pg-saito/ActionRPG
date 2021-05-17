@@ -10,13 +10,13 @@ class Player :public Base
 	{
 		//走るアニメーション
 		ANIM_RUN,
-
+		ANIM_ATTACK,
 		ANIM_NUM,
 	};
 
 public:
 	Player():
-		//Base()で初期化しているのはポジション変数
+		//Base()内で初期化しているのはポジション変数
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
@@ -33,14 +33,14 @@ public:
 	~Player() { Release(); }
 
 public:
+	//Initの引数はモデル読み込む時に使う
 	void Init(int modelhandle, int grhandle);
 	void Update();
 	void Draw();
 	void DrawHP(); 
 	void Release();
+	void Attack();
 
-
-	
 public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
@@ -50,10 +50,13 @@ public:
 private:
 	void Rotate();
 	void Move();
+	void Collision();
+	void Damage();
 
 private:
-	// モデルを保存する変数
+	// 3Dモデルを保存する変数
 	int m_ModelHandle;
+	//3Dモデルに貼るテクスチャ保存変数
 	int m_GrHandle[8];
 
 	//アニメーションに使用する変数
@@ -65,7 +68,12 @@ private:
 	//計算で使う変数
 	float  m_Radian;		
 	float  m_Digree_Y;	
-	VECTOR m_Direction;		//向いている方向
+	VECTOR m_Direction;		
+
+	//レイの描画に使う変数
+	VECTOR m_Line;
+	//DxLibにあるあたり判定用の戻り値+変数
+	MV1_COLL_RESULT_POLY HitPoly;
 };
 
 
