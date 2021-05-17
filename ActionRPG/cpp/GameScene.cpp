@@ -49,7 +49,7 @@ void GameScene::RunGameScene()
 
 	map.Draw();
 	player.Draw();
-	Sound::Instance()->play();
+	//Sound::Instance()->play();
 }
 
 void GameScene::FinishGameScene()

@@ -9,7 +9,7 @@ void Sound::Init(int soundhandle)
 void Sound::play()
 {
 	//サウンド再生(ループ)
-	PlaySoundMem(m_SoundHandle, DX_PLAYTYPE_BACK,FALSE);
+	PlaySoundMem(m_SoundHandle, DX_PLAYTYPE_LOOP,FALSE);
 }
 
 void Sound::stop()

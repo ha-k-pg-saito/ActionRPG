@@ -54,9 +54,9 @@ void Player::Rotate()
 	float RotateSpeed = 5.f;
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_A)) { Digree -= RotateSpeed; }
 	if (CheckHitKey(KEY_INPUT_D)) { Digree += RotateSpeed; }
-
+	else if (CheckHitKey(KEY_INPUT_A)) { Digree -= RotateSpeed; }
+	
 	if (Digree != 0.f)
 	{
 		m_Digree_Y += Digree;
@@ -66,6 +66,7 @@ void Player::Rotate()
 		//３Dの向きベクトル算出(単位ベクトル＝１)
 		m_Direction.x = sinf(Rad);
 		m_Direction.z = cosf(Rad);
+	
 		//モデルの回転
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 	}
@@ -86,14 +87,14 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
-		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
-	}
-	if (CheckHitKey(KEY_INPUT_S)) 
-	{
 		Move_Vec.x += m_Direction.x * (m_Speed * 1 / 60);
 		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60);
 	}
+	else if (CheckHitKey(KEY_INPUT_S)) 
+	{
+		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
+		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
+	}	
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
 	m_Line = VAdd(GetPos(), Move_Vec);
@@ -103,8 +104,11 @@ void Player::Move()
 	//移動したのかを調べて移動していたならアニメーションする
 	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
 	{
+		float Rad = atan2(Move_Vec.x, Move_Vec.z);
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
+
 		//待機状態から走るモーションに切り替える
-		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/catwalk.mv1");
+		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
 		//指定したモデルにアニメーションをアタッチする
 		//アタッチー＞付着させるetc...
 		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], TRUE);
@@ -118,7 +122,7 @@ void Player::Move()
 	{
 		//動いてなければ待機モーション
 		m_PlayTime = 0.f;
-		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/catwait.mv1");
+		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/Player/sisterwait.mv1");
 		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], TRUE);
 		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
 	}
@@ -175,8 +179,8 @@ void Player::Collision()
 void Player::Damage()
 {
 	//当たった回数を保存する変数
-	int HitCount = 0;
-	if ("敵とあたった"&&HitCount==1)
+	int HitCounter = 0;
+	if ("敵とあたった" && HitCounter == 1)
 	{
 		m_Hp = DrawBox(75, 65, 920, 140, GetColor(0, 255, 0), TRUE);
 	}

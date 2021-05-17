@@ -8,7 +8,7 @@ class Map
 public:
 	Map() :
 		m_MapHandle(0),
-		m_Pos{0,0.9,0}
+		m_Pos{71,0,462}
 	{}
 	~Map() {}
 
