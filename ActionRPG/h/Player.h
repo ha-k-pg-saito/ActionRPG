@@ -48,6 +48,8 @@ public:
 
 	int GetModel() { return m_ModelHandle; }
 
+	float MoveVector() { return m_Speed;}
+
 private:
 	// ƒ‚ƒfƒ‹‚ğ•Û‘¶‚·‚é•Ï”
 	int m_ModelHandle;
