@@ -49,6 +49,8 @@ public:
 
 	int GetModel() { return m_ModelHandle; }
 
+	float MoveVector() { return m_Speed;}
+
 private:
 	void Rotate();
 	void Move();
