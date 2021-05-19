@@ -1,6 +1,7 @@
 #include<Math.h>
 #include "../h/Player.h"
 #include"DxLib.h"
+#include"../h/Map.h"
 
 void Player::Init(int modelhandle,int grhandle)
 {
@@ -54,9 +55,9 @@ void Player::Rotate()
 	float RotateSpeed = 5.f;
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_A)) { Digree -= RotateSpeed; }
 	if (CheckHitKey(KEY_INPUT_D)) { Digree += RotateSpeed; }
-
+	else if (CheckHitKey(KEY_INPUT_A)) { Digree -= RotateSpeed; }
+	
 	if (Digree != 0.f)
 	{
 		m_Digree_Y += Digree;
@@ -66,6 +67,7 @@ void Player::Rotate()
 		//３Dの向きベクトル算出(単位ベクトル＝１)
 		m_Direction.x = sinf(Rad);
 		m_Direction.z = cosf(Rad);
+	
 		//モデルの回転
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 	}
@@ -74,7 +76,7 @@ void Player::Rotate()
 void Player::Move()
 {
 	//このCollisionはレイとマップのあたり判定を行っている
-	Collision();
+	//CollisionToMap();
 	
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
@@ -86,39 +88,50 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
-		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
-	}
-	if (CheckHitKey(KEY_INPUT_S)) 
-	{
 		Move_Vec.x += m_Direction.x * (m_Speed * 1 / 60);
 		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60);
+	}
+	else if (CheckHitKey(KEY_INPUT_S)) 
+	{
+		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
+		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
+	}	
+	//デバッグ用Y軸上昇
+	else if (CheckHitKey(KEY_INPUT_G))
+	{
+		m_Pos.y += 1.f;
 	}
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
 	m_Line = VAdd(GetPos(), Move_Vec);
 	DrawLine3D(m_Pos, m_Line, GetColor(0, 0, 255));
 #pragma endregion
-
+	
 	//移動したのかを調べて移動していたならアニメーションする
 	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
 	{
+		//atan2を使うことで現在の向いている方向から180振り向く
+		float Rad = atan2(Move_Vec.x, Move_Vec.z);
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
+		m_Digree_Y = Rad * 180.f / DX_PI_F;
+
 		//待機状態から走るモーションに切り替える
-		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/catwalk.mv1");
+		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
+		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 		//指定したモデルにアニメーションをアタッチする
 		//アタッチー＞付着させるetc...
 		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], TRUE);
 		//アタッチしたアニメーションの総時間を取得する
 		m_AnimTotalTime[ANIM_LIST::ANIM_RUN] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 		//本来のポジション変数に一時的に保存していた値を加算する
-		m_Pos.x += Move_Vec.x;
-		m_Pos.z += Move_Vec.z;
+		m_Pos.x -= Move_Vec.x;
+		m_Pos.z -= Move_Vec.z;
 	}
 	else 
 	{
 		//動いてなければ待機モーション
 		m_PlayTime = 0.f;
-		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/catwait.mv1");
+		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/Cat/catwait.mv1");
 		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], TRUE);
 		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
 	}
@@ -126,8 +139,17 @@ void Player::Move()
 
 void Player::DrawHP()
 {
-	//HPバー描画（四角形）
-	m_Hp = DrawBox(75, 65, 920, 140, GetColor(0, 255, 0), TRUE);
+	const int HPX = 75;
+	const int HPY = 65;
+	if (m_HitCounter == 0)
+	{
+		//HPバー描画（四角形）
+		m_Hp = DrawBox(HPX, HPY, 920, 140, GetColor(0, 255, 0), TRUE);
+	}
+	else if (m_HitCounter == 1) { m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); }
+	else if (m_HitCounter == 2) { m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); }
+	else if (m_HitCounter == 3) { m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE); }
+	else if (m_HitCounter == 4) { m_Hp = DrawBox(HPX, HPY, 75 , 140, GetColor(0, 255, 0), TRUE); }
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
 }
@@ -154,14 +176,15 @@ void Player::Attack()
 	}
 }
 
-void Player::Collision()
+void Player::CollisionToMap(Map* map)
 {
 	//モデル全体のコリジョン情報構築
 	MV1SetupCollInfo(m_ModelHandle, 0, 8, 8, 8);
 	//0番目のフレームのコリジョン情報を更新する
 	MV1RefreshCollInfo(m_ModelHandle, 0);
-	//0番フレームとレイ都のあたり判定
-	HitPoly= MV1CollCheck_Line(m_ModelHandle, 0, m_Pos, m_Line);
+	//0番フレームとレイとのあたり判定
+	//m_Posは始点・m_Lineは終点
+	HitPoly = MV1CollCheck_Line(map->GetModel(), -1, m_Pos, m_Line);
 
 	//当たったならその位置をレイの終点とする
 	if (HitPoly.HitFlag == 1)
@@ -172,14 +195,8 @@ void Player::Collision()
 	DrawFormatString(1500, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
 }
 
+//この関数はダメージを与えてきた敵にこの関数を呼び出す
 void Player::Damage()
 {
-	//当たった回数を保存する変数
-	int HitCount = 0;
-	if ("敵とあたった"&&HitCount==1)
-	{
-		m_Hp = DrawBox(75, 65, 920, 140, GetColor(0, 255, 0), TRUE);
-	}
-
-
+	m_HitCounter += 1;
 }

@@ -2,6 +2,7 @@
 #define Player_h_
 #include"Base.h"
 #include"DxLib.h"
+#include"../h/Map.h"
 
 class Player :public Base
 {
@@ -24,7 +25,8 @@ public:
 		m_Direction{0}
 	{
 		m_Speed = (20.f);
-		m_Hp = (3.f);
+		m_Hp = (0.f);
+		m_HitCounter = (0);
 	}
 	Player(VECTOR pos) :
 		Base(pos)
@@ -47,10 +49,12 @@ public:
 
 	int GetModel() { return m_ModelHandle; }
 
+	float MoveVector() { return m_Speed;}
+
 private:
 	void Rotate();
 	void Move();
-	void Collision();
+	void CollisionToMap(Map* map);
 	void Damage();
 
 private:
@@ -58,6 +62,9 @@ private:
 	int m_ModelHandle;
 	//3Dモデルに貼るテクスチャ保存変数
 	int m_GrHandle[8];
+
+	//デバッグ用
+	bool push = false;
 
 	//アニメーションに使用する変数
 	int   m_AnimHandle[ANIM_NUM];
@@ -74,6 +81,9 @@ private:
 	VECTOR m_Line;
 	//DxLibにあるあたり判定用の戻り値+変数
 	MV1_COLL_RESULT_POLY HitPoly;
+
+	//当たった回数を保存する変数
+	int m_HitCounter;
 };
 
 
