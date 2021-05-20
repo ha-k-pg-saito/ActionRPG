@@ -27,6 +27,7 @@ void Collision::Update(Player* player, Map* map)
 	MV1SetupCollInfo(player->GetModel(), -1, 8, 8, 8);
 
     // モデルとマップの当たり判定
+
     MV1SetupCollInfo(map->GetModel(), -1, 8, 8, 8);
 	// モデルと球との当たり判定（仮）
 	//HitPoly = MV1CollCheck_Line(player->GetModel(), -1, SpherePos, 100.0f);
@@ -65,6 +66,8 @@ void Collision::Update(Player* player, Map* map)
 			}
 		}
 	}
+
+
 
 }
 
