@@ -13,20 +13,19 @@ public:
 	~Map() {}
 
 public:
-	void Init(int maphandle,int grhandle,int lastmaphandle,int lastmapgrhandle);
+	void Init(int maphandle,int grhandle);
 	void Draw();
 	int GetModel(){ return m_MapHandle; }
+	bool CollisionToModel(VECTOR startpos, VECTOR endpos);
 
 private:
 	//マップモデル保存用変数
 	int    m_MapHandle;
 	//マップに貼るテクスチャ保存変数
-	int    m_GrHandle[7];
-	//ボスステージのモデル保存変数
-	int    m_LastMHandle;
-	//ボスステージのテクスチャ保存変数
-	int    m_LastMGrHandle[4];
+	int    m_GrHandle[10];
 	VECTOR m_Pos;
+	//DxLibにあるあたり判定用の戻り値+変数
+	MV1_COLL_RESULT_POLY HitPoly;
 };
 
 #endif

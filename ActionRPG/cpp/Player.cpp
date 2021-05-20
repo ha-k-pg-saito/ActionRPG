@@ -105,6 +105,7 @@ void Player::Move()
 	//終点は移動前の場所から移動した分のベクトルを足して出している
 	m_Line = VAdd(GetPos(), Move_Vec);
 	DrawLine3D(m_Pos, m_Line, GetColor(0, 0, 255));
+	map.CollisionToModel(m_Pos, m_Line);
 #pragma endregion
 	
 	//移動したのかを調べて移動していたならアニメーションする
@@ -174,25 +175,6 @@ void Player::Attack()
 		//アタッチしたアニメーションの総時間を取得する
 		m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
 	}
-}
-
-void Player::CollisionToMap(Map* map)
-{
-	//モデル全体のコリジョン情報構築
-	MV1SetupCollInfo(m_ModelHandle, 0, 8, 8, 8);
-	//0番目のフレームのコリジョン情報を更新する
-	MV1RefreshCollInfo(m_ModelHandle, 0);
-	//0番フレームとレイとのあたり判定
-	//m_Posは始点・m_Lineは終点
-	HitPoly = MV1CollCheck_Line(map->GetModel(), -1, m_Pos, m_Line);
-
-	//当たったならその位置をレイの終点とする
-	if (HitPoly.HitFlag == 1)
-	{
-		m_Line = HitPoly.HitPosition;
-	}
-	// 当たったかどうかを表示する
-	DrawFormatString(1500, 100, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
 }
 
 //この関数はダメージを与えてきた敵にこの関数を呼び出す
