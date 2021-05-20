@@ -67,6 +67,8 @@ void Collision::Update(Player* player, Map* map)
 		}
 	}
 
+
+
 }
 
 void Collision::Draw()
