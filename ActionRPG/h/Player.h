@@ -2,6 +2,7 @@
 #define Player_h_
 #include"Base.h"
 #include"DxLib.h"
+#include"../h/Map.h"
 
 class Player :public Base
 {
@@ -23,8 +24,9 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{0}
 	{
-		m_Speed = (20.f);
-		m_Hp = (3.f);
+		m_Speed = (100.f);
+		m_Hp = (0.f);
+		m_HitCounter = (0);
 	}
 	Player(VECTOR pos) :
 		Base(pos)
@@ -47,10 +49,11 @@ public:
 
 	int GetModel() { return m_ModelHandle; }
 
+	float MoveVector() { return m_Speed;}
+
 private:
 	void Rotate();
 	void Move();
-	void Collision();
 	void Damage();
 
 private:
@@ -72,8 +75,12 @@ private:
 
 	//レイの描画に使う変数
 	VECTOR m_Line;
-	//DxLibにあるあたり判定用の戻り値+変数
-	MV1_COLL_RESULT_POLY HitPoly;
+
+	//当たった回数を保存する変数
+	int m_HitCounter;
+
+	//マップクラスのインスタンス化
+	Map map;
 };
 
 

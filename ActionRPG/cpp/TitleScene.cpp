@@ -34,7 +34,7 @@ void TitleScene::RunTitleScene()
 		Push = false;
 	}
 	DrawGraph(0, 0, m_GrHandle, FALSE);
-	Sound::Instance()->play();
+	//Sound::Instance()->play();
 }
 
 void TitleScene::FinishTitleScene()
