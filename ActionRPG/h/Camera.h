@@ -11,6 +11,11 @@ public:
 	void Update(Player* player);
 
 private:
+	int m_MouseX;				// マウスのX座標
+	int m_MouseY;				// マウスのY座標
+	int m_BeforeMouseX;			// 1フレーム前のマウスのX座標
+	int m_BeforeMouseY;			// 1フレーム前のマウスのY座標
+	int m_FrameCounter;			// フレームカウンター
 	float	m_AngleH;			// 水平角度
 	float	m_AngleV;			// 垂直角度
 	float   m_Speed;			// 移動速度

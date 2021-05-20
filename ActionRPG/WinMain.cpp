@@ -25,6 +25,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 			break;
 		}
 
+		//Escapeキーでゲーム強制終了
+		if (CheckHitKey(KEY_INPUT_ESCAPE))
+		{
+			break;
+		}
+
 		ClearDrawScreen();					//描画されたもの削除
 		clsDx();							//文字削除
 		
