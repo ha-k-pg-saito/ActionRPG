@@ -24,7 +24,7 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{0}
 	{
-		m_Speed = (20.f);
+		m_Speed = (100.f);
 		m_Hp = (0.f);
 		m_HitCounter = (0);
 	}
@@ -54,7 +54,6 @@ public:
 private:
 	void Rotate();
 	void Move();
-	void CollisionToMap(Map* map);
 	void Damage();
 
 private:
@@ -62,9 +61,6 @@ private:
 	int m_ModelHandle;
 	//3Dモデルに貼るテクスチャ保存変数
 	int m_GrHandle[8];
-
-	//デバッグ用
-	bool push = false;
 
 	//アニメーションに使用する変数
 	int   m_AnimHandle[ANIM_NUM];
@@ -79,11 +75,12 @@ private:
 
 	//レイの描画に使う変数
 	VECTOR m_Line;
-	//DxLibにあるあたり判定用の戻り値+変数
-	MV1_COLL_RESULT_POLY HitPoly;
 
 	//当たった回数を保存する変数
 	int m_HitCounter;
+
+	//マップクラスのインスタンス化
+	Map map;
 };
 
 

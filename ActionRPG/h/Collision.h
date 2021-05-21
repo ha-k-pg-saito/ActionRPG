@@ -1,8 +1,6 @@
 #ifndef Collison_h_
 #define Collison_h_
 
-
-
 #include "DxLib.h"
 #include "../h/Player.h"
 #include "../h/Map.h"
@@ -22,9 +20,10 @@ private:
 	VECTOR SpherePos;
 	int KabeNum;						// 壁ポリゴンと判断されたポリゴンの数
 	int YukaNum;                        // 床ポリゴンと判断されたポリゴンの数
-    int CHARA_MAX_HITCOLL = 2408;
-	MV1_COLL_RESULT_POLY* Kabe[CHARA_MAX_HITCOLL];	// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
-	MV1_COLL_RESULT_POLY* Yuka[CHARA_MAX_HITCOLL];	// 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
+
+#define CHARA_MAX_HITCOLL			2048		// 処理するコリジョンポリゴンの最大数
+	MV1_COLL_RESULT_POLY *Kabe[CHARA_MAX_HITCOLL];	// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
+	MV1_COLL_RESULT_POLY *Yuka[CHARA_MAX_HITCOLL];	// 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
 
 };
 
