@@ -40,15 +40,16 @@ public:
 
 private:
 	void Rotate();
+	// 引数　移動処理をとる引数
 	void Move();
 	
 public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
-
+	// プレイヤーのモデル取得
 	int GetModel() { return m_ModelHandle; }
-
-	float MoveVector() { return m_Speed;}
+	// プレイヤーの移動ベクトル取得
+	VECTOR MoveVecter() { return Move_Vec; }
 
 private:
 	// モデルを保存する変数
@@ -65,6 +66,7 @@ private:
 	float  m_Radian;		
 	float  m_Digree_Y;	
 	VECTOR m_Direction;		//向いている方向
+	VECTOR Move_Vec;        //キャラの移動ベクトル
 };
 
 
