@@ -12,7 +12,7 @@ Collision::Collision(Player *player )
 
 	YukaNum = 0;
 
-	NowPos = VAdd(player->GetPos(), player->MoveVector());
+	//NowPos = VAdd(player->GetPos(), player->MoveVecter());
 }
 
 Collision::~Collision()
@@ -23,12 +23,8 @@ Collision::~Collision()
 
 void Collision::Update(Player* player, Map* map)
 {
-	HitDim =  MV1CollCheck_Sphere(player->GetModel(), -1, player->GetPos(), 800.0f + player->MoveVector());
+	//HitDim =  MV1CollCheck_Sphere(player->GetModel(), -1, player->GetPos(), 800.0f + player->MoveVector());
 
-	// モデルと攻撃判定
-	MV1SetupCollInfo(player->GetModel(), -1, 8, 8, 8);
-
-    // モデルとマップの当たり判定
 	//HitPoly = MV1CollCheck_Line(player->GetModel(), -1, SpherePos, 100.0f);
 
 	for (i = 0; i < HitDim.HitNum; i++)
@@ -87,7 +83,7 @@ void Collision::Update(Player* player, Map* map)
 
 				
 					// 走っている場合は頭の先からそこそこ低い位置の間で当たっているかを判定( 傾斜で落下状態に移行してしまわない為 )
-					LineRes = HitCheck_Line_Triangle(VAdd(NowPos, VGet(0.0f, PLAYER_HIT_HEIGHT, 0.0f)), VAdd(NowPos, VGet(0.0f, -40.0f, 0.0f)), Poly->Position[0], Poly->Position[1], Poly->Position[2]);
+					//LineRes = HitCheck_Line_Triangle(VAdd(NowPos, VGet(0.0f, PLAYER_HIT_HEIGHT, 0.0f)), VAdd(NowPos, VGet(0.0f, -40.0f, 0.0f)), Poly->Position[0], Poly->Position[1], Poly->Position[2]);
 				
 
 				// 当たっていなかったら何もしない
@@ -114,22 +110,22 @@ void Collision::Update(Player* player, Map* map)
 				
 
 				
-					// 移動していたかどうかで着地後の状態と再生するアニメーションを分岐する
-					if (MoveFlag)
-					{
-						// 移動している場合は走り状態に
-						Player_PlayAnim(1);
-						pl.State = 1;
-					}
-					else
-					{
-						// 移動していない場合は立ち止り状態に
-						Player_PlayAnim(4);
-						pl.State = 0;
-					}
+					//// 移動していたかどうかで着地後の状態と再生するアニメーションを分岐する
+					//if (MoveFlag)
+					//{
+					//	// 移動している場合は走り状態に
+					//	Player_PlayAnim(1);
+					//	pl.State = 1;
+					//}
+					//else
+					//{
+					//	// 移動していない場合は立ち止り状態に
+					//	Player_PlayAnim(4);
+					//	pl.State = 0;
+					//}
 
-					// 着地時はアニメーションのブレンドは行わない
-					pl.AnimBlendRate = 1.0f;
+					//// 着地時はアニメーションのブレンドは行わない
+					//pl.AnimBlendRate = 1.0f;
 				
 			}
 	}

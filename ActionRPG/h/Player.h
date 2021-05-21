@@ -82,8 +82,6 @@ private:
 	
 	//マップクラスのインスタンス化
 	Map map;
-
-	
 };
 #endif // !Player_h_
 
