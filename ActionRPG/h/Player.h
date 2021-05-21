@@ -48,8 +48,6 @@ public:
 	VECTOR GetPos() { return m_Pos; }
 	// プレイヤーのモデル取得
 	int GetModel() { return m_ModelHandle; }
-	// プレイヤーの移動ベクトル取得
-	VECTOR MoveVecter() { return Move_Vec; }
 
 private:
 	// モデルを保存する変数
@@ -66,7 +64,6 @@ private:
 	float  m_Radian;		
 	float  m_Digree_Y;	
 	VECTOR m_Direction;		//向いている方向
-	VECTOR Move_Vec;        //キャラの移動ベクトル
 };
 
 
