@@ -16,13 +16,13 @@ class Player :public Base
 	};
 
 public:
-	Player():
+	Player() :
 		//Base()内で初期化しているのはポジション変数
 		Base(0.f, 0.9f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
-		m_Direction{0}
+		m_Direction{ 0 }
 	{
 		m_Speed = (100.f);
 		m_Hp = (0.f);
@@ -35,6 +35,14 @@ public:
 	~Player() { Release(); }
 
 public:
+	// プレイヤーのモデル取得
+	int GetModel() { return m_ModelHandle; }
+	//プレイヤーの座標取取得
+	VECTOR GetPos() { return m_Pos; }
+	// プレイヤーの移動ベクトル取得
+	VECTOR MoveVecter() { return Move_Vec; }
+
+public:
 	//Initの引数はモデル読み込む時に使う
 	void Init(int modelhandle, int grhandle);
 	void Update();
@@ -42,20 +50,6 @@ public:
 	void DrawHP(); 
 	void Release();
 	void Attack();
-
-
-private:
-	void Rotate();
-	// 引数　移動処理をとる引数
-	void Move();
-	
-public:
-	//プレイヤーの座標取取得
-	VECTOR GetPos() { return m_Pos; }
-	// プレイヤーのモデル取得
-	int GetModel() { return m_ModelHandle; }
-	// プレイヤーの移動ベクトル取得
-	VECTOR MoveVecter() { return Move_Vec; }
 
 private:
 	void Rotate();
@@ -77,24 +71,20 @@ private:
 	//計算で使う変数
 	float  m_Radian;		
 	float  m_Digree_Y;	
-<<<<<<< HEAD
-	VECTOR m_Direction;		
-
-	//レイの描画に使う変数
-	VECTOR m_Line;
+	VECTOR m_Direction;	
 
 	//当たった回数を保存する変数
 	int m_HitCounter;
-
+	//キャラの移動量保存変数
+	VECTOR Move_Vec;       
+	//レイの描画に使う変数
+	VECTOR m_Line;
+	
 	//マップクラスのインスタンス化
 	Map map;
-=======
-	VECTOR m_Direction;		//向いている方向
-	VECTOR Move_Vec;        //キャラの移動ベクトル
->>>>>>> Collision
+
+	
 };
-
-
 #endif // !Player_h_
 
 

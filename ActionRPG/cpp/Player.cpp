@@ -75,13 +75,10 @@ void Player::Rotate()
 
 void Player::Move()
 {
-	//このCollisionはレイとマップのあたり判定を行っている
-	//CollisionToMap();
-	
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	//一時的に移動量を保存する
-	VECTOR Move_Vec{ 0.f,0.f,0.f };
+	 Move_Vec={ 0.f,0.f,0.f };
 	
 #pragma region 移動処理 
 	//向いている方向に移動
