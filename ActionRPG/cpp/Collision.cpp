@@ -12,7 +12,7 @@ Collision::Collision(Player *player )
 
 	YukaNum = 0;
 
-	NowPos = VAdd(player->GetPos(), player->MoveVecter());
+	//NowPos = VAdd(player->GetPos(), player->MoveVecter());
 }
 
 Collision::~Collision()
