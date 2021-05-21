@@ -54,8 +54,6 @@ public:
 	VECTOR GetPos() { return m_Pos; }
 	// プレイヤーのモデル取得
 	int GetModel() { return m_ModelHandle; }
-	// プレイヤーの移動ベクトル取得
-	VECTOR MoveVecter() { return Move_Vec; }
 
 private:
 	void Rotate();
@@ -77,7 +75,7 @@ private:
 	//計算で使う変数
 	float  m_Radian;		
 	float  m_Digree_Y;	
-<<<<<<< HEAD
+
 	VECTOR m_Direction;		
 
 	//レイの描画に使う変数
@@ -88,10 +86,10 @@ private:
 
 	//マップクラスのインスタンス化
 	Map map;
-=======
+
 	VECTOR m_Direction;		//向いている方向
+
 	VECTOR Move_Vec;        //キャラの移動ベクトル
->>>>>>> Collision
 };
 
 
