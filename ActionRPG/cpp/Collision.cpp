@@ -12,20 +12,32 @@ Collision::Collision(Player *player )
 
 	YukaNum = 0;
 
-	//NowPos = VAdd(player->GetPos(), player->MoveVecter());
+	MoveFlag = 0;
+
+	NowPos = VAdd(player->GetPos(), player->MoveVecter());
 }
 
 Collision::~Collision()
 {
     // 当たり判定情報の後始末
     //MV1CollResultPolyDimTerminate(HitPoly);
+	MV1CollResultPolyDimTerminate(HitDim);
 }
 
 void Collision::Update(Player* player, Map* map)
 {
-	//HitDim =  MV1CollCheck_Sphere(player->GetModel(), -1, player->GetPos(), 800.0f + player->MoveVector());
+	HitDim =  MV1CollCheck_Sphere(player->GetModel(), -1, player->GetPos(), PLAYER_ENUM_DEFAULT_SIZE + VSize(player->MoveVecter()));
 
 	//HitPoly = MV1CollCheck_Line(player->GetModel(), -1, SpherePos, 100.0f);
+
+	if (fabs(player->MoveVecter().x) > 0.01f || fabs(player->MoveVecter().z) > 0.01f)
+	{
+		MoveFlag = 1;
+	}
+	else
+	{
+		MoveFlag = 0;
+	}
 
 	for (i = 0; i < HitDim.HitNum; i++)
 	{
@@ -107,29 +119,14 @@ void Collision::Update(Player* player, Map* map)
 				// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
 				NowPos.y = MaxY;
 
-				
-
-				
-					//// 移動していたかどうかで着地後の状態と再生するアニメーションを分岐する
-					//if (MoveFlag)
-					//{
-					//	// 移動している場合は走り状態に
-					//	Player_PlayAnim(1);
-					//	pl.State = 1;
-					//}
-					//else
-					//{
-					//	// 移動していない場合は立ち止り状態に
-					//	Player_PlayAnim(4);
-					//	pl.State = 0;
-					//}
-
-					//// 着地時はアニメーションのブレンドは行わない
-					//pl.AnimBlendRate = 1.0f;
-				
 			}
-	}
+	} 
 
+	// 新しい座標を保存する
+	player->GetPos() = NowPos;
+
+	// プレイヤーのモデルの座標を更新する
+	MV1SetPosition(player->GetModel(), player->GetPos());
 }
 
 void Collision::Draw()
