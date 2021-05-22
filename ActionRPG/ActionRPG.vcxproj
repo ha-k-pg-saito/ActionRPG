@@ -162,9 +162,11 @@
     <ClCompile Include="cpp\Scene.cpp" />
     <ClCompile Include="cpp\Sound.cpp" />
     <ClCompile Include="cpp\TitleScene.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="h\Base.h" />
     <ClInclude Include="h\Camera.h" />
     <ClInclude Include="h\Collision.h" />
