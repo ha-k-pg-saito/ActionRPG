@@ -18,13 +18,13 @@ class Player :public Base
 public:
 	Player() :
 		//Base()内で初期化しているのはポジション変数
-		Base(0.f, 0.9f, 0.f),
+		Base(0.f, 0.f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = (100.f);
+		m_Speed = (20.f);
 		m_Hp = (0.f);
 		m_HitCounter = (0);
 	}
@@ -40,7 +40,7 @@ public:
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 	// プレイヤーの移動ベクトル取得
-	VECTOR MoveVecter() { return Move_Vec; }
+	VECTOR MoveVecter() { return m_MoveVec; }
 
 public:
 	//Initの引数はモデル読み込む時に使う
@@ -52,6 +52,7 @@ public:
 	void Attack();
 
 private:
+	//playerの関数内で呼び出す関数
 	void Rotate();
 	void Move();
 	void Damage();
@@ -76,7 +77,7 @@ private:
 	//当たった回数を保存する変数
 	int m_HitCounter;
 	//キャラの移動量保存変数
-	VECTOR Move_Vec;       
+	VECTOR m_MoveVec;       
 	//レイの描画に使う変数
 	VECTOR m_Line;
 	

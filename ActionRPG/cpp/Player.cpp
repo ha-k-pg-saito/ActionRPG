@@ -34,7 +34,7 @@ void Player::Update()
 	Attack();
 
 	m_PlayTime++;
-	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
+	if (m_PlayTime<m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
 	{
 		m_PlayTime = 0.f;
 	}
@@ -78,20 +78,20 @@ void Player::Move()
 	// 画面に移るモデルの移動
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	//一時的に移動量を保存する
-	 Move_Vec={ 0.f,0.f,0.f };
+	m_MoveVec = { 0.f };
 	
 #pragma region 移動処理 
 	//向いている方向に移動
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		Move_Vec.x += m_Direction.x * (m_Speed * 1 / 60);
-		Move_Vec.z += m_Direction.z * (m_Speed * 1 / 60);
+		m_MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
+		m_MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
 	}
 	else if (CheckHitKey(KEY_INPUT_S)) 
 	{
-		Move_Vec.x -= m_Direction.x * (m_Speed * 1 / 60);
-		Move_Vec.z -= m_Direction.z * (m_Speed * 1 / 60);
+		m_MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
+		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}	
 	//デバッグ用Y軸上昇
 	else if (CheckHitKey(KEY_INPUT_G))
@@ -100,16 +100,16 @@ void Player::Move()
 	}
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
-	m_Line = VAdd(GetPos(), Move_Vec);
+	m_Line = VAdd(GetPos(), m_MoveVec);
 	DrawLine3D(m_Pos, m_Line, GetColor(0, 0, 255));
 	map.CollisionToModel(m_Pos, m_Line);
 #pragma endregion
 	
 	//移動したのかを調べて移動していたならアニメーションする
-	if (Move_Vec.x != 0.f || Move_Vec.z != 0.f)
+	if (m_MoveVec.x != 0.f || m_MoveVec.z != 0.f)
 	{
 		//atan2を使うことで現在の向いている方向から180振り向く
-		float Rad = atan2(Move_Vec.x, Move_Vec.z);
+		float Rad = atan2(m_MoveVec.x, m_MoveVec.z);
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 		m_Digree_Y = Rad * 180.f / DX_PI_F;
 
@@ -118,17 +118,19 @@ void Player::Move()
 		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 		//指定したモデルにアニメーションをアタッチする
 		//アタッチー＞付着させるetc...
-		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], TRUE);
+		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
 		//アタッチしたアニメーションの総時間を取得する
 		m_AnimTotalTime[ANIM_LIST::ANIM_RUN] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 		//本来のポジション変数に一時的に保存していた値を加算する
-		m_Pos.x -= Move_Vec.x;
-		m_Pos.z -= Move_Vec.z;
+		m_Pos.x -= m_MoveVec.x;
+		m_Pos.z -= m_MoveVec.z;
 	}
 	else 
 	{
-		//動いてなければ待機モーション
 		m_PlayTime = 0.f;
+		//アニメーションをデタッチする
+		MV1DetachAnim(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
+		//動いてなければ待機モーション
 		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/Cat/catwait.mv1");
 		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], TRUE);
 		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
