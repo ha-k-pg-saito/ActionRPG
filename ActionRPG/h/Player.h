@@ -24,7 +24,7 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = (20.f);
+		m_Speed = (30.f);
 		m_Hp = (0.f);
 		m_HitCounter = (0);
 	}

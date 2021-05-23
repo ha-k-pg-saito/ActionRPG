@@ -29,15 +29,16 @@ void Player::Init(int modelhandle,int grhandle)
 
 void Player::Update()
 {
+	m_PlayTime++;
 	Rotate();
 	Move();
 	Attack();
 
-	m_PlayTime++;
-	if (m_PlayTime<m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
+	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN]|| m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_NUM])
 	{
 		m_PlayTime = 0.f;
 	}
+	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM], m_PlayTime);
 	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 }
 
@@ -98,12 +99,12 @@ void Player::Move()
 	{
 		m_Pos.y += 1.f;
 	}
+#pragma endregion
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
 	m_Line = VAdd(GetPos(), m_MoveVec);
 	DrawLine3D(m_Pos, m_Line, GetColor(0, 0, 255));
 	map.CollisionToModel(m_Pos, m_Line);
-#pragma endregion
 	
 	//移動したのかを調べて移動していたならアニメーションする
 	if (m_MoveVec.x != 0.f || m_MoveVec.z != 0.f)
@@ -115,6 +116,7 @@ void Player::Move()
 
 		//待機状態から走るモーションに切り替える
 		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
+		//アニメーションのデバッグ用モデル読み込み処理
 		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 		//指定したモデルにアニメーションをアタッチする
 		//アタッチー＞付着させるetc...
@@ -127,12 +129,11 @@ void Player::Move()
 	}
 	else 
 	{
-		m_PlayTime = 0.f;
 		//アニメーションをデタッチする
 		MV1DetachAnim(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 		//動いてなければ待機モーション
 		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/Cat/catwait.mv1");
-		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], TRUE);
+		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], FALSE);
 		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
 	}
 }
