@@ -38,28 +38,28 @@ public:
 	bool IsActive;
 
 private:
-	//モデル情報保存する変数
-	int    Enemy_ModelHandle;
+	//モデル情報を保存する変数
+	int    m_Enemy_ModelHandle;
 
 	//計算で使う変数
-	float  Enemy_Angle;
-	float  Initial_EnemyAngle;
-	float  Enemy_AnimTotalTime;
-	float  Enemy_AnimNowTime;
-	int    Enemy_AnimAttachIndex;
-	int    Enemy_RunFlag;
-	int    Enemy_MoveFlag;
-	int    Enemy_MoveAnimFrameIndex;
-	VECTOR Enemy_Position;
-	VECTOR Enemy_InitialPosition;
-	VECTOR SubVector;
-	VECTOR Initial_EnemyVector;
+	float  m_Enemy_Angle;
+	float  m_Initial_EnemyAngle;
+	float  m_Enemy_AnimTotalTime;
+	float  m_Enemy_AnimNowTime;
+	int    m_Enemy_AnimAttachIndex;
+	int    m_Enemy_RunFlag;
+	int    m_Enemy_MoveFlag;
+	int    m_Enemy_MoveAnimFrameIndex;
+	VECTOR m_Enemy_Position;
+	VECTOR m_Enemy_InitialPosition;
+	VECTOR m_SubVector;
+	VECTOR m_Initial_EnemyVector;
 
-	VECTOR Distance_Pos;
-	VECTOR SetEnemy_Pos;
-	// 座標の+-の修正
-	int Enemy_direction_x, Enemy_direction_z;
-	int Setenemy_direction_x, Setenemy_direction_z;
+	VECTOR m_Distance_Pos;
+	VECTOR m_SetEnemy_Pos;
+	// 座標の+-の修正用変数
+	int m_Enemy_direction_x, m_Enemy_direction_z;
+	int m_Setenemy_direction_x, m_Setenemy_direction_z;
 
 };
 

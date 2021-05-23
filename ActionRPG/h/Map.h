@@ -8,14 +8,17 @@ class Map
 public:
 	Map() :
 		m_MapHandle(0),
-		m_Pos{71,0,462}
+		m_Pos{71,-10,462}
 	{}
 	~Map() {}
+
+public:	
+	//モデル情報を渡すゲッター
+	int GetModel(){ return m_MapHandle; }
 
 public:
 	void Init(int maphandle,int grhandle);
 	void Draw();
-	int GetModel(){ return m_MapHandle; }
 	bool CollisionToModel(VECTOR startpos, VECTOR endpos);
 
 private:

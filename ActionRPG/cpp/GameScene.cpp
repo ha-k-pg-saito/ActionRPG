@@ -13,9 +13,9 @@ void GameScene::InitGameScene()
 	// モデルのテクスチャ読み込み
 	int PlayerGrHandle    = LoadGraph("Tex/Player/sister_body.png");
 	// モデルの読み込み
-	int PlayerModelHandle = MV1LoadModel("Tex/Player/sister.mv1");
+	//int PlayerModelHandle = MV1LoadModel("Tex/Player/sister.mv1");
 	//デバッグ用敵モデル読み込み
-	//int PlayerModelHandle = MV1LoadModel("Tex/Cat/catoriginal (2).mv1");
+	int PlayerModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
 	//マップのテクスチャ読み込み
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み

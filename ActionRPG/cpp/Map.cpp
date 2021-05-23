@@ -30,10 +30,10 @@ void Map::Draw()
 {
 	MV1SetPosition(m_MapHandle, m_Pos);
 	MV1DrawModel(m_MapHandle);
-	//MV1SetPosition(m_LastMHandle, m_Pos);
-	//MV1DrawModel(m_LastMHandle);
 }
 
+//マップとレイのあたり判定
+//PlayerだけでなくEnemyでも使用する
 bool Map::CollisionToModel(VECTOR startpos,VECTOR endpos)
 {
 	//モデル全体のコリジョン情報構築
@@ -48,15 +48,13 @@ bool Map::CollisionToModel(VECTOR startpos,VECTOR endpos)
 	if (HitPoly.HitFlag == 1)
 	{
 		endpos = HitPoly.HitPosition;
-	}
-	if (HitPoly.HitFlag == 1)
-	{
 		// 当たったかどうかを表示する
-		DrawFormatString(1000, 200, GetColor(255, 255, 255), "HIT:%d", HitPoly.HitFlag);
+		DrawFormatString(1000, 200, GetColor(255, 255, 255), "Hit Pos %f %f %f",
+			HitPoly.HitPosition.x, HitPoly.HitPosition.y, HitPoly.HitPosition.z);
 	}
 	else
 	{
-		DrawString(1000, 200, "当たってない", GetColor(255, 255, 255));
+		DrawString(1000, 200, "NO HIT", GetColor(255, 255, 255));
 	}
-		return false;
+		return true;
 }
