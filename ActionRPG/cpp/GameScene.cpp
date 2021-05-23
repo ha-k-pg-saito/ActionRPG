@@ -19,7 +19,7 @@ void GameScene::InitGameScene()
 	//マップのテクスチャ読み込み
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み
-	int MapHandle = MV1LoadModel("Tex/Stag/map.mv1");
+	int MapHandle = MV1LoadModel("Tex/Stage/map.mv1");
 	int SoundHandle = LoadSoundMem("Sound/怖い噂のある廃墟.mp3");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);

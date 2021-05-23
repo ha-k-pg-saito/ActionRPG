@@ -9,8 +9,8 @@ class Player :public Base
 	//アニメーションリスト
 	enum ANIM_LIST
 	{
-		//走るアニメーション
 		ANIM_RUN,
+		ANIM_WAIT,
 		ANIM_ATTACK,
 		ANIM_NUM,
 	};

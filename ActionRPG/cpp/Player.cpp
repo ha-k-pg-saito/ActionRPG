@@ -6,7 +6,7 @@
 void Player::Init(int modelhandle,int grhandle)
 {
 	m_ModelHandle = modelhandle;
-#pragma region モデルテクスチャ読み込み
+#pragma region モデルテクスチャ読み込み・貼り付け
 	m_GrHandle[0] = grhandle;
 	m_GrHandle[1] = LoadGraph("Tex/Player/sister_hood.png");
 	m_GrHandle[2] = LoadGraph("Tex/Player/sister_juel.png");
@@ -15,16 +15,45 @@ void Player::Init(int modelhandle,int grhandle)
 	m_GrHandle[5] = LoadGraph("Tex/Player/sister_hair.png");
 	m_GrHandle[6] = LoadGraph("Tex/Player/sister_ahoge.png");
 	m_GrHandle[7] = LoadGraph("Tex/Player/sister_rod.png");
-#pragma endregion 
-
+	
+	//モデルに貼るテクスチャ分だけfor文を回す
 	for (int i=0;i<8;i++)
 	{
 		MV1SetTextureGraphHandle(m_ModelHandle, i, m_GrHandle[i], FALSE);
 	
 		MV1SetMaterialAmbColor(m_ModelHandle, i ,GetColorF(0.5f, 0.5f, 0.5f, 1.f));
 	}
+#pragma endregion 
+
 	//マテリアル関数でジュエルだけを発光
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
+	
+#pragma region アニメーション読み込み	
+//走りモーション	
+	//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
+	//アニメーションのデバッグ用モデル読み込み処理
+	m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
+	//指定したモデルにアニメーションをアタッチする
+	//アタッチー＞付着させるetc...
+	m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = 
+		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_RUN, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
+	//アタッチしたアニメーションの総時間を取得する
+	m_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
+
+//待機モーション
+	//m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
+		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_WAIT, m_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
+	m_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
+
+//攻撃モーション
+	//m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/catattack.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_ATTACK, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
+	//アタッチしたアニメーションの総時間を取得する
+	m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
+#pragma endregion
 }
 
 void Player::Update()
@@ -34,12 +63,11 @@ void Player::Update()
 	Move();
 	Attack();
 
-	if (m_PlayTime>=m_AnimTotalTime[ANIM_LIST::ANIM_RUN]|| m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_NUM])
+	//現在の再生時間が総再生時間を超えたら再生じかんを0に戻す
+	if ( m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
 	{
 		m_PlayTime = 0.f;
 	}
-	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM], m_PlayTime);
-	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 }
 
 //プレイヤー描画
@@ -95,10 +123,6 @@ void Player::Move()
 		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}	
 	//デバッグ用Y軸上昇
-	else if (CheckHitKey(KEY_INPUT_G))
-	{
-		m_Pos.y += 1.f;
-	}
 #pragma endregion
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
@@ -113,28 +137,16 @@ void Player::Move()
 		float Rad = atan2(m_MoveVec.x, m_MoveVec.z);
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 		m_Digree_Y = Rad * 180.f / DX_PI_F;
-
-		//待機状態から走るモーションに切り替える
-		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
-		//アニメーションのデバッグ用モデル読み込み処理
-		m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
-		//指定したモデルにアニメーションをアタッチする
-		//アタッチー＞付着させるetc...
-		m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
-		//アタッチしたアニメーションの総時間を取得する
-		m_AnimTotalTime[ANIM_LIST::ANIM_RUN] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
+		//走るアニメーション
+		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 		//本来のポジション変数に一時的に保存していた値を加算する
 		m_Pos.x -= m_MoveVec.x;
 		m_Pos.z -= m_MoveVec.z;
 	}
 	else 
 	{
-		//アニメーションをデタッチする
-		MV1DetachAnim(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
-		//動いてなければ待機モーション
-		m_AnimHandle[ANIM_LIST::ANIM_NUM] = MV1LoadModel("Tex/Cat/catwait.mv1");
-		m_AnimAttachIndex[ANIM_LIST::ANIM_NUM] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_NUM], FALSE);
-		m_AnimTotalTime[ANIM_LIST::ANIM_NUM] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_NUM]);
+		//待機モーション
+		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 	}
 }
 
@@ -142,15 +154,12 @@ void Player::DrawHP()
 {
 	const int HPX = 75;
 	const int HPY = 65;
-	if (m_HitCounter == 0)
-	{
-		//HPバー描画（四角形）
-		m_Hp = DrawBox(HPX, HPY, 920, 140, GetColor(0, 255, 0), TRUE);
-	}
-	else if (m_HitCounter == 1) { m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); }
-	else if (m_HitCounter == 2) { m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); }
-	else if (m_HitCounter == 3) { m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE); }
-	else if (m_HitCounter == 4) { m_Hp = DrawBox(HPX, HPY, 75 , 140, GetColor(0, 255, 0), TRUE); }
+	//HPゲージ描画
+	if (m_HitCounter == 0)       m_Hp = DrawBox(HPX, HPY, 920, 140, GetColor(0, 255, 0), TRUE);
+	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); 
+	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); 
+	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE);
+	else if (m_HitCounter == 4)  m_Hp = DrawBox(HPX, HPY, 75 , 140, GetColor(0, 255, 0), TRUE);
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
 }
@@ -167,13 +176,7 @@ void Player::Attack()
 {
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0)
 	{
-		//別の状態から攻撃モーションに切り替える
-		m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/catattack.mv1");
-		//指定したモデルにアニメーションをアタッチする
-		//アタッチー＞付着させるetc...
-		m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
-		//アタッチしたアニメーションの総時間を取得する
-		m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
+	
 	}
 }
 
