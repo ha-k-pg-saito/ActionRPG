@@ -1,6 +1,6 @@
 #include "../h/TitleScene.h"
 #include"../h/Scene.h"
-#include"../h/Sound.h"
+#include"../h/SoundManager.h"
 
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
@@ -12,8 +12,7 @@ TitleScene::TitleScene()
 
 void TitleScene::InitTitleScene()
 {
-	int SoundHandle = LoadSoundMem("Sound/•|‚¢‰\‚Ì‚ ‚é”pšÐ.mp3");
-	Sound::Instance()->Init(SoundHandle);
+	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
 	Push = true;
 	g_SceneStep = SceneStep::Run;
@@ -34,12 +33,13 @@ void TitleScene::RunTitleScene()
 		Push = false;
 	}
 	DrawGraph(0, 0, m_GrHandle, FALSE);
-	//Sound::Instance()->play();
+	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 }
 
 void TitleScene::FinishTitleScene()
 {
-	Sound::Instance()->stop();
+	SoundMng::Instance()->Stop("Title");
+	SoundMng::Instance()->Release("Title");
 	DeleteGraph(m_GrHandle);
 	g_SceneKind = SceneKind::SceneKind_Game;
 	g_SceneStep = SceneStep::Init;

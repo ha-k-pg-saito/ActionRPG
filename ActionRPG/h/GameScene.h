@@ -3,7 +3,6 @@
 
 #include"Player.h"
 #include"Camera.h"
-#include"Sound.h"
 #include"Map.h"
 
 class GameScene
@@ -21,6 +20,7 @@ public:
 	void GameSceneUpdate();
 
 private:
+	int SoundHandle;
 	bool   Push;
 	Player player;
 	Camera camera;

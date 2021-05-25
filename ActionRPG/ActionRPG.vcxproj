@@ -160,7 +160,7 @@
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\ResultScene.cpp" />
     <ClCompile Include="cpp\Scene.cpp" />
-    <ClCompile Include="cpp\Sound.cpp" />
+    <ClCompile Include="cpp\SoundManager.cpp" />
     <ClCompile Include="cpp\TitleScene.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -176,7 +176,7 @@
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\ResultScene.h" />
     <ClInclude Include="h\Scene.h" />
-    <ClInclude Include="h\Sound.h" />
+    <ClInclude Include="h\SoundManager.h" />
     <ClInclude Include="h\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

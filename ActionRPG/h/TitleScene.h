@@ -20,6 +20,7 @@ public:
 private:
 	bool Push;
 	int  m_GrHandle;
+	int m_SoundHandle;
 };
 
 #endif

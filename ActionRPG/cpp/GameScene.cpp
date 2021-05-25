@@ -1,5 +1,6 @@
 #include "../h/GameScene.h"
 #include"../h/Scene.h"
+#include"../h/SoundManager.h"
 
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
@@ -20,17 +21,15 @@ void GameScene::InitGameScene()
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	int MapHandle = MV1LoadModel("Tex/Stage/map.mv1");
-	int SoundHandle = LoadSoundMem("Sound/•|‚¢‰\‚Ì‚ ‚é”pšĞ.mp3");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
-	Sound::Instance()->Init(SoundHandle);
+	SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ƒQ[ƒ€");
 	Push = true;
 	g_SceneStep = SceneStep::Run;
 }
 
 void GameScene::RunGameScene()
 {
-	
 	player.Update();
 	camera.Update(&player);
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
@@ -47,12 +46,13 @@ void GameScene::RunGameScene()
 	}
 	map.Draw();
 	player.Draw();
-	//Sound::Instance()->play();
+	SoundMng::Instance()->Play("ƒQ[ƒ€", DX_PLAYTYPE_LOOP);
 }
 
 void GameScene::FinishGameScene()
 {
-	Sound::Instance()->stop();
+	SoundMng::Instance()->Stop("ƒQ[ƒ€");
+	SoundMng::Instance()->Release("ƒQ[ƒ€");
 	g_SceneKind = SceneKind::SceneKind_Result;
 	g_SceneStep = SceneStep::Init;
 }

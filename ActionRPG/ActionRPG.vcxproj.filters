@@ -37,9 +37,6 @@
     <ClCompile Include="cpp\ResultScene.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Sound.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\Enemy.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
@@ -50,6 +47,9 @@
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
     <ClCompile Include="cpp\Collision.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\SoundManager.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,9 +75,6 @@
     <ClInclude Include="h\TitleScene.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\Sound.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\Enemy.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
@@ -88,6 +85,9 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Collision.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\SoundManager.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
