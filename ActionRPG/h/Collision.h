@@ -11,10 +11,10 @@
 class Collision
 {
 public:
-	Collision( Player *player );
+	Collision();
 	~Collision();
 
-	void Update(Player *player, Map *map);
+	void Update(Player *player);
 	void Draw();
 
 private:
