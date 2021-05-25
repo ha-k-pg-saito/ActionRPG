@@ -4,6 +4,7 @@
 #include<map>
 #include<string>
 
+//マジックナンバ削除用enum
 enum SoundState
 	{
 		State_Error = -1,		//失敗
@@ -15,14 +16,12 @@ enum SoundState
 class SoundMng
 {
 public:
+	//シングルトン
 	static SoundMng* Instance()
 	{
 		static SoundMng instance;
 		return &instance;
 	}
-
-private:
-
 
 public:
 	bool Load(const char* filename, std::string keyword);
@@ -32,6 +31,8 @@ public:
 	void AllRelease();
 
 private:
+	//mapを使ってサウンドを管理している
+	//stging型のキーがintで帰ってくる変数
 	std::map<std::string, int>m_SoundList;
 	SoundMng() {}
 	~SoundMng() { AllRelease(); }

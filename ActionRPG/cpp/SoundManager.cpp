@@ -18,9 +18,10 @@ bool SoundMng::Load(const char* filename, std::string keyword)
 
 void SoundMng::Play(std::string keyword, int playtype, int toppositionflag)
 {
+	//リスト内探して、一番下まで行けば抜ける
 	if (m_SoundList.find(keyword) == m_SoundList.end()) return;
 	int handle = m_SoundList[keyword];
-	
+	//再生中かどうか調べる＝＞再生されていない＝＞再生する	
 	if (CheckSoundMem(handle) == SoundState::State_None)
 	{
 		PlaySoundMem(handle, playtype, toppositionflag);
@@ -32,6 +33,7 @@ void SoundMng::Stop(std::string keyword)
 	if (m_SoundList.find(keyword) == m_SoundList.end()) return;
 
 	int handle = m_SoundList[keyword];
+	//再生中かどうか調べる＝＞再生中＝＞指定したサウンドを止める
 	if (CheckSoundMem(handle) == SoundState::State_Success)
 	{
 		StopSoundMem(handle);
