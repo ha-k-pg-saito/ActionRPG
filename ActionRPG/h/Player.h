@@ -3,7 +3,6 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-#include"Collision.h"
 
 class Player :public Base
 {

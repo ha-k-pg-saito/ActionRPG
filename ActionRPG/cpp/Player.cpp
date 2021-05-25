@@ -2,6 +2,10 @@
 #include "../h/Player.h"
 #include"DxLib.h"
 #include"../h/Map.h"
+#include"../h/Collision.h"
+
+Collision collision;
+Player player;
 
 void Player::Init(int modelhandle,int grhandle)
 {
@@ -62,6 +66,7 @@ void Player::Update()
 	Rotate();
 	Move();
 	Attack();
+	collision.Update(&player);
 
 	//Œ»İ‚ÌÄ¶ŠÔ‚ª‘Ä¶ŠÔ‚ğ’´‚¦‚½‚çÄ¶‚¶‚©‚ñ‚ğ0‚É–ß‚·
 	if ( m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
@@ -108,6 +113,7 @@ void Player::Move()
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	//ˆê“I‚ÉˆÚ“®—Ê‚ğ•Û‘¶‚·‚é
 	m_MoveVec = { 0.f };
+	
 	
 #pragma region ˆÚ“®ˆ— 
 	//Œü‚¢‚Ä‚¢‚é•ûŒü‚ÉˆÚ“®
