@@ -1,6 +1,6 @@
 #include "../h/Collision.h"
 
-Collision::Collision(Player *player )
+Collision::Collision()
 {
 	Add = 8;
 
@@ -13,20 +13,20 @@ Collision::Collision(Player *player )
 	YukaNum = 0;
 
 	MoveFlag = 0;
-
-	NowPos = VAdd(player->GetPos(), player->MoveVecter());
 }
 
 Collision::~Collision()
 {
     // “–‚½‚è”»’èî•ñ‚ÌŒãŽn––
     //MV1CollResultPolyDimTerminate(HitPoly);
-	MV1CollResultPolyDimTerminate(HitDim);
+	//MV1CollResultPolyDimTerminate(HitDim);
 }
 
-void Collision::Update(Player* player, Map* map)
+void Collision::Update(Player* player)
 {
 	HitDim =  MV1CollCheck_Sphere(player->GetModel(), -1, player->GetPos(), PLAYER_ENUM_DEFAULT_SIZE + VSize(player->MoveVecter()));
+
+	NowPos = VAdd(player->GetPos(), player->MoveVecter());
 
 	//HitPoly = MV1CollCheck_Line(player->GetModel(), -1, SpherePos, 100.0f);
 
