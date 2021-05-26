@@ -2,9 +2,7 @@
 #include "../h/Player.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-#include"../h/Collision.h"
 
-Collision collision;
 Player player;
 
 void Player::Init(int modelhandle,int grhandle)
@@ -28,7 +26,7 @@ void Player::Init(int modelhandle,int grhandle)
 		MV1SetMaterialAmbColor(m_ModelHandle, i ,GetColorF(0.5f, 0.5f, 0.5f, 1.f));
 	}
 #pragma endregion 
-
+	
 	//マテリアル関数でジュエルだけを発光
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
 	
@@ -57,6 +55,13 @@ void Player::Init(int modelhandle,int grhandle)
 	m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_ATTACK, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
 	//アタッチしたアニメーションの総時間を取得する
 	m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
+
+//ダメージモーション
+	//m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/catattack.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] = MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_DAMAGE, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
+	//アタッチしたアニメーションの総時間を取得する
+	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
+
 #pragma endregion
 }
 
@@ -67,6 +72,7 @@ void Player::Update()
 	Move();
 	Attack();
 	collision.Update(&player);
+	//m_Pos.y -= 9.8;
 
 	//現在の再生時間が総再生時間を超えたら再生じかんを0に戻す
 	if ( m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
@@ -180,9 +186,10 @@ void Player::Release()
 
 void Player::Attack()
 {
-	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0)
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
-	
+		//攻撃アニメーション
+		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK], m_PlayTime);
 	}
 }
 

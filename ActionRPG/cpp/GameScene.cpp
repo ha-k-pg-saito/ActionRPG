@@ -5,10 +5,6 @@
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
 
-GameScene::GameScene()
-{
-}
-
 void GameScene::InitGameScene()
 {
 	// モデルのテクスチャ読み込み
@@ -23,7 +19,7 @@ void GameScene::InitGameScene()
 	int MapHandle = MV1LoadModel("Tex/Stage/map.mv1");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
-	SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ゲーム");
+	//SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ゲーム");
 	Push = true;
 	g_SceneStep = SceneStep::Run;
 }
