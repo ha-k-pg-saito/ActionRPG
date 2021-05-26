@@ -1,8 +1,9 @@
 #include<Math.h>
 #include "../h/Player.h"
-#include"DxLib.h"
 #include"../h/Map.h"
+#include"../h/Collision.h"
 
+Collision collision;
 Player player;
 
 void Player::Init(int modelhandle,int grhandle)

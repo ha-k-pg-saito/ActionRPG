@@ -3,8 +3,6 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-#include"../h/Collision.h"
-
 class Player :public Base
 {
 	//アニメーションリスト
@@ -90,8 +88,7 @@ private:
 	
 	//マップクラスのインスタンス化
 	Map map;
-	//コリジョンクラスのインスタンス化
-	Collision collision;
+	
 };
 #endif // !Player_h_
 
