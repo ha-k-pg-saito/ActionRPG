@@ -90,8 +90,7 @@ private:
 	
 	//マップクラスのインスタンス化
 	Map map;
-	//コリジョンクラスのインスタンス化
-	Collision collision;
+	
 };
 #endif // !Player_h_
 
