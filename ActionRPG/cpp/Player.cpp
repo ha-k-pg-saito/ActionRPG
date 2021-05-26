@@ -5,7 +5,6 @@
 
 Collision collision;
 Player player;
-Collision collision;
 
 void Player::Init(int modelhandle,int grhandle)
 {
