@@ -37,7 +37,7 @@ void TitleScene::RunTitleScene()
 
 	if (m_FrameCounter < 60)
 	{
-		DrawString(450, 850, "左クリックでゲームスタート", GetColor(0, 0, 0));
+		DrawString(470, 890, "左クリックでゲームスタート", GetColor(0, 0, 0));
 	}
 
 	if (m_FrameCounter >= 120)
