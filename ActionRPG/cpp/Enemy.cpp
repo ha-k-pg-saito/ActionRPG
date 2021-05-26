@@ -30,7 +30,8 @@ void Enemy::Init()
 	m_Enemy_Position = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 	m_Enemy_InitialPosition = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 
-	IsActive = false;
+	m_Hp = 3;
+	IsActive = true;
 }
 
 void Enemy::Update(VECTOR player_pos)
