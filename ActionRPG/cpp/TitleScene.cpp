@@ -5,14 +5,9 @@
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
 
-TitleScene::TitleScene()
-{
-
-}
-
 void TitleScene::InitTitleScene()
 {
-	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
+	//m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
 	Push = true;
 	g_SceneStep = SceneStep::Run;
@@ -20,7 +15,7 @@ void TitleScene::InitTitleScene()
 
 void TitleScene::RunTitleScene()
 {
-	if (CheckHitKey(KEY_INPUT_RETURN)!=0)
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
 		if (Push == false)
 		{
@@ -33,6 +28,7 @@ void TitleScene::RunTitleScene()
 		Push = false;
 	}
 	DrawGraph(0, 0, m_GrHandle, FALSE);
+	DrawString(450, 850, "左クリックでゲームスタート", GetColor(0, 0, 0));
 	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 }
 
@@ -53,5 +49,4 @@ void TitleScene::TitleSceneUpdate()
 	case SceneStep::Run:    RunTitleScene();    break;
 	case SceneStep::Finish: FinishTitleScene();	break;
 	}
-
 }

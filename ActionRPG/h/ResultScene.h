@@ -6,10 +6,6 @@
 class ResultScene
 {
 public:
-	ResultScene();
-	~ResultScene() {}
-
-public:
 	void InitResultScene();
 	void RunResultScene();
 	void FinishResultScene();
