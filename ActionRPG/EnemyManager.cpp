@@ -1,16 +1,16 @@
 #include "EnemyManager.h"
 
-void EnemyManager::Init(VECTOR pos)
+void EnemyManager::Init()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < Enemy_Num; i++)
 	{
-		Enemies[i].Init(pos);
+		Enemies[i].Init();
 	}
 }
 
 void EnemyManager::Update(VECTOR player_pos)
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < Enemy_Num; i++)
 	{
 		if (Enemies[i].IsActive == false)
 		{
@@ -23,7 +23,7 @@ void EnemyManager::Update(VECTOR player_pos)
 
 void EnemyManager::Draw()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < Enemy_Num; i++)
 	{
 		if (Enemies[i].IsActive == false)
 		{
@@ -34,14 +34,14 @@ void EnemyManager::Draw()
 	}
 }
 
-Enemy* EnemyManager::CreateEnemy(VECTOR init_pos)
+Enemy* EnemyManager::CreateEnemy()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < Enemy_Num; i++)
 	{
 		// 非アクティブの敵をアクティブに変更する => 敵を生成する
 		if (Enemies[i].IsActive == false)
 		{
-			Enemies[i].Init(init_pos);
+			Enemies[i].Init();
 			Enemies[i].IsActive = true;
 
 			return &Enemies[i];
