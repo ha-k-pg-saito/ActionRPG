@@ -145,10 +145,12 @@ void Enemy::Draw()
 		// 新しいアニメーションをアタッチ
 		if (m_Enemy_RunFlag)
 		{
+			// 移動
 			m_Enemy_AnimAttachIndex = MV1AttachAnim(m_Enemy_ModelHandle, 1);
 		}
 		else
 		{
+			// 待機
 			m_Enemy_AnimAttachIndex = MV1AttachAnim(m_Enemy_ModelHandle, 4);
 		}
 
