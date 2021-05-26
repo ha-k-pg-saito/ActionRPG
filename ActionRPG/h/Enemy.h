@@ -30,7 +30,7 @@ public:
 	~Enemy() {}
 
 public:
-	void Init(VECTOR value);
+	void Init();
 	void Update(VECTOR player_pos);
 	void Draw();
 	void DrawHp();
@@ -51,6 +51,7 @@ private:
 	int    m_Enemy_MoveFlag;
 	int    m_Enemy_MoveAnimFrameIndex;
 	VECTOR m_Enemy_Position;
+	VECTOR m_Rand_Pos;	// óêêîï€ë∂óp
 	VECTOR m_Enemy_InitialPosition;
 	VECTOR m_SubVector;
 	VECTOR m_Initial_EnemyVector;
