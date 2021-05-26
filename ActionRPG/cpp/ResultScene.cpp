@@ -5,11 +5,6 @@
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
 
-ResultScene::ResultScene()
-{
-
-}
-
 void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;

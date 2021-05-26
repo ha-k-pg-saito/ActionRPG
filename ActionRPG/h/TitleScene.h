@@ -6,10 +6,6 @@
 class TitleScene
 {
 public:
-	TitleScene();
-	~TitleScene() {}
-
-public:
 	void InitTitleScene();
 	void RunTitleScene();
 	void FinishTitleScene();
