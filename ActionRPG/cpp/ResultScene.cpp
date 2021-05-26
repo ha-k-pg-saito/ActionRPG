@@ -5,16 +5,11 @@
 extern SceneKind g_SceneKind;
 extern SceneStep g_SceneStep;
 
-ResultScene::ResultScene()
-{
-
-}
-
 void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;
 
-	Push = true;
+	m_Push = true;
 }
 
 void ResultScene::RunResultScene()
@@ -24,15 +19,15 @@ void ResultScene::RunResultScene()
 	
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
-		if (Push == false)
+		if (m_Push == false)
 		{
-			Push = true;
+			m_Push = true;
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
 	else
 	{
-		Push = false;
+		m_Push = false;
 	}
 }
 

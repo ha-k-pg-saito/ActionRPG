@@ -8,10 +8,6 @@
 class GameScene
 {
 public:
-	GameScene();
-	~GameScene() {}
-
-public:
 	void InitGameScene();
 	void RunGameScene();
 	void FinishGameScene();
@@ -25,7 +21,6 @@ private:
 	Player player;
 	Camera camera;
 	Map    map;
-	//Sound  sound;
 };
 
 #endif

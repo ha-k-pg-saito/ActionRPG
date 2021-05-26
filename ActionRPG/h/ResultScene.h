@@ -6,10 +6,6 @@
 class ResultScene
 {
 public:
-	ResultScene();
-	~ResultScene() {}
-
-public:
 	void InitResultScene();
 	void RunResultScene();
 	void FinishResultScene();
@@ -18,7 +14,7 @@ public:
 	void ResultSceneUpdate();
 
 private:
-	bool Push;
+	bool m_Push;
 };
 
 #endif

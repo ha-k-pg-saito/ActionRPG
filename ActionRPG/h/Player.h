@@ -3,7 +3,6 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-
 class Player :public Base
 {
 	//アニメーションリスト
@@ -12,6 +11,8 @@ class Player :public Base
 		ANIM_RUN,
 		ANIM_WAIT,
 		ANIM_ATTACK,
+		ANIM_DAMAGE,
+		ANIM_DIED,
 		ANIM_NUM,
 	};
 
@@ -24,9 +25,10 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = (30.f);
-		m_Hp = (0.f);
-		m_HitCounter = (0);
+		m_Speed = 30.f;
+		m_Hp = 0.f;
+		m_HitCounter = 0;
+		m_Gravity = 9.8f;
 	}
 	Player(VECTOR pos) :
 		Base(pos)
@@ -36,7 +38,7 @@ public:
 
 public:
 	// プレイヤーのモデル取得
-	int GetModel() { return m_ModelHandle; }
+	int    GetModel() { return m_ModelHandle; }
 	//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 	// プレイヤーの移動ベクトル取得
@@ -74,15 +76,19 @@ private:
 	float  m_Digree_Y;	
 	VECTOR m_Direction;	
 
+	//重力
+	float m_Gravity;
+
 	//当たった回数を保存する変数
 	int m_HitCounter;
 	//キャラの移動量保存変数
 	VECTOR m_MoveVec;       
-	//レイの描画に使う変数
+	//レイの終点に使う変数
 	VECTOR m_Line;
 	
 	//マップクラスのインスタンス化
 	Map map;
+	
 };
 #endif // !Player_h_
 
