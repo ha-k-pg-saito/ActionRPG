@@ -9,26 +9,42 @@ void TitleScene::InitTitleScene()
 {
 	//m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
-	Push = true;
+
+	m_Push = true;
+	m_FrameCounter = 0;
+
 	g_SceneStep = SceneStep::Run;
 }
 
 void TitleScene::RunTitleScene()
 {
+	m_FrameCounter++;
+
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (Push == false)
+		if (m_Push == false)
 		{
-			Push = true;
+			m_Push = true;
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
 	else
 	{
-		Push = false;
+		m_Push = false;
 	}
+
 	DrawGraph(0, 0, m_GrHandle, FALSE);
-	DrawString(450, 850, "左クリックでゲームスタート", GetColor(0, 0, 0));
+
+	if (m_FrameCounter < 60)
+	{
+		DrawString(450, 850, "左クリックでゲームスタート", GetColor(0, 0, 0));
+	}
+
+	if (m_FrameCounter >= 120)
+	{
+		m_FrameCounter = 0;
+	}
+	
 	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 }
 

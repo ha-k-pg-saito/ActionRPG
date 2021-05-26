@@ -14,9 +14,10 @@ public:
 	void TitleSceneUpdate();
 
 private:
-	bool Push;
+	bool m_Push;
+	int  m_FrameCounter;			
 	int  m_GrHandle;
-	int m_SoundHandle;
+	int  m_SoundHandle;
 };
 
 #endif

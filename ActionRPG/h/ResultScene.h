@@ -14,7 +14,7 @@ public:
 	void ResultSceneUpdate();
 
 private:
-	bool Push;
+	bool m_Push;
 };
 
 #endif
