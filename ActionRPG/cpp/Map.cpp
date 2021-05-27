@@ -49,12 +49,12 @@ bool Map::CollisionToModel(VECTOR startpos,VECTOR endpos)
 	{
 		endpos = HitPoly.HitPosition;
 		// “–‚½‚Á‚½‚©‚Ç‚¤‚©‚ð•\Ž¦‚·‚é
-		DrawFormatString(1000, 200, GetColor(255, 255, 255), "Hit Pos %f %f %f",
-			HitPoly.HitPosition.x, HitPoly.HitPosition.y, HitPoly.HitPosition.z);
+		DrawFormatString(1200, 200, GetColor(255, 255, 255), "Hit Pos %f,%f",
+			HitPoly.HitPosition.x, HitPoly.HitPosition.z);
 	}
 	else
 	{
-		DrawString(1000, 200, "NO HIT", GetColor(255, 255, 255));
+		DrawString(1200, 200, "NO HIT", GetColor(255, 255, 255));
 	}
 		return true;
 }

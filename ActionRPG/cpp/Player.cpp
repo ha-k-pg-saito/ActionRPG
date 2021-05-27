@@ -37,7 +37,6 @@ void Player::Init(int modelhandle,int grhandle)
 	//アニメーションのデバッグ用モデル読み込み処理
 	m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 	//指定したモデルにアニメーションをアタッチする
-	//アタッチー＞付着させるetc...
 	m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = 
 		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_RUN, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
 	//アタッチしたアニメーションの総時間を取得する
@@ -45,7 +44,7 @@ void Player::Init(int modelhandle,int grhandle)
 		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 
 //待機モーション
-	//m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
+	m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
 	m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
 		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_WAIT, m_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
 	m_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
@@ -120,8 +119,6 @@ void Player::Move()
 	MV1SetPosition(m_ModelHandle, m_Pos);
 	//一時的に移動量を保存する
 	m_MoveVec = { 0.f };
-	
-	
 #pragma region 移動処理 
 	//向いている方向に移動
 	if (CheckHitKey(KEY_INPUT_W))
@@ -135,7 +132,6 @@ void Player::Move()
 		m_MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
 		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}	
-	//デバッグ用Y軸上昇
 #pragma endregion
 	//レイの描画
 	//終点は移動前の場所から移動した分のベクトルを足して出している
@@ -161,6 +157,7 @@ void Player::Move()
 		//待機モーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 	}
+	DrawFormatString(0, 200, GetColor(255, 255, 255), "現在のポジションは%fです", m_MoveVec.x, m_MoveVec.z);
 }
 
 void Player::DrawHP()
@@ -172,7 +169,12 @@ void Player::DrawHP()
 	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE);
-	else if (m_HitCounter == 4)  m_Hp = DrawBox(HPX, HPY, 75 , 140, GetColor(0, 255, 0), TRUE);
+	else if (m_HitCounter == 4) 
+	{
+		m_Hp = DrawBox(HPX, HPY, 75, 140, GetColor(0, 255, 0), TRUE);
+		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DIED], m_PlayTime);
+		if (m_PlayTime >= m_AnimAttachIndex[ANIM_LIST::ANIM_DIED])  Release();
+	}
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
 }
@@ -197,5 +199,5 @@ void Player::Attack()
 //この関数はダメージを与えてきた敵にこの関数を呼び出す
 void Player::Damage()
 {
-	m_HitCounter += 1;
+	m_HitCounter ++;
 }
