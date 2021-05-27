@@ -28,7 +28,7 @@ void Camera::Update(Player* player)
     //GetMousePoint((int*)&m_Mouse.m_BeforeMouseX, (int*)&m_Mouse.m_BeforeMouseY);
     GetMousePoint(&m_MouseX, &m_MouseY);
 
-    if (m_FrameCounter % 30 == 0)
+    if (m_FrameCounter % 20 == 0)
     {
         //マウスカーソルを中心に移動
         SetMousePoint(960, 540);
@@ -41,8 +41,8 @@ void Camera::Update(Player* player)
     m_FrameCounter++;
  
     //カメラ座標の更新
-    m_AngleV -= (m_MouseY - m_BeforeMouseY) / 100.f;
-    m_AngleH += (m_MouseX - m_BeforeMouseX) / 100.f;
+    m_AngleV -= (m_MouseY - m_BeforeMouseY) / 400.f;
+    m_AngleH += (m_MouseX - m_BeforeMouseX) / 400.f;
 
     //マウス座標の保存
     m_BeforeMouseX = m_MouseX;
