@@ -32,35 +32,39 @@ void Player::Init(int modelhandle,int grhandle)
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
 	
 #pragma region アニメーション読み込み	
+//待機モーション
+	m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
+		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
+	m_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
+
 //走りモーション	
 	//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
 	//アニメーションのデバッグ用モデル読み込み処理
 	m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 	//指定したモデルにアニメーションをアタッチする
 	m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = 
-		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_RUN, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
+		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
 	//アタッチしたアニメーションの総時間を取得する
 	m_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
 		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 
-//待機モーション
-	m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
-		MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_WAIT, m_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
-	m_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
-
 //攻撃モーション
-	//m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/catattack.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_ATTACK, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
+	m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/Cat/catattack.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = 
+		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
 	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
+	m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = 
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
 
 //ダメージモーション
 	//m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/catattack.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] = MV1AttachAnim(m_ModelHandle, ANIM_LIST::ANIM_DAMAGE, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
+	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] = 
+		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
 	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] = MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
+	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] = 
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
 
 #pragma endregion
 }
@@ -72,10 +76,10 @@ void Player::Update()
 	Move();
 	Attack();
 	collision.Update(&player);
-	//m_Pos.y -= 9.8;
+//	m_Pos.y -= m_Gravity;
 
-	//現在の再生時間が総再生時間を超えたら再生じかんを0に戻す
-	if ( m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
+	//現在の再生時間が総再生時間を超えたら再生時間を0に戻す
+	if (m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
 	{
 		m_PlayTime = 0.f;
 	}
@@ -157,7 +161,7 @@ void Player::Move()
 		//待機モーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 	}
-	DrawFormatString(0, 200, GetColor(255, 255, 255), "現在のポジションは%fです", m_MoveVec.x, m_MoveVec.z);
+	//DrawFormatString(0, 200, GetColor(255, 255, 255), "現在のポジションは%fです", m_MoveVec.x, m_MoveVec.z);
 }
 
 void Player::DrawHP()
@@ -200,4 +204,5 @@ void Player::Attack()
 void Player::Damage()
 {
 	m_HitCounter ++;
+	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE], m_PlayTime);
 }

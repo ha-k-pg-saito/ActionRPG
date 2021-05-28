@@ -9,15 +9,17 @@
 
 class Player :public Base
 {	
+	//アニメーションを管理するenum
 	enum ANIM_LIST
 	{
-		ANIM_RUN,
 		ANIM_WAIT,
+		ANIM_RUN,
 		ANIM_ATTACK,
 		ANIM_DAMAGE,
 		ANIM_DIED,
 		ANIM_NUM,
 	};
+
 public:
 	Player() :
 		//Base()内で初期化しているのはポジション変数

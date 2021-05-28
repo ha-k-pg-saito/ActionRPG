@@ -7,7 +7,7 @@ extern SceneStep g_SceneStep;
 
 void TitleScene::InitTitleScene()
 {
-	//m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
+//	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
 
 	m_Push = true;
@@ -18,7 +18,7 @@ void TitleScene::InitTitleScene()
 
 void TitleScene::RunTitleScene()
 {
-	m_FrameCounter++;
+	m_FrameCounter += 2;
 
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
@@ -33,11 +33,11 @@ void TitleScene::RunTitleScene()
 		m_Push = false;
 	}
 
-	DrawGraph(0, 0, m_GrHandle, FALSE);
+	DrawGraph(0, 0, m_GrHandle, TRUE);
 
 	if (m_FrameCounter < 60)
 	{
-		DrawString(470, 890, "左クリックでゲームスタート", GetColor(0, 0, 0));
+		DrawString(750, 890, "左クリックでゲームスタート", GetColor(0, 0, 0));
 	}
 
 	if (m_FrameCounter >= 120)
@@ -46,6 +46,9 @@ void TitleScene::RunTitleScene()
 	}
 	
 	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
+	int FontHandle = CreateFontToHandle(NULL, 30, 0);
+	DrawStringToHandle(1600, 30, "ESCでゲーム終了", GetColor(0,0,0), FontHandle);
+	//DrawString(1600,30, "ESCでゲーム終了", GetColor(0, 0, 0));
 }
 
 void TitleScene::FinishTitleScene()
