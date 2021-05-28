@@ -79,7 +79,7 @@ void Player::Update()
 //	m_Pos.y -= m_Gravity;
 
 	//Œ»Ý‚ÌÄ¶ŽžŠÔ‚ª‘Ä¶ŽžŠÔ‚ð’´‚¦‚½‚çÄ¶ŽžŠÔ‚ð0‚É–ß‚·
-	if (m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN])
+	if (m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN]|| m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
 	{
 		m_PlayTime = 0.f;
 	}
