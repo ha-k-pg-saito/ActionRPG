@@ -3,13 +3,17 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
+
+//アニメーションリスト
+
+
 class Player :public Base
-{
-	//アニメーションリスト
+{	
+	//アニメーションを管理するenum
 	enum ANIM_LIST
 	{
-		ANIM_RUN,
 		ANIM_WAIT,
+		ANIM_RUN,
 		ANIM_ATTACK,
 		ANIM_DAMAGE,
 		ANIM_DIED,
@@ -25,7 +29,7 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = 30.f;
+		m_Speed = 100.f;
 		m_Hp = 0.f;
 		m_HitCounter = 0;
 		m_Gravity = 9.8f;

@@ -4,17 +4,18 @@
 #include<map>
 #include<string>
 
-//マジックナンバ削除用enum
-enum SoundState
+
+
+class SoundMng
+{
+	//マジックナンバ削除用enum
+	enum SoundState
 	{
 		State_Error = -1,		//失敗
 		State_None,				//行動しない
 		State_Success,			//成功
 		State_Num				//最大値
 	};
-
-class SoundMng
-{
 public:
 	//シングルトン
 	static SoundMng* Instance()
