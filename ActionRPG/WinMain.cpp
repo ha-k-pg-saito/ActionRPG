@@ -16,7 +16,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	{
 		return -1;							//エラーが起きたら直ちに終了
 	}
-	
+
 	//ゲームループ
 	while (true)
 	{

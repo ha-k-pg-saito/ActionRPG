@@ -8,7 +8,7 @@ class Map
 public:
 	Map() :
 		m_MapHandle(0),
-		m_Pos{71,-10,462}
+		m_StagePos{ 71,-10,462 }
 	{}
 	~Map() {}
 
@@ -19,14 +19,14 @@ public:
 public:
 	void Init(int maphandle,int grhandle);
 	void Draw();
-	bool CollisionToModel(VECTOR startpos, VECTOR endpos);
+	bool CollisionToModel(VECTOR startpos, VECTOR endpos,VECTOR* intersectpos);
 
 private:
 	//マップモデル保存用変数
 	int    m_MapHandle;
 	//マップに貼るテクスチャ保存変数
 	int    m_GrHandle[10];
-	VECTOR m_Pos;
+	VECTOR m_StagePos;
 	//DxLibにあるあたり判定用の戻り値+変数
 	MV1_COLL_RESULT_POLY HitPoly;
 };

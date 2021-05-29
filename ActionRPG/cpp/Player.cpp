@@ -4,7 +4,6 @@
 #include"../h/Collision.h"
 
 Collision collision;
-Player player;
 
 void Player::Init(int modelhandle,int grhandle)
 {
@@ -75,7 +74,7 @@ void Player::Update()
 	Rotate();
 	Move();
 	Attack();
-	collision.Update(&player);
+	collision.Update(this);
 //	m_Pos.y -= m_Gravity;
 
 	//現在の再生時間が総再生時間を超えたら再生時間を0に戻す
@@ -119,8 +118,6 @@ void Player::Rotate()
 
 void Player::Move()
 {
-	// 画面に移るモデルの移動
-	MV1SetPosition(m_ModelHandle, m_Pos);
 	//一時的に移動量を保存する
 	m_MoveVec = { 0.f };
 #pragma region 移動処理 
@@ -128,40 +125,60 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		m_MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
-		m_MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
+		m_MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
+		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}
 	else if (CheckHitKey(KEY_INPUT_S)) 
 	{
-		m_MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
-		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
+		m_MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
+		m_MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
 	}	
+
 #pragma endregion
-	//レイの描画
-	//終点は移動前の場所から移動した分のベクトルを足して出している
-	m_Line = VAdd(GetPos(), m_MoveVec);
-	DrawLine3D(m_Pos, m_Line, GetColor(0, 0, 255));
-	map.CollisionToModel(m_Pos, m_Line);
 	
 	//移動したのかを調べて移動していたならアニメーションする
 	if (m_MoveVec.x != 0.f || m_MoveVec.z != 0.f)
 	{
 		//atan2を使うことで現在の向いている方向から180振り向く
-		float Rad = atan2(m_MoveVec.x, m_MoveVec.z);
+		float Rad = atan2(-m_MoveVec.x, -m_MoveVec.z);
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 		m_Digree_Y = Rad * 180.f / DX_PI_F;
 		//走るアニメーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
-		//本来のポジション変数に一時的に保存していた値を加算する
-		m_Pos.x -= m_MoveVec.x;
-		m_Pos.z -= m_MoveVec.z;
+		
+		VECTOR CenterPos = m_Pos;
+		CenterPos.y += 6;
+		//当たったところを終点にする
+		VECTOR HitPos = { 0 };
+		if (m_MapRef->CollisionToModel(CenterPos,VAdd(CenterPos,m_MoveVec),&HitPos))
+		{
+			return;
+		}
+
+		//初期始点値からどれくらいずらすのか
+		VECTOR vertical{ 0,6,0 };
+		//始点は現在のポジションと移動量を保存している変数を足している
+		m_StartLine = VAdd(m_Pos, m_MoveVec);
+		m_StartLine.y +=vertical.y ;
+		//初期始点値からどれくらい下にレイを出すのか
+		VECTOR DownLine{ 0,-20,0 };
+		m_EndLine = VAdd(m_StartLine, DownLine);
+		//出したレイのマップとのあたり判定
+		if (m_MapRef->CollisionToModel(m_StartLine, m_EndLine, &HitPos))
+		{
+			m_Pos = HitPos;
+		}
+		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
+		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+		// 画面に移るモデルの移動
+		MV1SetPosition(m_ModelHandle, m_Pos);
 	}
 	else 
 	{
 		//待機モーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 	}
-	//DrawFormatString(0, 200, GetColor(255, 255, 255), "現在のポジションは%fです", m_MoveVec.x, m_MoveVec.z);
+	
 }
 
 void Player::DrawHP()

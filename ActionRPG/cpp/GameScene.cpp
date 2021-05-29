@@ -16,7 +16,7 @@ void GameScene::InitGameScene()
 	//マップのテクスチャ読み込み
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み
-	int MapHandle = MV1LoadModel("Tex/Stage/map.mv1");
+	int MapHandle = MV1LoadModel("Tex/Stage/map2.mv1");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
 	//SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ゲーム");

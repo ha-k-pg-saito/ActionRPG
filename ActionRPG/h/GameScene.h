@@ -8,6 +8,12 @@
 class GameScene
 {
 public:
+	GameScene() :
+		SoundHandle (0),
+		Push(false),
+		player(&map)
+	{}
+	~GameScene() {}
 	void InitGameScene();
 	void RunGameScene();
 	void FinishGameScene();
@@ -18,9 +24,9 @@ public:
 private:
 	int SoundHandle;
 	bool   Push;
+	Map    map;
 	Player player;
 	Camera camera;
-	Map    map;
 };
 
 #endif

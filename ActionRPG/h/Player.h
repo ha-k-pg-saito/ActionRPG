@@ -4,12 +4,11 @@
 #include"DxLib.h"
 #include"../h/Map.h"
 
-//アニメーションリスト
 
 
 class Player :public Base
 {	
-	//アニメーションを管理するenum
+//アニメーションを管理するenum
 	enum ANIM_LIST
 	{
 		ANIM_WAIT,
@@ -21,7 +20,7 @@ class Player :public Base
 	};
 
 public:
-	Player() :
+	Player(Map* map) :
 		//Base()内で初期化しているのはポジション変数
 		Base(0.f, 0.f, 0.f),
 		m_Radian{ 0.f },
@@ -29,10 +28,11 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = 100.f;
+		m_Speed = 40.f;
 		m_Hp = 0.f;
 		m_HitCounter = 0;
 		m_Gravity = 9.8f;
+		m_MapRef = map;
 	}
 	Player(VECTOR pos) :
 		Base(pos)
@@ -41,15 +41,15 @@ public:
 	~Player() { Release(); }
 
 public:
-	// プレイヤーのモデル取得
+// プレイヤーのモデル取得
 	int    GetModel() { return m_ModelHandle; }
-	//プレイヤーの座標取取得
+//プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
-	// プレイヤーの移動ベクトル取得
+// プレイヤーの移動ベクトル取得
 	VECTOR MoveVecter() { return m_MoveVec; }
 
 public:
-	//Initの引数はモデル読み込む時に使う
+//Initの引数はモデル読み込む時に使う
 	void Init(int modelhandle, int grhandle);
 	void Update();
 	void Draw();
@@ -58,40 +58,39 @@ public:
 	void Attack();
 
 private:
-	//playerの関数内で呼び出す関数
+//playerの関数内で呼び出す関数
 	void Rotate();
 	void Move();
 	void Damage();
 
 private:
-	// 3Dモデルを保存する変数
+// 3Dモデルを保存する変数
 	int m_ModelHandle;
-	//3Dモデルに貼るテクスチャ保存変数
+//3Dモデルに貼るテクスチャ保存変数
 	int m_GrHandle[8];
 
-	//アニメーションに使用する変数
+//アニメーションに使用する変数
 	int   m_AnimHandle[ANIM_NUM];
 	int   m_AnimAttachIndex[ANIM_NUM];
 	int   m_AnimTotalTime[ANIM_NUM];
 	float m_PlayTime;						//アニメーション時間
 
-	//計算で使う変数
+//計算で使う変数
 	float  m_Radian;		
 	float  m_Digree_Y;	
 	VECTOR m_Direction;	
-
-	//重力
+//重力
 	float m_Gravity;
 
-	//当たった回数を保存する変数
+//当たった回数を保存する変数
 	int m_HitCounter;
-	//キャラの移動量保存変数
+//キャラの移動量保存変数
 	VECTOR m_MoveVec;       
-	//レイの終点に使う変数
-	VECTOR m_Line;
+//レイの始点に使う変数
+	VECTOR m_StartLine;
+	VECTOR m_EndLine;
 	
-	//マップクラスのインスタンス化
-	Map map;
+	Map* m_MapRef;
 	
 };
 #endif // !Player_h_

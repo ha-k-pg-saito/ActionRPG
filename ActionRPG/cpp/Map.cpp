@@ -2,7 +2,6 @@
 
 void Map::Init(int maphandle,int grhandle)
 {
-	
 #pragma region マップモデル読み込み
 	//初期マップモデル
 	m_MapHandle = maphandle;
@@ -24,37 +23,38 @@ void Map::Init(int maphandle,int grhandle)
 	{
 		MV1SetTextureGraphHandle(m_MapHandle, i, m_GrHandle[i], FALSE);
 	}
+	MV1SetScale(m_MapHandle, VECTOR{ 100,100,100 });
+	MV1SetPosition(m_MapHandle, m_StagePos);
+	//モデル全体のコリジョン情報構築
+	MV1SetupCollInfo(m_MapHandle, -1, 8, 8, 8);
 }
 
 void Map::Draw()
 {
-	MV1SetPosition(m_MapHandle, m_Pos);
 	MV1DrawModel(m_MapHandle);
 }
 
 //マップとレイのあたり判定
 //PlayerだけでなくEnemyでも使用する
-bool Map::CollisionToModel(VECTOR startpos,VECTOR endpos)
+bool Map::CollisionToModel(VECTOR startpos, VECTOR endpos, VECTOR* intersectpos)
 {
-	//モデル全体のコリジョン情報構築
-	MV1SetupCollInfo(m_MapHandle, -1, 8, 8, 8);
-	//0番目のフレームのコリジョン情報を更新する
-	MV1RefreshCollInfo(m_MapHandle, 0);
 	//-1番フレームとレイとのあたり判定
 	//m_Posは始点・m_Lineは終点
 	HitPoly = MV1CollCheck_Line(m_MapHandle, -1, startpos, endpos);
 
-	//当たったならその位置をレイの終点とする
-	if (HitPoly.HitFlag == 1)
-	{
-		endpos = HitPoly.HitPosition;
-		// 当たったかどうかを表示する
-	/*	DrawFormatString(1200, 200, GetColor(255, 255, 255), "Hit Pos %f,%f",
-			HitPoly.HitPosition.x, HitPoly.HitPosition.z);*/
+	if (HitPoly.HitFlag == 0)
+	{	
+		return false;
 	}
-	else
+
+	if (intersectpos != nullptr)
 	{
-		DrawString(1200, 200, "NO HIT", GetColor(255, 255, 255));
+		*intersectpos= HitPoly.HitPosition;
 	}
-		return true;
+
+// 当たったかどうかを表示する
+	//DrawFormatString(1200, 100, GetColor(255, 255, 255), "Hit Pos %f %f ",HitPoly.HitPosition.x, HitPoly.HitPosition.z);
+	DrawFormatString(100, 300, GetColor(255, 255, 255), "Hit Pos %f %f ",HitPoly.HitPosition.x, HitPoly.HitPosition.z);
+	return true;
+
 }
