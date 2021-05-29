@@ -3,25 +3,27 @@
 
 void Enemy::Init()
 {
-	m_Enemy_ModelHandle = MV1LoadModel("DxChara.x");
+	m_Enemy_ModelHandle = MV1LoadModel("catoriginal.mv1");
+	//走りモーション	
+		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
+		//アニメーションのデバッグ用モデル読み込み処理
+	m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("catwalk.mv1");
+	//指定したモデルにアニメーションをアタッチする
+	//アタッチー＞付着させるetc...
+	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN] =
+		MV1AttachAnim(m_Enemy_ModelHandle, ANIM_LIST::ANIM_RUN, m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
+	//アタッチしたアニメーションの総時間を取得する
+	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
+		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 
-	m_Enemy_RunFlag = FALSE;
+	//待機モーション
+	m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("catwait0.mv1");
+	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
+		MV1AttachAnim(m_Enemy_ModelHandle, ANIM_LIST::ANIM_WAIT, m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
+	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
+		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
 
-	// 待機アニメーションをアタッチ
-	m_Enemy_AnimAttachIndex = MV1AttachAnim(m_Enemy_ModelHandle, 4);
-
-	// 待機アニメーションの総時間を取得しておく
-	m_Enemy_AnimTotalTime = MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex);
-
-	// アニメーション再生時間を初期化
-	m_Enemy_AnimNowTime = 0.0f;
-	MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex, m_Enemy_AnimNowTime);
-
-	// アニメーションで移動をしているフレームの番号を検索する
-	m_Enemy_MoveAnimFrameIndex = MV1SearchFrame(m_Enemy_ModelHandle, "BasePoint");
-
-	// アニメーションで移動をしているフレームを無効にする
-	MV1SetFrameUserLocalMatrix(m_Enemy_ModelHandle, m_Enemy_MoveAnimFrameIndex, MV1GetFrameLocalMatrix(m_Enemy_ModelHandle, m_Enemy_MoveAnimFrameIndex));
+	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
 	m_Rand_Pos.x = rand() % 5000 - 2500;
@@ -37,12 +39,12 @@ void Enemy::Init()
 void Enemy::Update(VECTOR player_pos)
 {
 	// ３ＤモデルEnemyから３ＤモデルPlayerに向かうベクトルを算出
-	m_SubVector = VSub(player_pos, m_Enemy_Position);
+	m_Vector = VSub(player_pos, m_Enemy_Position);
 	// ３ＤモデルEnemyから初期地点へのベクトルを算出
 	m_Initial_EnemyVector = VSub(m_Enemy_InitialPosition, m_Enemy_Position);
 
 	// atan2 を使用して角度を取得
-	m_Enemy_Angle = atan2(m_SubVector.x, m_SubVector.z);
+	m_Enemy_Angle = atan2(m_Vector.x, m_Vector.z);
 	m_Initial_EnemyAngle = atan2(m_Initial_EnemyVector.x, m_Initial_EnemyVector.z);
 
 	// PlayerとEnemyの距離
@@ -130,49 +132,26 @@ void Enemy::Update(VECTOR player_pos)
 		}
 	}
 
+	m_PlayTime++;
+	if (m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] || m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
+	{
+		m_PlayTime = 0.f;
+	}
 }
 
 void Enemy::Draw()
 {
-	if (m_Enemy_RunFlag != m_Enemy_MoveFlag)
-	{
-		// 走っているかどうかのフラグを保存
-		m_Enemy_RunFlag = m_Enemy_MoveFlag;
-
-		// 今までアタッチしていたアニメーションをデタッチ
-		MV1DetachAnim(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex);
-
 		// 新しいアニメーションをアタッチ
-		if (m_Enemy_RunFlag)
+		if (m_Enemy_MoveFlag)
 		{
-			m_Enemy_AnimAttachIndex = MV1AttachAnim(m_Enemy_ModelHandle, 1);
+			// 移動
+			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 		}
 		else
 		{
-			m_Enemy_AnimAttachIndex = MV1AttachAnim(m_Enemy_ModelHandle, 4);
+			// 待機
+			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 		}
-
-		// アニメーションの総時間を取得しておく
-		m_Enemy_AnimTotalTime = MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex);
-
-		// アニメーション再生時間を初期化
-		m_Enemy_AnimNowTime = 0.0f;
-	}
-	else
-	{
-		// アニメーション再生時間を進める
-		m_Enemy_AnimNowTime += 200.0f;
-
-		// アニメーション再生時間がアニメーションの総時間を越えていたらループさせる
-		if (m_Enemy_AnimNowTime >= m_Enemy_AnimTotalTime)
-		{
-			// 新しいアニメーション再生時間は、アニメーション再生時間からアニメーション総時間を引いたもの
-			m_Enemy_AnimNowTime -= m_Enemy_AnimTotalTime;
-		}
-	}
-
-	// 新しいアニメーション再生時間をセット
-	MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex, m_Enemy_AnimNowTime);
 
 	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
 	MV1DrawModel(m_Enemy_ModelHandle);

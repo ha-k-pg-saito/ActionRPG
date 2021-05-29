@@ -12,6 +12,8 @@ public:
 
 		ANIM_RUN,
 
+		ANIM_WAIT,
+
 		ANIM_NUM
 	};
 
@@ -38,22 +40,21 @@ public:
 	bool IsActive;
 
 private:
-	//モデル情報を保存する変数
-	int    m_Enemy_ModelHandle;
+	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
+	int   m_Enemy_AnimHandle[ANIM_NUM];
+	int   m_Enemy_AnimAttachIndex[ANIM_NUM];
+	int   m_Enemy_AnimTotalTime[ANIM_NUM];
+	float m_PlayTime;				//アニメーション時間
 
 	//計算で使う変数
 	float  m_Enemy_Angle;
 	float  m_Initial_EnemyAngle;
-	float  m_Enemy_AnimTotalTime;
-	float  m_Enemy_AnimNowTime;
-	int    m_Enemy_AnimAttachIndex;
-	int    m_Enemy_RunFlag;
 	int    m_Enemy_MoveFlag;
 	int    m_Enemy_MoveAnimFrameIndex;
 	VECTOR m_Enemy_Position;
 	VECTOR m_Rand_Pos;	// 乱数保存用
 	VECTOR m_Enemy_InitialPosition;
-	VECTOR m_SubVector;
+	VECTOR m_Vector;
 	VECTOR m_Initial_EnemyVector;
 
 	VECTOR m_Distance_Pos;
