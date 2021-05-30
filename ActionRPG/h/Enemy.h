@@ -2,6 +2,7 @@
 #define Enemy_h_
 #include"DxLib.h"
 #include"Base.h"
+#include"../h/Map.h"
 
 class Enemy :public Base
 {
@@ -21,7 +22,7 @@ public:
 	Enemy() :
 		Base(0.f, 0.9f, 10.f)
 	{
-		m_Speed = (10.f);
+		m_Speed = (0.5f);
 		m_Hp = (3.f);
 	}
 
@@ -63,6 +64,11 @@ private:
 	int m_Enemy_direction_x, m_Enemy_direction_z;
 	int m_Setenemy_direction_x, m_Setenemy_direction_z;
 
+	//レイの始点に使う変数
+	VECTOR m_StartLine;
+	VECTOR m_EndLine;
+
+	Map m_MapRef;
 };
 
 #endif
