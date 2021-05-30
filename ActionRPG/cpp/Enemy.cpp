@@ -133,6 +133,34 @@ void Enemy::Update(VECTOR player_pos)
 		}
 	}
 
+	if (m_Enemy_MoveFlag)
+	{
+		VECTOR CenterPos = m_Enemy_Position;
+		CenterPos.y += 6;
+		//当たったところを終点にする
+		VECTOR HitPos = { 0 };
+		if (m_MapRef.CollisionToModel(CenterPos, VAdd(CenterPos, m_Enemy_Position), &HitPos))
+		{
+			return;
+		}
+
+		//初期始点値からどれくらいずらすのか
+		VECTOR vertical{ 0,6,0 };
+		//始点は現在のポジションと移動量を保存している変数を足している
+		m_StartLine = VAdd(m_Pos, m_Enemy_Position);
+		m_StartLine.y += vertical.y;
+		//初期始点値からどれくらい下にレイを出すのか
+		VECTOR DownLine{ 0,-20,0 };
+		m_EndLine = VAdd(m_StartLine, DownLine);
+		//出したレイのマップとのあたり判定
+		if (m_MapRef.CollisionToModel(m_StartLine, m_EndLine, &HitPos))
+		{
+			m_Pos = HitPos;
+		}
+		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
+		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+	}
+
 	m_PlayTime++;
 	if (m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] || m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
 	{
@@ -148,31 +176,6 @@ void Enemy::Draw()
 		{
 			// 移動
 			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
-
-			VECTOR CenterPos = m_Enemy_Position;
-			CenterPos.y += 6;
-			//当たったところを終点にする
-			VECTOR HitPos = { 0 };
-			if (m_MapRef.CollisionToModel(CenterPos, VAdd(CenterPos, m_Vector), &HitPos))
-			{
-				return;
-			}
-
-			//初期始点値からどれくらいずらすのか
-			VECTOR vertical{ 0,6,0 };
-			//始点は現在のポジションと移動量を保存している変数を足している
-			m_StartLine = VAdd(m_Enemy_Position, m_Vector);
-			m_StartLine.y += vertical.y;
-			//初期始点値からどれくらい下にレイを出すのか
-			VECTOR DownLine{ 0,-20,0 };
-			m_EndLine = VAdd(m_StartLine, DownLine);
-			//出したレイのマップとのあたり判定
-			if (m_MapRef.CollisionToModel(m_StartLine, m_EndLine, &HitPos))
-			{
-				m_Enemy_Position = HitPos;
-			}
-			DrawLine3D(m_Enemy_Position, m_StartLine, GetColor(0, 0, 255));
-			DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
 		}
 		else
 		{
@@ -180,7 +183,6 @@ void Enemy::Draw()
 			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 		}
 
-	
 	MV1DrawModel(m_Enemy_ModelHandle);
 }
 
