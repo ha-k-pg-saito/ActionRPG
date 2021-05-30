@@ -26,8 +26,8 @@ void Enemy::Init()
 	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
-	m_Rand_Pos.x = rand() % 300 - 100;
-	m_Rand_Pos.z = rand() % 300 - 100;
+	m_Rand_Pos.x = rand() % 1000 - 100;
+	m_Rand_Pos.z = rand() % 1000 - 100;
 	m_Rand_Pos.y = 0.0f;
 	m_Enemy_Position = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 	m_Enemy_InitialPosition = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
@@ -100,20 +100,20 @@ void Enemy::Update(VECTOR player_pos)
 	m_Enemy_MoveFlag = FALSE;
 
 	// 一定距離になるとPlayerの方に向く
-	if (m_Distance_Pos.x <= 4000.0f && m_Distance_Pos.z <= 4000.0f)
+	if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
 	{
 		// atan2 で取得した角度に３Ｄモデルを正面に向かせるための補正値( DX_PI_F )を
 		// 足した値を３Ｄモデルの Y軸回転値として設定
 		MV1SetRotationXYZ(m_Enemy_ModelHandle, VGet(0.0f, m_Enemy_Angle + DX_PI_F, 0.0f));
 
 		// 一定距離になるとPlayerの方に移動
-		if (m_Distance_Pos.x <= 3000.0f && m_Distance_Pos.z <= 3000.0f)
+		if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
 		{
-			if (m_Distance_Pos.x >= 300.0f) {
+			if (m_Distance_Pos.x >= 10.0f) {
 				m_Enemy_Position.x += m_Enemy_direction_x * m_Speed;
 				m_Enemy_MoveFlag = TRUE;
 			}
-			if (m_Distance_Pos.z >= 300.0f) {
+			if (m_Distance_Pos.z >= 10.0f) {
 				m_Enemy_Position.z += m_Enemy_direction_z * m_Speed;
 				m_Enemy_MoveFlag = TRUE;
 			}
@@ -148,6 +148,31 @@ void Enemy::Draw()
 		{
 			// 移動
 			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
+
+			VECTOR CenterPos = m_Enemy_Position;
+			CenterPos.y += 6;
+			//当たったところを終点にする
+			VECTOR HitPos = { 0 };
+			if (m_MapRef.CollisionToModel(CenterPos, VAdd(CenterPos, m_Vector), &HitPos))
+			{
+				return;
+			}
+
+			//初期始点値からどれくらいずらすのか
+			VECTOR vertical{ 0,6,0 };
+			//始点は現在のポジションと移動量を保存している変数を足している
+			m_StartLine = VAdd(m_Enemy_Position, m_Vector);
+			m_StartLine.y += vertical.y;
+			//初期始点値からどれくらい下にレイを出すのか
+			VECTOR DownLine{ 0,-20,0 };
+			m_EndLine = VAdd(m_StartLine, DownLine);
+			//出したレイのマップとのあたり判定
+			if (m_MapRef.CollisionToModel(m_StartLine, m_EndLine, &HitPos))
+			{
+				m_Enemy_Position = HitPos;
+			}
+			DrawLine3D(m_Enemy_Position, m_StartLine, GetColor(0, 0, 255));
+			DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
 		}
 		else
 		{
