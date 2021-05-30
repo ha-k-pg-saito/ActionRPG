@@ -19,15 +19,18 @@ void GameScene::InitGameScene()
 	int MapHandle = MV1LoadModel("Tex/Stage/map2.mv1");
 	map.Init(MapHandle, MapGrHandle);
 	player.Init(PlayerModelHandle, PlayerGrHandle);
-	//SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ÉQÅ[ÉÄ");
+	EnemyMng.Init();
+	SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ÉQÅ[ÉÄ");
 	Push = true;
 	g_SceneStep = SceneStep::Run;
 }
 
 void GameScene::RunGameScene()
 {
+	EnemyMng.Update(player.GetPos());
 	player.Update();
 	camera.Update(&player);
+
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
 		if (Push == false)
@@ -40,8 +43,12 @@ void GameScene::RunGameScene()
 	{
 		Push = false;
 	}
+	EnemyMng.CreateEnemy();
+
+
 	map.Draw();
 	player.Draw();
+	EnemyMng.Draw();
 	SoundMng::Instance()->Play("ÉQÅ[ÉÄ", DX_PLAYTYPE_LOOP);
 }
 

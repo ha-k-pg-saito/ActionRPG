@@ -7,7 +7,7 @@ extern SceneStep g_SceneStep;
 
 void TitleScene::InitTitleScene()
 {
-//	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
+	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
 
 	m_Push = true;

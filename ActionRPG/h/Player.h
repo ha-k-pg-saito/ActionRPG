@@ -28,10 +28,9 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = 40.f;
+		m_Speed = 100.f;
 		m_Hp = 0.f;
 		m_HitCounter = 0;
-		m_Gravity = 9.8f;
 		m_MapRef = map;
 	}
 	Player(VECTOR pos) :
@@ -79,8 +78,6 @@ private:
 	float  m_Radian;		
 	float  m_Digree_Y;	
 	VECTOR m_Direction;	
-//d—Í
-	float m_Gravity;
 
 //“–‚½‚Á‚½‰ñ”‚ğ•Û‘¶‚·‚é•Ï”
 	int m_HitCounter;

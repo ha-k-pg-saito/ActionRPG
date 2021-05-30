@@ -3,37 +3,38 @@
 
 void Enemy::Init()
 {
-	m_Enemy_ModelHandle = MV1LoadModel("catoriginal.mv1");
+	m_Enemy_ModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
 	//走りモーション	
 		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
 		//アニメーションのデバッグ用モデル読み込み処理
-	m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("catwalk.mv1");
+	m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
 	//指定したモデルにアニメーションをアタッチする
 	//アタッチー＞付着させるetc...
 	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN] =
-		MV1AttachAnim(m_Enemy_ModelHandle, ANIM_LIST::ANIM_RUN, m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
+		MV1AttachAnim(m_Enemy_ModelHandle, 0, m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
 	//アタッチしたアニメーションの総時間を取得する
 	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
 		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
 
 	//待機モーション
-	m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("catwait0.mv1");
+	m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
 	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
-		MV1AttachAnim(m_Enemy_ModelHandle, ANIM_LIST::ANIM_WAIT, m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
+		MV1AttachAnim(m_Enemy_ModelHandle, 0, m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
 	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
 		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
 
 	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
-	m_Rand_Pos.x = rand() % 5000 - 2500;
-	m_Rand_Pos.z = rand() % 5000 - 2500;
+	m_Rand_Pos.x = rand() % 300 - 100;
+	m_Rand_Pos.z = rand() % 300 - 100;
 	m_Rand_Pos.y = 0.0f;
 	m_Enemy_Position = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 	m_Enemy_InitialPosition = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 
 	m_Hp = 3;
 	IsActive = true;
+	
 }
 
 void Enemy::Update(VECTOR player_pos)
@@ -137,6 +138,7 @@ void Enemy::Update(VECTOR player_pos)
 	{
 		m_PlayTime = 0.f;
 	}
+	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
 }
 
 void Enemy::Draw()
@@ -153,7 +155,7 @@ void Enemy::Draw()
 			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 		}
 
-	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
+	
 	MV1DrawModel(m_Enemy_ModelHandle);
 }
 

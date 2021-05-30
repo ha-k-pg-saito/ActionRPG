@@ -4,6 +4,7 @@
 #include"Player.h"
 #include"Camera.h"
 #include"Map.h"
+#include"../EnemyManager.h"
 
 class GameScene
 {
@@ -22,11 +23,12 @@ public:
 	void GameSceneUpdate();
 
 private:
-	int SoundHandle;
-	bool   Push;
-	Map    map;
-	Player player;
-	Camera camera;
+	int          SoundHandle;
+	bool         Push;
+	Map          map;
+	Player       player;
+	Camera       camera;
+	EnemyManager EnemyMng;
 };
 
 #endif
