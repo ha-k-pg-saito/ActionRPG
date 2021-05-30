@@ -20,9 +20,9 @@ public:
 
 public:
 	Enemy() :
-		Base(0.f, 0.9f, 10.f)
+		Base(0.f, 0.9f, 0.f)
 	{
-		m_Speed = (0.5f);
+		m_Speed = (1.f);
 		m_Hp = (3.f);
 	}
 
