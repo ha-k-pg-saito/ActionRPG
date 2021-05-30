@@ -23,6 +23,7 @@ void Map::Init(int maphandle,int grhandle)
 	{
 		MV1SetTextureGraphHandle(m_MapHandle, i, m_GrHandle[i], FALSE);
 	}
+	//もともとのマップデータを100倍している
 	MV1SetScale(m_MapHandle, VECTOR{ 100,100,100 });
 	MV1SetPosition(m_MapHandle, m_StagePos);
 	//モデル全体のコリジョン情報構築
@@ -52,9 +53,6 @@ bool Map::CollisionToModel(VECTOR startpos, VECTOR endpos, VECTOR* intersectpos)
 		*intersectpos= HitPoly.HitPosition;
 	}
 
-// 当たったかどうかを表示する
-	//DrawFormatString(1200, 100, GetColor(255, 255, 255), "Hit Pos %f %f ",HitPoly.HitPosition.x, HitPoly.HitPosition.z);
-	DrawFormatString(100, 300, GetColor(255, 255, 255), "Hit Pos %f %f ",HitPoly.HitPosition.x, HitPoly.HitPosition.z);
 	return true;
 
 }

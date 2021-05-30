@@ -58,11 +58,19 @@ void Player::Init(int modelhandle,int grhandle)
 		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
 
 //ダメージモーション
-	//m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/catattack.mv1");
+	m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/Cat/catdamage.mv1");
 	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] = 
 		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
 	//アタッチしたアニメーションの総時間を取得する
 	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] = 
+		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
+
+//死亡モーション
+	m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/Cat/catdied.mv1");
+	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] =
+		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
+	//アタッチしたアニメーションの総時間を取得する
+	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] =
 		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
 
 #pragma endregion
@@ -75,6 +83,9 @@ void Player::Update()
 	Move();
 	Attack();
 	collision.Update(this);
+
+	//デバッグ用ダメージ関数の呼び出し
+	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
 
 	//現在の再生時間が総再生時間を超えたら再生時間を0に戻す
 	if (m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN]|| m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
@@ -167,8 +178,8 @@ void Player::Move()
 		{
 			m_Pos = HitPos;
 		}
-		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
-		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+		DrawLine3D(m_Pos, m_StartLine, GetColor(255, 255, 255));
+		DrawLine3D(m_StartLine, m_EndLine, GetColor(255, 255, 255));
 		// 画面に移るモデルの移動
 		MV1SetPosition(m_ModelHandle, m_Pos);
 	}
@@ -177,7 +188,6 @@ void Player::Move()
 		//待機モーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
 	}
-	
 }
 
 void Player::DrawHP()
@@ -189,7 +199,7 @@ void Player::DrawHP()
 	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE);
-	else if (m_HitCounter == 4) 
+	else if (m_HitCounter <= 4) 
 	{
 		m_Hp = DrawBox(HPX, HPY, 75, 140, GetColor(0, 255, 0), TRUE);
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DIED], m_PlayTime);

@@ -28,7 +28,7 @@ public:
 		m_AnimHandle{ 0 },
 		m_Direction{ 0 }
 	{
-		m_Speed = 100.f;
+		m_Speed = 40.f;
 		m_Hp = 0.f;
 		m_HitCounter = 0;
 		m_MapRef = map;
