@@ -22,7 +22,7 @@ public:
 	Enemy() :
 		Base(0.f, 0.9f, 0.f)
 	{
-		m_Speed = (1.f);
+		m_Speed = (0.5f);
 		m_Hp = (3.f);
 	}
 
@@ -41,6 +41,7 @@ public:
 	bool IsActive;
 
 	int GetModel() { return m_Enemy_ModelHandle; }
+	VECTOR GetPos() { return m_Enemy_Position; }
 
 private:
 	int    m_Enemy_ModelHandle;		//ƒ‚ƒfƒ‹î•ñ‚ğ•Û‘¶‚·‚é•Ï”
