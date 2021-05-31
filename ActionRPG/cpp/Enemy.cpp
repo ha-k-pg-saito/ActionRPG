@@ -34,7 +34,7 @@ void Enemy::Init()
 
 	m_Hp = 3;
 	IsActive = true;
-	
+	MV1SetupCollInfo(m_Enemy_ModelHandle, -1, 1, 1, 1);
 }
 
 void Enemy::Update(VECTOR player_pos)
@@ -167,6 +167,7 @@ void Enemy::Update(VECTOR player_pos)
 		m_PlayTime = 0.f;
 	}
 	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
+	MV1RefreshCollInfo(m_Enemy_ModelHandle, -1);
 }
 
 void Enemy::Draw()

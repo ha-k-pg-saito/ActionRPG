@@ -3,7 +3,7 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-#include"../h/OnCollision.h"
+#include"../h/Enemy.h"
 
 class Player :public Base
 {	
@@ -31,6 +31,7 @@ public:
 		m_Hp = 0.f;
 		m_HitCounter = 0;
 		m_MapRef = map;
+		m_HeightCapsule = { 0.f,6.f,0 };
 	}
 	Player(VECTOR pos) :
 		Base(pos)
@@ -45,6 +46,7 @@ public:
 	VECTOR GetPos() { return m_Pos; }
 // プレイヤーの移動ベクトル取得
 	VECTOR MoveVecter() { return m_MoveVec; }
+	VECTOR GetHeight() { return m_HeightCapsule; }
 
 public:
 //Initの引数はモデル読み込む時に使う
@@ -85,9 +87,10 @@ private:
 //レイの始点に使う変数
 	VECTOR m_StartLine;
 	VECTOR m_EndLine;
-	
+//カプセルの当たり判定で使用する変数
+	VECTOR m_HeightCapsule;
+
 	Map* m_MapRef;
-	OnColl oncoll;
 
 };
 #endif // !Player_h_

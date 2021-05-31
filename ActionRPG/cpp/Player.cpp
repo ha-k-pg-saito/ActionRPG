@@ -1,13 +1,9 @@
 #include<Math.h>
 #include "../h/Player.h"
 #include"../h/Map.h"
-#include"../h/Collision.h"
-
-Collision collision;
 
 void Player::Init(int modelhandle,int grhandle)
 {
-	oncoll.Init(this);
 	m_ModelHandle = modelhandle;
 #pragma region モデルテクスチャ読み込み・貼り付け
 	m_GrHandle[0] = grhandle;
@@ -75,6 +71,8 @@ void Player::Init(int modelhandle,int grhandle)
 		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
 
 #pragma endregion
+	//　playerのモデルハンドル,フレーム番号,XYZの空間分割
+	MV1SetupCollInfo(m_ModelHandle, -1, 1, 1, 1);
 }
 
 void Player::Update()
@@ -83,8 +81,7 @@ void Player::Update()
 	Rotate();
 	Move();
 	Attack();
-	//collision.Update(this);
-	oncoll.Update(this);
+	//collision.Update(this)
 
 	//デバッグ用ダメージ関数の呼び出し
 	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
@@ -94,6 +91,8 @@ void Player::Update()
 	{
 		m_PlayTime = 0.f;
 	}
+
+	MV1RefreshCollInfo(m_ModelHandle, -1);
 }
 
 //プレイヤー描画

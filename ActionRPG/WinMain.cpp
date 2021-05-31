@@ -17,6 +17,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		return -1;							//エラーが起きたら直ちに終了
 	}
 
+	SetDrawScreen(DX_SCREEN_BACK);
+
 	//ゲームループ
 	while (true)
 	{
@@ -40,7 +42,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 
 	DxLib_End();							 // ＤＸライブラリ使用の終了処理
-	SetDrawScreen(DX_SCREEN_BACK);
 
 	return 0;								 // ソフトの終了 
 }

@@ -5,6 +5,7 @@
 #include"Camera.h"
 #include"Map.h"
 #include"../EnemyManager.h"
+#include"../h/OnCollision.h"
 
 class GameScene
 {
@@ -29,6 +30,7 @@ private:
 	Player       player;
 	Camera       camera;
 	EnemyManager EnemyMng;
+	OnColl		 oncoll;
 };
 
 #endif

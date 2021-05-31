@@ -30,7 +30,10 @@ void GameScene::RunGameScene()
 	EnemyMng.Update(player.GetPos());
 	player.Update();
 	camera.Update(&player);
-
+	for (int i=0;i<EnemyMng.GetEnemyNum();++i)
+	{
+		oncoll.Update(&player, EnemyMng.GetEnemy(i));
+	}
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
 		if (Push == false)
@@ -49,6 +52,7 @@ void GameScene::RunGameScene()
 	map.Draw();
 	player.Draw();
 	EnemyMng.Draw();
+	oncoll.Draw(&player);
 	SoundMng::Instance()->Play("ÉQÅ[ÉÄ", DX_PLAYTYPE_LOOP);
 }
 
