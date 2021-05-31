@@ -1,5 +1,6 @@
 #include "..\h\OnCollision.h"
 #include"../h/Player.h"
+#include"../h/Enemy.h"
 
 void OnColl::Init(Player* player)
 {
@@ -12,9 +13,10 @@ void OnColl::Init(Player* player)
 void OnColl::Update(Player* player)
 {
     MV1RefreshCollInfo(player->GetModel(), -1);
+    //MV1RefreshCollInfo(enemy->GetModel(), -1);
 	SpherePos = VGet( 100.f, 0.f, 100.f );
 
-	HitPolyDim = MV1CollCheck_Sphere(player->GetModel(), -1, SpherePos, 100.f);
+	HitPolyDim = MV1CollCheck_Sphere(player->GetModel(), -1, SpherePos, 10.f);
 
 	DrawSphere3D(SpherePos, 10.f, 8, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 
