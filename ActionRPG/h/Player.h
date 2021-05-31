@@ -3,8 +3,7 @@
 #include"Base.h"
 #include"DxLib.h"
 #include"../h/Map.h"
-
-
+#include"../h/OnCollision.h"
 
 class Player :public Base
 {	
@@ -88,7 +87,8 @@ private:
 	VECTOR m_EndLine;
 	
 	Map* m_MapRef;
-	
+	OnColl oncoll;
+
 };
 #endif // !Player_h_
 

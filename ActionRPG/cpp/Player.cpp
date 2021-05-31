@@ -7,6 +7,7 @@ Collision collision;
 
 void Player::Init(int modelhandle,int grhandle)
 {
+	oncoll.Init(this);
 	m_ModelHandle = modelhandle;
 #pragma region モデルテクスチャ読み込み・貼り付け
 	m_GrHandle[0] = grhandle;
@@ -82,7 +83,8 @@ void Player::Update()
 	Rotate();
 	Move();
 	Attack();
-	collision.Update(this);
+	//collision.Update(this);
+	oncoll.Update(this);
 
 	//デバッグ用ダメージ関数の呼び出し
 	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
@@ -178,8 +180,8 @@ void Player::Move()
 		{
 			m_Pos = HitPos;
 		}
-		DrawLine3D(m_Pos, m_StartLine, GetColor(255, 255, 255));
-		DrawLine3D(m_StartLine, m_EndLine, GetColor(255, 255, 255));
+		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
+		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
 		// 画面に移るモデルの移動
 		MV1SetPosition(m_ModelHandle, m_Pos);
 	}

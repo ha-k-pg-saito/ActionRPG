@@ -52,6 +52,9 @@
     <ClCompile Include="cpp\SoundManager.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\OnCollision.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Player.h">
@@ -88,6 +91,9 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\TitleScene.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\OnCollision.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
