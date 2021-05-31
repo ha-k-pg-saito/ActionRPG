@@ -40,6 +40,8 @@ public:
 
 	bool IsActive;
 
+	int GetModel() { return m_Enemy_ModelHandle; }
+
 private:
 	int    m_Enemy_ModelHandle;		//ƒ‚ƒfƒ‹î•ñ‚ğ•Û‘¶‚·‚é•Ï”
 	int   m_Enemy_AnimHandle[ANIM_NUM];
