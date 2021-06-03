@@ -2,21 +2,32 @@
 #include "../h/Player.h"
 #include"../h/Map.h"
 
-void Player::Init(int modelhandle,int grhandle)
+void Player::Init()
 {
-	m_ModelHandle = modelhandle;
-#pragma region モデルテクスチャ読み込み・貼り付け
-	m_GrHandle[0] = grhandle;
-	m_GrHandle[1] = LoadGraph("Tex/Player/sister_hood.png");
-	m_GrHandle[2] = LoadGraph("Tex/Player/sister_juel.png");
-	m_GrHandle[3] = LoadGraph("Tex/Player/sister_flame.png");
-	m_GrHandle[4] = LoadGraph("Tex/Player/sister_pierce.png");
-	m_GrHandle[5] = LoadGraph("Tex/Player/sister_hair.png");
-	m_GrHandle[6] = LoadGraph("Tex/Player/sister_ahoge.png");
-	m_GrHandle[7] = LoadGraph("Tex/Player/sister_rod.png");
+#pragma region Player関連読み込み
+	const char* file_names[]
+	{
+		"Tex/Player/sister_body.png",
+		"Tex/Player/sister_hood.png",
+		"Tex/Player/sister_juel.png",
+		"Tex/Player/sister_flame.png",
+		"Tex/Player/sister_pierce.png",
+		"Tex/Player/sister_hair.png",
+		"Tex/Player/sister_ahoge.png",
+		"Tex/Player/sister_rod.png"
+	};
+
+	m_ModelHandle = MV1LoadModel("Tex/Player/sister.mv1");
+	//デバッグ用モデル
+	//m_ModelHandle =MV1LoadModel("Tex/Cat/catoriginal.mv1"); 
+
+	for (int i = 0; i <PLAYER_TEX_NUM; i++)
+	{
+		m_GrHandle[i] = LoadGraph(file_names[i]);
+	}
 	
 	//モデルに貼るテクスチャ分だけfor文を回す
-	for (int i=0;i<8;i++)
+	for (int i = 0; i < PLAYER_TEX_NUM; i++)
 	{
 		MV1SetTextureGraphHandle(m_ModelHandle, i, m_GrHandle[i], FALSE);
 	
@@ -81,7 +92,6 @@ void Player::Update()
 	Rotate();
 	Move();
 	Attack();
-	//collision.Update(this)
 
 	//デバッグ用ダメージ関数の呼び出し
 	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
@@ -97,8 +107,12 @@ void Player::Update()
 
 //プレイヤー描画
 void Player::Draw()
-{
+{	
 	MV1DrawModel(m_ModelHandle);
+#ifdef _DEBUG
+	DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
+	DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+#endif
 	DrawHP();
 }
 
@@ -109,8 +123,8 @@ void Player::Rotate()
 	float RotateSpeed = 5.f;
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_D)) { Digree += RotateSpeed; }
-	else if (CheckHitKey(KEY_INPUT_A)) { Digree -= RotateSpeed; }
+	if (CheckHitKey(KEY_INPUT_D))       Digree += RotateSpeed; 
+	else if (CheckHitKey(KEY_INPUT_A))  Digree -= RotateSpeed; 
 	
 	if (Digree != 0.f)
 	{
@@ -152,8 +166,8 @@ void Player::Move()
 	{
 		//atan2を使うことで現在の向いている方向から180振り向く
 		float Rad = atan2(-m_MoveVec.x, -m_MoveVec.z);
-		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 		m_Digree_Y = Rad * 180.f / DX_PI_F;
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 		//走るアニメーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 		
@@ -167,20 +181,19 @@ void Player::Move()
 		}
 
 		//初期始点値からどれくらいずらすのか
-		VECTOR vertical{ 0,6,0 };
+		VECTOR vertical{ 0,4,0 };
 		//始点は現在のポジションと移動量を保存している変数を足している
 		m_StartLine = VAdd(m_Pos, m_MoveVec);
 		m_StartLine.y +=vertical.y ;
 		//初期始点値からどれくらい下にレイを出すのか
-		VECTOR DownLine{ 0,-20,0 };
+		VECTOR DownLine{ 0,-16,0 };
 		m_EndLine = VAdd(m_StartLine, DownLine);
 		//出したレイのマップとのあたり判定
 		if (m_MapRef->CollisionToModel(m_StartLine, m_EndLine, &HitPos))
 		{
 			m_Pos = HitPos;
 		}
-		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
-		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+	
 		// 画面に移るモデルの移動
 		MV1SetPosition(m_ModelHandle, m_Pos);
 	}
@@ -214,8 +227,11 @@ void Player::Release()
 {
 	//3Dモデルの削除
 	MV1DeleteModel(m_ModelHandle);
-	//テクスチャの削除
-	DeleteGraph(m_GrHandle[8]);
+	for (int i = 0; i < 8; i++)
+	{
+		//テクスチャの削除
+		DeleteGraph(m_GrHandle[8]);
+	}
 }
 
 void Player::Attack()

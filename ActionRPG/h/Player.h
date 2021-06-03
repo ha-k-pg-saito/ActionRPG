@@ -5,7 +5,7 @@
 #include"../h/Map.h"
 #include"../h/Enemy.h"
 
-class Player :public Base
+class Player :public CharBase
 {	
 //アニメーションを管理するenum
 	enum ANIM_LIST
@@ -21,20 +21,20 @@ class Player :public Base
 public:
 	Player(Map* map) :
 		//Base()内で初期化しているのはポジション変数
-		Base(0.f, 0.f, 0.f),
+		CharBase(0.f, 0.f, 0.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
-		m_Direction{ 0 }
+		m_Direction{ 0 },
+		m_HitCounter{0},
+		m_HeightCapsule { 0.f,6.f,0 }
 	{
 		m_Speed = 40.f;
 		m_Hp = 0.f;
-		m_HitCounter = 0;
 		m_MapRef = map;
-		m_HeightCapsule = { 0.f,6.f,0 };
 	}
 	Player(VECTOR pos) :
-		Base(pos)
+		CharBase(pos)
 	{}
 
 	~Player() { Release(); }
@@ -42,15 +42,16 @@ public:
 public:
 // プレイヤーのモデル取得
 	int    GetModel() { return m_ModelHandle; }
+	VECTOR SetPos(VECTOR movevec) { return m_MoveVec; }
 //プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 // プレイヤーの移動ベクトル取得
-	VECTOR MoveVecter() { return m_MoveVec; }
+	VECTOR GetMoveVec() { return m_MoveVec; }
+//プレイヤの高さを取得
 	VECTOR GetHeight() { return m_HeightCapsule; }
 
 public:
-//Initの引数はモデル読み込む時に使う
-	void Init(int modelhandle, int grhandle);
+	void Init();
 	void Update();
 	void Draw();
 	void DrawHP(); 
@@ -91,7 +92,9 @@ private:
 	VECTOR m_HeightCapsule;
 
 	Map* m_MapRef;
-
+	
+//Playerのテクスチャ数
+#define PLAYER_TEX_NUM  8
 };
 #endif // !Player_h_
 

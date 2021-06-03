@@ -6,16 +6,17 @@
 class OnColl
 {
 public:
-	OnColl() :
-		m_SpherePos{0}
-	{}
+	OnColl() {}
 	~OnColl() {}
 
 	void Update(Player* player, Enemy* enemy);
-	void Draw(Player* player);
+	void Draw(Player* player,Enemy* enemy);
 
-	MV1_COLL_RESULT_POLY_DIM HitPolyDim;
-	VECTOR m_SpherePos;
+	VECTOR m_CharVec;
+	VECTOR m_PushVec;
+	VECTOR m_CharPos;
+	float  m_Length;
+	VECTOR m_MoveVec;
 };
 
 #endif

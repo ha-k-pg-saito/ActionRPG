@@ -7,33 +7,30 @@ extern SceneStep g_SceneStep;
 
 void GameScene::InitGameScene()
 {
-	// モデルのテクスチャ読み込み
-	int PlayerGrHandle    = LoadGraph("Tex/Player/sister_body.png");
-	// モデルの読み込み
-	int PlayerModelHandle = MV1LoadModel("Tex/Player/sister.mv1");
-	//デバッグ用敵モデル読み込み
-	//int PlayerModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
+	
 	//マップのテクスチャ読み込み
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み
 	int MapHandle = MV1LoadModel("Tex/Stage/map2.mv1");
-	map.Init(MapHandle, MapGrHandle);
-	player.Init(PlayerModelHandle, PlayerGrHandle);
+	Map.Init();
+	Player.Init();
 	EnemyMng.Init();
 	SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ゲーム");
+	//SoundMng::Instance()->Play("ゲーム", DX_PLAYTYPE_LOOP);
 	Push = true;
 	g_SceneStep = SceneStep::Run;
 }
 
 void GameScene::RunGameScene()
 {
-	EnemyMng.Update(player.GetPos());
-	player.Update();
-	camera.Update(&player);
+	EnemyMng.Update(Player.GetPos());
+	Player.Update();
+	Camera.Update(&Player);
 	for (int i=0;i<EnemyMng.GetEnemyNum();++i)
 	{
-		oncoll.Update(&player, EnemyMng.GetEnemy(i));
+		oncoll.Update(&Player, EnemyMng.GetEnemy(i));
 	}
+	Push = false;
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
 		if (Push == false)
@@ -42,18 +39,18 @@ void GameScene::RunGameScene()
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
-	else
-	{
-		Push = false;
-	}
+
 	EnemyMng.CreateEnemy();
 
-
-	map.Draw();
-	player.Draw();
+	Map.Draw();
+	Player.Draw();
 	EnemyMng.Draw();
-	oncoll.Draw(&player);
-	SoundMng::Instance()->Play("ゲーム", DX_PLAYTYPE_LOOP);
+	for (int i = 0; i < EnemyMng.GetEnemyNum(); ++i)
+	{
+		oncoll.Draw(&Player, EnemyMng.GetEnemy(i));
+	}
+	
+
 }
 
 void GameScene::FinishGameScene()

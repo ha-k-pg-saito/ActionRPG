@@ -13,7 +13,7 @@ public:
 	GameScene() :
 		SoundHandle (0),
 		Push(false),
-		player(&map)
+		Player(&Map)
 	{}
 	~GameScene() {}
 	void InitGameScene();
@@ -26,9 +26,9 @@ public:
 private:
 	int          SoundHandle;
 	bool         Push;
-	Map          map;
-	Player       player;
-	Camera       camera;
+	Map          Map;
+	Player       Player;
+	Camera       Camera;
 	EnemyManager EnemyMng;
 	OnColl		 oncoll;
 };

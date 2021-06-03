@@ -3,16 +3,16 @@
 
 #include"DxLib.h"
 
-class Base
+class CharBase
 {
 public:
-	Base();		
+	CharBase();		
 
-	Base(float x, float y, float z);
+	CharBase(float x, float y, float z);
 
-	Base(VECTOR pos);
+	CharBase(VECTOR pos);
 
-	virtual ~Base() {}		
+	virtual ~CharBase() {}		
 
 //Œp³ŠÖ˜A‚Íprotected‚ğg—p
 protected:				

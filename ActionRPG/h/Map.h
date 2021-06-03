@@ -17,7 +17,7 @@ public:
 	int GetModel(){ return m_MapHandle; }
 
 public:
-	void Init(int maphandle,int grhandle);
+	void Init();
 	void Draw();
 	bool CollisionToModel(VECTOR startpos, VECTOR endpos,VECTOR* intersectpos);
 
@@ -29,6 +29,7 @@ private:
 	VECTOR m_StagePos;
 	//DxLib‚É‚ ‚é‚ ‚½‚è”»’è—p‚Ì–ß‚è’l+•Ï”
 	MV1_COLL_RESULT_POLY HitPoly;
-};
 
+#define MAP_TEX_NUM      10
+};
 #endif

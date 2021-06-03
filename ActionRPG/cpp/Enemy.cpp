@@ -1,5 +1,5 @@
 #include"../h/Enemy.h"
-#include"math.h"
+#include<Math.h>
 
 void Enemy::Init()
 {
@@ -109,11 +109,11 @@ void Enemy::Update(VECTOR player_pos)
 		// ˆê’è‹——£‚É‚È‚é‚ÆPlayer‚Ì•û‚ÉˆÚ“®
 		if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
 		{
-			if (m_Distance_Pos.x >= 10.0f) {
+			if (m_Distance_Pos.x >= 5.0f) {
 				m_Enemy_Position.x += m_Enemy_direction_x * m_Speed;
 				m_Enemy_MoveFlag = TRUE;
 			}
-			if (m_Distance_Pos.z >= 10.0f) {
+			if (m_Distance_Pos.z >= 5.0f) {
 				m_Enemy_Position.z += m_Enemy_direction_z * m_Speed;
 				m_Enemy_MoveFlag = TRUE;
 			}

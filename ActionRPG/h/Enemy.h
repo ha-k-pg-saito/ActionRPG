@@ -4,7 +4,7 @@
 #include"Base.h"
 #include"../h/Map.h"
 
-class Enemy :public Base
+class Enemy :public CharBase
 {
 public:
 	//アニメーションリスト
@@ -20,14 +20,15 @@ public:
 
 public:
 	Enemy() :
-		Base(0.f, 0.9f, 0.f)
+		CharBase(0.f, 0.9f, 0.f)
 	{
 		m_Speed = (0.5f);
 		m_Hp = (3.f);
+		m_EnemyHeight = { 0.f,2.f,0 };
 	}
 
 	Enemy(VECTOR pos) :
-		Base(pos)
+		CharBase(pos)
 	{}
 
 	~Enemy() {}
@@ -42,6 +43,8 @@ public:
 
 	int GetModel() { return m_Enemy_ModelHandle; }
 	VECTOR GetPos() { return m_Enemy_Position; }
+	VECTOR GetHeight() { return m_EnemyHeight; }
+
 
 private:
 	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
@@ -72,6 +75,8 @@ private:
 	VECTOR m_EndLine;
 
 	Map m_MapRef;
+
+	VECTOR m_EnemyHeight;
 };
 
 #endif

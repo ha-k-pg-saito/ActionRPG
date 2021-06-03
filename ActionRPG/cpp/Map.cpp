@@ -1,30 +1,40 @@
 #include"../h/Map.h"
 
-void Map::Init(int maphandle,int grhandle)
+void Map::Init()
 {
-#pragma region マップモデル読み込み
+#pragma region マップ関連読み込み
+	const char* file_name[]
+	{
+		"Tex/Stage/rock.jpg",
+		"Tex/Stage/ground.jpg",
+		"Tex/Stage/bark.jpg",
+		"Tex/Stage/wood.jpg",
+		"Tex/Stage/wood kawa.jpg",
+		"Tex/Stage/wood yuka.jpg",
+		"Tex/Stage/wood kabe.jpg",
+		"Tex/Stage/grass.jpg",
+		"Tex/Stage/bridge.jpg",
+		"Tex/Stage/water.jpg"
+	};
+
+	for (int i = 0; i < MAP_TEX_NUM; i++)
+	{
+		m_GrHandle[i] = LoadGraph(file_name[i]);
+	}
+
 	//初期マップモデル
-	m_MapHandle = maphandle;
+	m_MapHandle = MV1LoadModel("Tex/Stage/map2.mv1");
 	//初期マップテクスチャ
-	m_GrHandle[0] = grhandle;
-	m_GrHandle[1] =  LoadGraph("Tex/Stage/ground.jpg");
-	m_GrHandle[2] =  LoadGraph("Tex/Stage/bark.jpg");
-	m_GrHandle[3] =  LoadGraph("Tex/Stage/wood.jpg");
-	m_GrHandle[4] =  LoadGraph("Tex/Stage/wood kawa.jpg");
-	m_GrHandle[5] =  LoadGraph("Tex/Stage/wood yuka.jpg");
-	m_GrHandle[6] =  LoadGraph("Tex/Stage/wood kabe.jpg");
-	m_GrHandle[7] =  LoadGraph("Tex/Stage/grass.jpg");
-	m_GrHandle[8] =  LoadGraph("Tex/Stage/bridge.jpg");
-	m_GrHandle[9] =  LoadGraph("Tex/Stage/water.jpg");
 
 #pragma endregion
 	//モデルに貼るテクスチャの数分だけfor文を回す
-	for (int i = 0; i <10 ; i++)
+	for (int i = 0; i <MAP_TEX_NUM ; i++)
 	{
 		MV1SetTextureGraphHandle(m_MapHandle, i, m_GrHandle[i], FALSE);
 	}
 	//もともとのマップデータを100倍している
-	MV1SetScale(m_MapHandle, VECTOR{ 100,100,100 });
+	VECTOR Scale{ 100.f,100.f,100.f };
+	MV1SetScale(m_MapHandle, Scale);
 	MV1SetPosition(m_MapHandle, m_StagePos);
 	//モデル全体のコリジョン情報構築
 	MV1SetupCollInfo(m_MapHandle, -1, 8, 8, 8);
