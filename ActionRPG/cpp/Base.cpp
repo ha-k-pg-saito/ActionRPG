@@ -8,17 +8,17 @@ CharBase::CharBase() :
 {
 }
 
-CharBase::CharBase(float x, float y, float z) :
+CharBase::CharBase(float x, float y, float z,float hp,float speed) :
 	m_Pos(VGet(x, y, z)),
-	m_Hp{ 0.f },
-	m_Speed{ 0.f }
+	m_Hp{ hp },
+	m_Speed{ speed }
 {
 }
 
-CharBase::CharBase(VECTOR pos) :
+CharBase::CharBase(VECTOR pos, float hp, float speed) :
 	m_Pos(pos),
-	m_Hp{ 0 },
-	m_Speed{ 0 }
+	m_Hp{ hp },
+	m_Speed{ speed }
 {
 }
 

@@ -4,15 +4,15 @@
 #include"Player.h"
 #include"Camera.h"
 #include"Map.h"
-#include"../EnemyManager.h"
+#include"../h/EnemyManager.h"
 #include"../h/OnCollision.h"
 
 class GameScene
 {
 public:
 	GameScene() :
-		SoundHandle (0),
-		Push(false),
+		m_SoundHandle (0),
+		IsPush(false),
 		Player(&Map)
 	{}
 	~GameScene() {}
@@ -24,13 +24,13 @@ public:
 	void GameSceneUpdate();
 
 private:
-	int          SoundHandle;
-	bool         Push;
+	int          m_SoundHandle;
+	bool         IsPush;
 	Map          Map;
 	Player       Player;
 	Camera       Camera;
 	EnemyManager EnemyMng;
-	OnColl		 oncoll;
+	OnColl		 Oncoll;
 };
 
 #endif

@@ -8,9 +8,9 @@ class CharBase
 public:
 	CharBase();		
 
-	CharBase(float x, float y, float z);
+	CharBase(float x, float y, float z,float hp,float speed);
 
-	CharBase(VECTOR pos);
+	CharBase(VECTOR pos, float hp, float speed);
 
 	virtual ~CharBase() {}		
 

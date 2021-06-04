@@ -6,8 +6,8 @@
 #include"../h/Enemy.h"
 
 class Player :public CharBase
-{	
-//アニメーションを管理するenum
+{
+	//アニメーションを管理するenum
 	enum ANIM_LIST
 	{
 		ANIM_WAIT,
@@ -20,8 +20,8 @@ class Player :public CharBase
 
 public:
 	Player(Map* map) :
-		//Base()内で初期化しているのはポジション変数
-		CharBase(0.f, 0.f, 0.f),
+		//CharBase({pos},hp,speed)を初期化している
+		CharBase({ 0.f, 0.f, 0.f }, 0, 40.f), 
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
@@ -29,12 +29,10 @@ public:
 		m_HitCounter{0},
 		m_HeightCapsule { 0.f,6.f,0 }
 	{
-		m_Speed = 40.f;
-		m_Hp = 0.f;
 		m_MapRef = map;
 	}
-	Player(VECTOR pos) :
-		CharBase(pos)
+	Player(VECTOR pos, float hp, float speed) :
+		CharBase(pos, hp, speed)
 	{}
 
 	~Player() { Release(); }

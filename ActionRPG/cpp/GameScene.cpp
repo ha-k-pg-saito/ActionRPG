@@ -15,9 +15,9 @@ void GameScene::InitGameScene()
 	Map.Init();
 	Player.Init();
 	EnemyMng.Init();
-	SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ÉQÅ[ÉÄ");
+	m_SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ÉQÅ[ÉÄ");
 	//SoundMng::Instance()->Play("ÉQÅ[ÉÄ", DX_PLAYTYPE_LOOP);
-	Push = true;
+	IsPush = true;
 	g_SceneStep = SceneStep::Run;
 }
 
@@ -28,14 +28,14 @@ void GameScene::RunGameScene()
 	Camera.Update(&Player);
 	for (int i=0;i<EnemyMng.GetEnemyNum();++i)
 	{
-		oncoll.Update(&Player, EnemyMng.GetEnemy(i));
+		Oncoll.Update(&Player, EnemyMng.GetEnemy(i));
 	}
-	Push = false;
+	IsPush = false;
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
-		if (Push == false)
+		if (IsPush == false)
 		{
-			Push = true;
+			IsPush = true;
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
@@ -47,7 +47,7 @@ void GameScene::RunGameScene()
 	EnemyMng.Draw();
 	for (int i = 0; i < EnemyMng.GetEnemyNum(); ++i)
 	{
-		oncoll.Draw(&Player, EnemyMng.GetEnemy(i));
+		Oncoll.Draw(&Player, EnemyMng.GetEnemy(i));
 	}
 	
 

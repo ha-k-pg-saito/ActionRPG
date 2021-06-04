@@ -1,4 +1,4 @@
-#include "..\h\OnCollision.h"
+#include"../h/OnCollision.h"
 
 void OnColl::Update(Player* player,Enemy* enemy)
 {
@@ -10,9 +10,9 @@ void OnColl::Update(Player* player,Enemy* enemy)
   
     //ˆÚ“®Œã‚ÌPlayer‚ÌÀ•WŽZo
     m_CharPos = VAdd(player->GetPos(), player->GetMoveVec());
-
+    
     //  Player‚Ì”¼Œa‚Q@Enemy‚Ì”¼Œa‚Í‚S
-    if (HitCheck_Capsule_Capsule(player->GetPos(), PlayerTop, 2.f, enemy->GetPos(), EnemyTop, 4.f) == TRUE)
+    if (HitCheck_Capsule_Capsule(m_CharPos, PlayerTop, 2.f, enemy->GetPos(), EnemyTop, 4.f) == TRUE)
     {
 #ifdef _DEBUG
         DrawString(1700, 100, "Hit",GetColor(255, 255, 255));

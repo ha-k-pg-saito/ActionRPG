@@ -20,15 +20,13 @@ public:
 
 public:
 	Enemy() :
-		CharBase(0.f, 0.9f, 0.f)
+		CharBase({ 0.f, 0.9f, 0.f }, 3.f, 0.5f)
 	{
-		m_Speed = (0.5f);
-		m_Hp = (3.f);
 		m_EnemyHeight = { 0.f,2.f,0 };
 	}
 
-	Enemy(VECTOR pos) :
-		CharBase(pos)
+	Enemy(VECTOR pos, float hp, float speed) :
+		CharBase(pos, hp, speed)
 	{}
 
 	~Enemy() {}
