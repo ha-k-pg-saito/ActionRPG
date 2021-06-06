@@ -21,13 +21,14 @@ class Player :public CharBase
 public:
 	Player(Map* map) :
 		//CharBase({pos},hp,speed)を初期化している
-		CharBase({ 0.f, 0.f, 0.f }, 0, 40.f), 
+		CharBase({ 0.f, 0.f, 0.f }, 0, 40.f),
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
 		m_AnimHandle{ 0 },
-		m_Direction{ 0 },
-		m_HitCounter{0},
-		m_HeightCapsule { 0.f,6.f,0 }
+		m_Direction{ 0.f,0.f,1.f },
+		m_HitCounter{ 0 },
+		m_HeightCapsule{ 0.f,6.f,0.f },
+		m_RotateSpeed{ 5.f }
 	{
 		m_MapRef = map;
 	}
@@ -40,11 +41,12 @@ public:
 public:
 // プレイヤーのモデル取得
 	int    GetModel() { return m_ModelHandle; }
-	VECTOR SetPos(VECTOR movevec) { return m_MoveVec; }
+//pos変数に反映させる
+	VECTOR SetPos(VECTOR movevec) { return m_Pos; }
 //プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 // プレイヤーの移動ベクトル取得
-	VECTOR GetMoveVec() { return m_MoveVec; }
+	VECTOR GetMoveVec() { return m_OldMoveVec; }
 //プレイヤの高さを取得
 	VECTOR GetHeight() { return m_HeightCapsule; }
 
@@ -69,9 +71,9 @@ private:
 	int m_GrHandle[8];
 
 //アニメーションに使用する変数
-	int   m_AnimHandle[ANIM_NUM];
-	int   m_AnimAttachIndex[ANIM_NUM];
-	int   m_AnimTotalTime[ANIM_NUM];
+	int   m_AnimHandle[ANIM_NUM];			//アニメーションハンドル
+	int   m_AnimAttachIndex[ANIM_NUM];		//アニメーション番号
+	int   m_AnimTotalTime[ANIM_NUM];		//アニメーション総再生時間
 	float m_PlayTime;						//アニメーション時間
 
 //計算で使う変数
@@ -82,19 +84,20 @@ private:
 //当たった回数を保存する変数
 	int m_HitCounter;
 //キャラの移動量保存変数
-	VECTOR m_MoveVec;       
+	VECTOR m_OldMoveVec;       
 //レイの始点に使う変数
 	VECTOR m_StartLine;
 	VECTOR m_EndLine;
 //カプセルの当たり判定で使用する変数
 	VECTOR m_HeightCapsule;
 
+//回転スピード
+	float m_RotateSpeed;
+
+//マップモデル初期化
 	Map* m_MapRef;
 	
 //Playerのテクスチャ数
 #define PLAYER_TEX_NUM  8
 };
 #endif // !Player_h_
-
-
-

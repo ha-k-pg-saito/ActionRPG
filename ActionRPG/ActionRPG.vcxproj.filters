@@ -43,9 +43,6 @@
     <ClCompile Include="cpp\Map.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\Collision.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
     <ClCompile Include="cpp\OnCollision.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\EnemyManager.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,9 +81,6 @@
     <ClInclude Include="h\Map.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\Collision.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
@@ -94,6 +91,15 @@
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\OnCollision.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\EnemyManager.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Calculation.h">
+      <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Animation.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>

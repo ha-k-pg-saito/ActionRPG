@@ -9,26 +9,22 @@ void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;
 
-	m_Push = true;
+	IsPush = true;
 }
 
 void ResultScene::RunResultScene()
 {
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "ResultScene");
-
+	IsPush = false;
 	
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
 	{
-		if (m_Push == false)
+		if (IsPush == false)
 		{
-			m_Push = true;
+			IsPush = true;
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
-	else
-	{
-		m_Push = false;
-	}
+
 }
 
 void ResultScene::FinishResultScene()

@@ -1,6 +1,7 @@
 #include<Math.h>
 #include "../h/Player.h"
 #include"../h/Map.h"
+#include"../h/Calculation.h"
 
 void Player::Init()
 {
@@ -24,17 +25,12 @@ void Player::Init()
 	for (int i = 0; i <PLAYER_TEX_NUM; i++)
 	{
 		m_GrHandle[i] = LoadGraph(file_names[i]);
-	}
-	
-	//モデルに貼るテクスチャ分だけfor文を回す
-	for (int i = 0; i < PLAYER_TEX_NUM; i++)
-	{
 		MV1SetTextureGraphHandle(m_ModelHandle, i, m_GrHandle[i], FALSE);
-	
 		MV1SetMaterialAmbColor(m_ModelHandle, i ,GetColorF(0.5f, 0.5f, 0.5f, 1.f));
 	}
 #pragma endregion 
 	
+	MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, 0.f, 0.f));
 	//マテリアル関数でジュエルだけを発光
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
 	
@@ -119,23 +115,24 @@ void Player::Draw()
 //プレイヤーの回転
 void Player::Rotate()
 {
-	float Digree = 0.f;
-	float RotateSpeed = 5.f;
+	float Angle{ 0.f };
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_D))       Digree += RotateSpeed; 
-	else if (CheckHitKey(KEY_INPUT_A))  Digree -= RotateSpeed; 
-	
-	if (Digree != 0.f)
+	if (CheckHitKey(KEY_INPUT_D))  Angle += m_RotateSpeed;
+	else if (CheckHitKey(KEY_INPUT_A))  Angle -= m_RotateSpeed;
+
+	if (Angle != 0.f)
 	{
-		m_Digree_Y += Digree;
+		m_Digree_Y += Angle;
 		//度数法からラジアンに変換
-		float Rad = m_Digree_Y * DX_PI_F / 180.0f;
+		float Rad = m_Digree_Y * DX_PI_F / 180.f;
 
 		//３Dの向きベクトル算出(単位ベクトル＝１)
 		m_Direction.x = sinf(Rad);
 		m_Direction.z = cosf(Rad);
-	
+		m_OldMoveVec.x = m_Direction.x * (m_RotateSpeed * 1 / 60);
+		m_OldMoveVec.z = m_Direction.z * (m_RotateSpeed * 1 / 60);
+
 		//モデルの回転
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
 	}
@@ -143,47 +140,57 @@ void Player::Rotate()
 
 void Player::Move()
 {
-	//一時的に移動量を保存する
-	m_MoveVec = { 0.f };
+//一時的に移動量を保存する
+	VECTOR MoveVec{ 0.f };
 #pragma region 移動処理 
 	//向いている方向に移動
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		m_MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
-		m_MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
+		MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
+	    MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
 	}
 	else if (CheckHitKey(KEY_INPUT_S)) 
 	{
-		m_MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
-		m_MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
-	}	
+		MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
+		MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
+	}
 
 #pragma endregion
+	if (MoveVec.x == 0.f && MoveVec.z == 0.f)
+	{
+		MoveVec = Lerp(m_OldMoveVec, MoveVec, 0.2);
+	}
+	else
+	{
+		MoveVec = Slerp(m_OldMoveVec, MoveVec, 0.2);
+	}
 	
+	
+	//過去の移動ベクトル保存
+	m_OldMoveVec = MoveVec;
+
 	//移動したのかを調べて移動していたならアニメーションする
-	if (m_MoveVec.x != 0.f || m_MoveVec.z != 0.f)
+	if (VSize(MoveVec) >= 0.1f)
 	{
 		//atan2を使うことで現在の向いている方向から180振り向く
-		float Rad = atan2(-m_MoveVec.x, -m_MoveVec.z);
+		float Rad = atan2(-MoveVec.x, -MoveVec.z);
+
 		m_Digree_Y = Rad * 180.f / DX_PI_F;
-		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.f, Rad, 0.f));
 		//走るアニメーション
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
 		
 		VECTOR CenterPos = m_Pos;
 		CenterPos.y += 6;
 		//当たったところを終点にする
-		VECTOR HitPos = { 0 };
-		if (m_MapRef->CollisionToModel(CenterPos,VAdd(CenterPos,m_MoveVec),&HitPos))
-		{
-			return;
-		}
+		VECTOR HitPos{ 0.f };
+		if (m_MapRef->CollisionToModel(CenterPos, VAdd(CenterPos, MoveVec), &HitPos))	return;
 
 		//初期始点値からどれくらいずらすのか
-		VECTOR vertical{ 0,4,0 };
+		VECTOR vertical{ 0.f,4.f,0.f };
 		//始点は現在のポジションと移動量を保存している変数を足している
-		m_StartLine = VAdd(m_Pos, m_MoveVec);
+		m_StartLine = VAdd(m_Pos, MoveVec);
 		m_StartLine.y +=vertical.y ;
 		//初期始点値からどれくらい下にレイを出すのか
 		VECTOR DownLine{ 0,-16,0 };
@@ -213,7 +220,7 @@ void Player::DrawHP()
 	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); 
 	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE);
-	else if (m_HitCounter <= 4) 
+	else
 	{
 		m_Hp = DrawBox(HPX, HPY, 75, 140, GetColor(0, 255, 0), TRUE);
 		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DIED], m_PlayTime);
@@ -227,10 +234,10 @@ void Player::Release()
 {
 	//3Dモデルの削除
 	MV1DeleteModel(m_ModelHandle);
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < PLAYER_TEX_NUM; i++)
 	{
 		//テクスチャの削除
-		DeleteGraph(m_GrHandle[8]);
+		DeleteGraph(m_GrHandle[i]);
 	}
 }
 

@@ -11,8 +11,8 @@ class GameScene
 {
 public:
 	GameScene() :
-		m_SoundHandle (0),
-		IsPush(false),
+		m_SoundHandle{ 0 },
+		IsPush{ true },
 		Player(&Map)
 	{}
 	~GameScene() {}
@@ -32,5 +32,4 @@ private:
 	EnemyManager EnemyMng;
 	OnColl		 Oncoll;
 };
-
 #endif

@@ -6,6 +6,11 @@
 class ResultScene
 {
 public:
+	ResultScene() :
+		IsPush{ true }
+	{}
+	~ResultScene() {}
+
 	void InitResultScene();
 	void RunResultScene();
 	void FinishResultScene();
@@ -14,7 +19,6 @@ public:
 	void ResultSceneUpdate();
 
 private:
-	bool m_Push;
+	bool IsPush;
 };
-
 #endif

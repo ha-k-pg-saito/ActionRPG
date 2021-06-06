@@ -22,6 +22,4 @@ private:
 	VECTOR	m_Pos;				// カメラ座標
 	VECTOR	m_Target;			// 注視点座標
 };
-
-
 #endif

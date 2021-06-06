@@ -155,6 +155,7 @@
     <ClCompile Include="cpp\Camera.cpp" />
     <ClCompile Include="cpp\Collision.cpp" />
     <ClCompile Include="cpp\Enemy.cpp" />
+    <ClCompile Include="cpp\EnemyManager.cpp" />
     <ClCompile Include="cpp\GameScene.cpp" />
     <ClCompile Include="cpp\Map.cpp" />
     <ClCompile Include="cpp\OnCollision.cpp" />
@@ -163,15 +164,16 @@
     <ClCompile Include="cpp\Scene.cpp" />
     <ClCompile Include="cpp\SoundManager.cpp" />
     <ClCompile Include="cpp\TitleScene.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="h\Animation.h" />
     <ClInclude Include="h\Base.h" />
+    <ClInclude Include="h\Calculation.h" />
     <ClInclude Include="h\Camera.h" />
     <ClInclude Include="h\Collision.h" />
     <ClInclude Include="h\Enemy.h" />
+    <ClInclude Include="h\EnemyManager.h" />
     <ClInclude Include="h\GameScene.h" />
     <ClInclude Include="h\Map.h" />
     <ClInclude Include="h\OnCollision.h" />

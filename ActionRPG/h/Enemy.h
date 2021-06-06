@@ -76,5 +76,4 @@ private:
 
 	VECTOR m_EnemyHeight;
 };
-
 #endif

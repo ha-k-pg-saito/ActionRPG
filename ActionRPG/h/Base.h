@@ -20,6 +20,4 @@ protected:
 	float   m_Hp;		//Hp
 	float  m_Speed;		//スピード
 };
-
-
 #endif

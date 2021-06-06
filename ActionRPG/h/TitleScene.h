@@ -6,6 +6,14 @@
 class TitleScene
 {
 public:
+
+	TitleScene() :
+		IsPush{ true },
+		m_FrameCounter{ 0 },
+		m_GrHandle{ 0 },
+		m_SoundHandle{ 0 }
+	{}
+	~TitleScene() {}
 	void InitTitleScene();
 	void RunTitleScene();
 	void FinishTitleScene();
@@ -14,10 +22,9 @@ public:
 	void TitleSceneUpdate();
 
 private:
-	bool m_Push;
+	bool IsPush;
 	int  m_FrameCounter;			
 	int  m_GrHandle;
 	int  m_SoundHandle;
 };
-
 #endif

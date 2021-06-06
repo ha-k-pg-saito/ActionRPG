@@ -7,7 +7,6 @@ extern SceneStep g_SceneStep;
 
 void GameScene::InitGameScene()
 {
-	
 	//マップのテクスチャ読み込み
 	int MapGrHandle = LoadGraph("Tex/Stage/rock.jpg");
 	//マップモデルの読み込み

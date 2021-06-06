@@ -10,7 +10,7 @@ void TitleScene::InitTitleScene()
 	m_SoundHandle = SoundMng::Instance()->Load("Sound/Title.mp3", "Title");
 	m_GrHandle = LoadGraph("Tex/Title.png");
 
-	m_Push = true;
+	IsPush = true;
 	m_FrameCounter = 0;
 
 	g_SceneStep = SceneStep::Run;
@@ -19,18 +19,14 @@ void TitleScene::InitTitleScene()
 void TitleScene::RunTitleScene()
 {
 	m_FrameCounter += 1;
-
+	IsPush = false;
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (m_Push == false)
+		if (IsPush == false)
 		{
-			m_Push = true;
+			IsPush = true;
 			g_SceneStep = SceneStep::Finish;
 		}
-	}
-	else
-	{
-		m_Push = false;
 	}
 
 	DrawGraph(0, 0, m_GrHandle, TRUE);

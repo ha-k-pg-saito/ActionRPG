@@ -6,17 +6,15 @@
 class OnColl
 {
 public:
-	OnColl() {}
+	OnColl() :
+		m_OldCharPos{ 0.f }
+	{}
 	~OnColl() {}
 
 	void Update(Player* player, Enemy* enemy);
 	void Draw(Player* player,Enemy* enemy);
 
-	VECTOR m_CharVec;
-	VECTOR m_PushVec;
+	VECTOR m_OldCharPos;
 	VECTOR m_CharPos;
-	float  m_Length;
-	VECTOR m_MoveVec;
 };
-
 #endif
