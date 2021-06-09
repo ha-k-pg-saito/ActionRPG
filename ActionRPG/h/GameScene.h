@@ -30,6 +30,6 @@ private:
 	Player       Player;
 	Camera       Camera;
 	EnemyManager EnemyMng;
-	OnColl		 Oncoll;
+	OnColl		 OnColl;
 };
 #endif

@@ -1,12 +1,11 @@
 #include<Math.h>
 #include "../h/Player.h"
-#include"../h/Map.h"
 #include"../h/Calculation.h"
 
 void Player::Init()
 {
-#pragma region Player関連読み込み
-	const char* file_names[]
+#pragma region モデル・テクスチャ文字列
+	const char* file_names[] =
 	{
 		"Tex/Player/sister_body.png",
 		"Tex/Player/sister_hood.png",
@@ -22,6 +21,7 @@ void Player::Init()
 	//デバッグ用モデル
 	//m_ModelHandle =MV1LoadModel("Tex/Cat/catoriginal.mv1"); 
 
+	//テクスチャの数だけ、for文を回している
 	for (int i = 0; i <PLAYER_TEX_NUM; i++)
 	{
 		m_GrHandle[i] = LoadGraph(file_names[i]);
@@ -31,54 +31,24 @@ void Player::Init()
 #pragma endregion 
 	
 	MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, 0.f, 0.f));
-	//マテリアル関数でジュエルだけを発光
+//マテリアル関数でジュエルだけを発光
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
+
+#pragma region アニメーション用文字列
+	const char* anim_names[]=
+	{
+		"Tex/Cat/catwait.mv1",
+		"Tex/Cat/catwalk.mv1",
+		"Tex/Cat/catattack.mv1",
+		"Tex/Cat/catdamage.mv1",
+		"Tex/Cat/catdied.mv1"
+	};
 	
-#pragma region アニメーション読み込み	
-//待機モーション
-	m_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
-		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
-	m_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
-
-//走りモーション	
-	//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
-	//アニメーションのデバッグ用モデル読み込み処理
-	m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
-	//指定したモデルにアニメーションをアタッチする
-	m_AnimAttachIndex[ANIM_LIST::ANIM_RUN] = 
-		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
-	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
-
-//攻撃モーション
-	m_AnimHandle[ANIM_LIST::ANIM_ATTACK] = MV1LoadModel("Tex/Cat/catattack.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK] = 
-		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_ATTACK], TRUE);
-	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_ATTACK] = 
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK]);
-
-//ダメージモーション
-	m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/Cat/catdamage.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] = 
-		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
-	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] = 
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
-
-//死亡モーション
-	m_AnimHandle[ANIM_LIST::ANIM_DAMAGE] = MV1LoadModel("Tex/Cat/catdied.mv1");
-	m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE] =
-		MV1AttachAnim(m_ModelHandle, 0, m_AnimHandle[ANIM_LIST::ANIM_DAMAGE], TRUE);
-	//アタッチしたアニメーションの総時間を取得する
-	m_AnimTotalTime[ANIM_LIST::ANIM_DAMAGE] =
-		MV1GetAttachAnimTotalTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE]);
-
+	//文字列の先頭を選べる
+	Anim.AnimInit(m_ModelHandle, anim_names);
 #pragma endregion
-	//　playerのモデルハンドル,フレーム番号,XYZの空間分割
+
+//playerのモデルハンドル,フレーム番号,XYZの空間分割
 	MV1SetupCollInfo(m_ModelHandle, -1, 1, 1, 1);
 }
 
@@ -89,15 +59,17 @@ void Player::Update()
 	Move();
 	Attack();
 
-	//デバッグ用ダメージ関数の呼び出し
+//デバッグ用ダメージ関数の呼び出し
 	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
 
-	//現在の再生時間が総再生時間を超えたら再生時間を0に戻す
-	if (m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_RUN]|| m_PlayTime >= m_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
+//現在の再生時間が総再生時間を超えたら再生時間を0に戻す
+	if (m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_RUN]|| 
+		m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_WAIT])
 	{
 		m_PlayTime = 0.f;
 	}
 
+	//当たり判定を更新
 	MV1RefreshCollInfo(m_ModelHandle, -1);
 }
 
@@ -118,10 +90,10 @@ void Player::Rotate()
 	float Angle{ 0.f };
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_D))  Angle += m_RotateSpeed;
+	if (CheckHitKey(KEY_INPUT_D))       Angle += m_RotateSpeed;
 	else if (CheckHitKey(KEY_INPUT_A))  Angle -= m_RotateSpeed;
 
-	if (Angle != 0.f)
+	if (Angle != PlayerState::None)
 	{
 		m_Digree_Y += Angle;
 		//度数法からラジアンに変換
@@ -130,8 +102,8 @@ void Player::Rotate()
 		//３Dの向きベクトル算出(単位ベクトル＝１)
 		m_Direction.x = sinf(Rad);
 		m_Direction.z = cosf(Rad);
-		m_OldMoveVec.x = m_Direction.x * (m_RotateSpeed * 1 / 60);
-		m_OldMoveVec.z = m_Direction.z * (m_RotateSpeed * 1 / 60);
+		m_OldMoveVec.x = m_Direction.x * (m_RotateSpeed * 1.f / 60.f);
+		m_OldMoveVec.z = m_Direction.z * (m_RotateSpeed * 1.f / 60.f);
 
 		//モデルの回転
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, Rad, 0.0f));
@@ -140,32 +112,28 @@ void Player::Rotate()
 
 void Player::Move()
 {
-//一時的に移動量を保存する
+//毎フレーム0で初期化する
 	VECTOR MoveVec{ 0.f };
+
 #pragma region 移動処理 
-	//向いている方向に移動
+//特定のキーを押したときに移動
 	if (CheckHitKey(KEY_INPUT_W))
 	{ 
 		//60で割ることで60フレームで進むベクトルを出している
-		MoveVec.x -= m_Direction.x * (m_Speed * 1 / 60);
-	    MoveVec.z -= m_Direction.z * (m_Speed * 1 / 60);
+		MoveVec.x -= m_Direction.x * (m_Speed * 1.f / 60.f);
+	    MoveVec.z -= m_Direction.z * (m_Speed * 1.f / 60.f);
 	}
 	else if (CheckHitKey(KEY_INPUT_S)) 
 	{
-		MoveVec.x += m_Direction.x * (m_Speed * 1 / 60);
-		MoveVec.z += m_Direction.z * (m_Speed * 1 / 60);
+		MoveVec.x += m_Direction.x * (m_Speed * 1.f / 60.f);
+		MoveVec.z += m_Direction.z * (m_Speed * 1.f / 60.f);
 	}
 
 #pragma endregion
-	if (MoveVec.x == 0.f && MoveVec.z == 0.f)
+	if (MoveVec.x != PlayerState::None && MoveVec.z != PlayerState::None)
 	{
-		MoveVec = Lerp(m_OldMoveVec, MoveVec, 0.2);
+		MoveVec = Slerp(m_OldMoveVec, MoveVec, 0.2f);
 	}
-	else
-	{
-		MoveVec = Slerp(m_OldMoveVec, MoveVec, 0.2);
-	}
-	
 	
 	//過去の移動ベクトル保存
 	m_OldMoveVec = MoveVec;
@@ -176,24 +144,24 @@ void Player::Move()
 		//atan2を使うことで現在の向いている方向から180振り向く
 		float Rad = atan2(-MoveVec.x, -MoveVec.z);
 
-		m_Digree_Y = Rad * 180.f / DX_PI_F;
+		//m_Digree_Y = Rad * 180.f / DX_PI_F;
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.f, Rad, 0.f));
 		//走るアニメーション
-		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
-		
+		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_RUN, m_PlayTime);
+
 		VECTOR CenterPos = m_Pos;
-		CenterPos.y += 6;
+		CenterPos.y += 6.f;
 		//当たったところを終点にする
 		VECTOR HitPos{ 0.f };
 		if (m_MapRef->CollisionToModel(CenterPos, VAdd(CenterPos, MoveVec), &HitPos))	return;
 
 		//初期始点値からどれくらいずらすのか
-		VECTOR vertical{ 0.f,4.f,0.f };
+		VECTOR vertical{ 0.f,6.f,0.f };
 		//始点は現在のポジションと移動量を保存している変数を足している
 		m_StartLine = VAdd(m_Pos, MoveVec);
 		m_StartLine.y +=vertical.y ;
 		//初期始点値からどれくらい下にレイを出すのか
-		VECTOR DownLine{ 0,-16,0 };
+		VECTOR DownLine{ 0.f,-16.f,0.f };
 		m_EndLine = VAdd(m_StartLine, DownLine);
 		//出したレイのマップとのあたり判定
 		if (m_MapRef->CollisionToModel(m_StartLine, m_EndLine, &HitPos))
@@ -207,7 +175,7 @@ void Player::Move()
 	else 
 	{
 		//待機モーション
-		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
+		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_WAIT, m_PlayTime);
 	}
 }
 
@@ -223,8 +191,8 @@ void Player::DrawHP()
 	else
 	{
 		m_Hp = DrawBox(HPX, HPY, 75, 140, GetColor(0, 255, 0), TRUE);
-		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DIED], m_PlayTime);
-		if (m_PlayTime >= m_AnimAttachIndex[ANIM_LIST::ANIM_DIED])  Release();
+		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_DIED, m_PlayTime);
+		if (m_PlayTime >= Anim.m_AnimAttachIndex[Anim.ANIM_LIST::ANIM_DIED])  Release();
 	}
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
@@ -243,10 +211,10 @@ void Player::Release()
 
 void Player::Attack()
 {
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != PlayerState::None)
 	{
 		//攻撃アニメーション
-		MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_ATTACK], m_PlayTime);
+		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_ATTACK, m_PlayTime);
 	}
 }
 
@@ -254,5 +222,5 @@ void Player::Attack()
 void Player::Damage()
 {
 	m_HitCounter ++;
-	MV1SetAttachAnimTime(m_ModelHandle, m_AnimAttachIndex[ANIM_LIST::ANIM_DAMAGE], m_PlayTime);
+	Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_DAMAGE, m_PlayTime);
 }

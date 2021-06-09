@@ -3,31 +3,16 @@
 #include"DxLib.h"
 #include"Base.h"
 #include"../h/Map.h"
+#include"../h/Animation.h"
 
 class Enemy :public CharBase
 {
 public:
-	//アニメーションリスト
-	enum ANIM_LIST
-	{
-
-		ANIM_RUN,
-
-		ANIM_WAIT,
-
-		ANIM_NUM
-	};
-
-public:
 	Enemy() :
-		CharBase({ 0.f, 0.9f, 0.f }, 3.f, 0.5f)
+		CharBase({ 0.f, 0.9f, 0.f }, 3, 0.5f)
 	{
 		m_EnemyHeight = { 0.f,2.f,0 };
 	}
-
-	Enemy(VECTOR pos, float hp, float speed) :
-		CharBase(pos, hp, speed)
-	{}
 
 	~Enemy() {}
 
@@ -42,13 +27,11 @@ public:
 	int GetModel() { return m_Enemy_ModelHandle; }
 	VECTOR GetPos() { return m_Enemy_Position; }
 	VECTOR GetHeight() { return m_EnemyHeight; }
-
+	void SetPos(VECTOR setpos) { m_Enemy_Position = setpos; }
 
 private:
 	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
-	int   m_Enemy_AnimHandle[ANIM_NUM];
-	int   m_Enemy_AnimAttachIndex[ANIM_NUM];
-	int   m_Enemy_AnimTotalTime[ANIM_NUM];
+
 	float m_PlayTime;				//アニメーション時間
 
 	//計算で使う変数
@@ -73,6 +56,7 @@ private:
 	VECTOR m_EndLine;
 
 	Map m_MapRef;
+	Animation Anim;
 
 	VECTOR m_EnemyHeight;
 };

@@ -8,16 +8,16 @@ class CharBase
 public:
 	CharBase();		
 
-	CharBase(float x, float y, float z,float hp,float speed);
+	CharBase(float x, float y, float z, int hp, float speed);
 
-	CharBase(VECTOR pos, float hp, float speed);
+	CharBase(VECTOR pos, int hp, float speed);
 
 	virtual ~CharBase() {}		
 
 //継承関連はprotectedを使用
 protected:				
 	VECTOR m_Pos;		//ポジション
-	float   m_Hp;		//Hp
+	int    m_Hp;		//Hp
 	float  m_Speed;		//スピード
 };
 #endif

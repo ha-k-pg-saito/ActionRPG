@@ -4,37 +4,34 @@
 #include"DxLib.h"
 #include"../h/Map.h"
 #include"../h/Enemy.h"
+#include"../h/Animation.h"
 
 class Player :public CharBase
 {
-	//アニメーションを管理するenum
-	enum ANIM_LIST
+//動いたかどうかで状態を変化させる
+	enum PlayerState
 	{
-		ANIM_WAIT,
-		ANIM_RUN,
-		ANIM_ATTACK,
-		ANIM_DAMAGE,
-		ANIM_DIED,
-		ANIM_NUM,
+		None,
+		OnMove
 	};
-
 public:
 	Player(Map* map) :
-		//CharBase({pos},hp,speed)を初期化している
+	//CharBase({pos},hp,speed)を初期化している
 		CharBase({ 0.f, 0.f, 0.f }, 0, 40.f),
+		m_ModelHandle{ 0 },
 		m_Radian{ 0.f },
 		m_PlayTime{ 0.f },
-		m_AnimHandle{ 0 },
 		m_Direction{ 0.f,0.f,1.f },
+		m_Digree_Y{ 0.f },
+		m_StartLine{ 0.f },
+		m_EndLine{ 0.f }, 
 		m_HitCounter{ 0 },
+		m_OldMoveVec{ 0.f },
 		m_HeightCapsule{ 0.f,6.f,0.f },
 		m_RotateSpeed{ 5.f }
 	{
 		m_MapRef = map;
 	}
-	Player(VECTOR pos, float hp, float speed) :
-		CharBase(pos, hp, speed)
-	{}
 
 	~Player() { Release(); }
 
@@ -42,7 +39,7 @@ public:
 // プレイヤーのモデル取得
 	int    GetModel() { return m_ModelHandle; }
 //pos変数に反映させる
-	VECTOR SetPos(VECTOR movevec) { return m_Pos; }
+	void SetPos(VECTOR setpos) { m_Pos = setpos; }
 //プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
 // プレイヤーの移動ベクトル取得
@@ -65,16 +62,17 @@ private:
 	void Damage();
 
 private:
+//Playerのテクスチャ数
+#define PLAYER_TEX_NUM  8
+#define PLAYER_ANIM_NUM 6
+
 // 3Dモデルを保存する変数
 	int m_ModelHandle;
 //3Dモデルに貼るテクスチャ保存変数
-	int m_GrHandle[8];
+	int m_GrHandle[PLAYER_TEX_NUM];
 
-//アニメーションに使用する変数
-	int   m_AnimHandle[ANIM_NUM];			//アニメーションハンドル
-	int   m_AnimAttachIndex[ANIM_NUM];		//アニメーション番号
-	int   m_AnimTotalTime[ANIM_NUM];		//アニメーション総再生時間
-	float m_PlayTime;						//アニメーション時間
+//アニメーション時間
+	float m_PlayTime;						
 
 //計算で使う変数
 	float  m_Radian;		
@@ -96,8 +94,7 @@ private:
 
 //マップモデル初期化
 	Map* m_MapRef;
-	
-//Playerのテクスチャ数
-#define PLAYER_TEX_NUM  8
+	Animation Anim;
+
 };
 #endif // !Player_h_

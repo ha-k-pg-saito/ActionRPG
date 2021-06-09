@@ -3,26 +3,17 @@
 
 void Enemy::Init()
 {
+	
+	const char* anim_names[] =
+	{
+		"Tex/Cat/catwait.mv1",
+		"Tex/Cat/catwalk.mv1",
+		"Tex/Cat/catattack.mv1",
+		"Tex/Cat/catdamage.mv1",
+		"Tex/Cat/catdied.mv1"
+	};
 	m_Enemy_ModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
-	//走りモーション	
-		//m_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Player/sisterwalk.mv1");
-		//アニメーションのデバッグ用モデル読み込み処理
-	m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN] = MV1LoadModel("Tex/Cat/catwalk.mv1");
-	//指定したモデルにアニメーションをアタッチする
-	//アタッチー＞付着させるetc...
-	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN] =
-		MV1AttachAnim(m_Enemy_ModelHandle, 0, m_Enemy_AnimHandle[ANIM_LIST::ANIM_RUN], FALSE);
-	//アタッチしたアニメーションの総時間を取得する
-	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] =
-		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN]);
-
-	//待機モーション
-	m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT] = MV1LoadModel("Tex/Cat/catwait.mv1");
-	m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT] =
-		MV1AttachAnim(m_Enemy_ModelHandle, 0, m_Enemy_AnimHandle[ANIM_LIST::ANIM_WAIT], FALSE);
-	m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT] =
-		MV1GetAttachAnimTotalTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT]);
-
+	Anim.AnimInit(m_Enemy_ModelHandle, anim_names);
 	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
@@ -162,7 +153,7 @@ void Enemy::Update(VECTOR player_pos)
 	}
 
 	m_PlayTime++;
-	if (m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_RUN] || m_PlayTime >= m_Enemy_AnimTotalTime[ANIM_LIST::ANIM_WAIT])
+	if (m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_RUN] || m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_WAIT])
 	{
 		m_PlayTime = 0.f;
 	}
@@ -176,12 +167,11 @@ void Enemy::Draw()
 		if (m_Enemy_MoveFlag)
 		{
 			// 移動
-			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_RUN], m_PlayTime);
+			Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_RUN, m_PlayTime);
 		}
 		else
 		{
-			// 待機
-			MV1SetAttachAnimTime(m_Enemy_ModelHandle, m_Enemy_AnimAttachIndex[ANIM_LIST::ANIM_WAIT], m_PlayTime);
+			Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_WAIT, m_PlayTime);
 		}
 
 	MV1DrawModel(m_Enemy_ModelHandle);

@@ -4,6 +4,7 @@
 #include"DxLib.h"
 #include<math.h>
 
+//valueが最小値・最大値を超えないようにする
 void Clamp(float& value,float min,float max) 
 {
 	if (value < min)
@@ -16,6 +17,8 @@ void Clamp(float& value,float min,float max)
 	}
 }
 
+//線形補間
+//引数ー＞移動前の座標、移動後の座標
 VECTOR Lerp(VECTOR vec1, VECTOR vec2, float time)
 {
 	Clamp(time, 0.f, 1.f);
@@ -27,6 +30,8 @@ VECTOR Lerp(VECTOR vec1, VECTOR vec2, float time)
 	return c;
 }
 
+//球面線形補間
+//引数ー＞移動前の座標、移動後の座標、回転スピード
 VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 {
 	Clamp(time, -1.f, 1.f);
@@ -41,10 +46,10 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 		//ベクトルの正規化
 		 NormalVec2 = VNorm(vec2);
 	}
-	//二ベクトルの角度
+	//二つのベクトルの角度
 	float d = VDot(NormalVec1, NormalVec2);
 	Clamp(d, -1.f, 1.f);
-	float angle = acos(d);
+	float angle = acosf(d);
 	//sinθ
 	float SinTh = sinf(angle);
 	
@@ -52,16 +57,19 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 	float Pe = sinf(angle * time);
 
 	NormalVec1.x *= Ps;
+	//NormalVec1.y *= Ps;
 	NormalVec1.z *= Ps;
 	NormalVec2.x *= Pe;
+	//NormalVec2.y *= Pe;
 	NormalVec2.z *= Pe;
 
 	VECTOR v = VAdd(NormalVec1, NormalVec2);
 	if (SinTh != 0.f)
 	{
 		v.x /= SinTh;
+		//v.y /= SinTh;
 		v.z /= SinTh;
 	}
 	return v;
 }
-#endif // !1
+#endif

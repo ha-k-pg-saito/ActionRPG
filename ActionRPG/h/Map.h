@@ -8,7 +8,8 @@ class Map
 public:
 	Map() :
 		m_MapHandle(0),
-		m_StagePos{ 71,-10,462 }
+		m_StagePos{ 71,-10,462 },
+		HitPoly{ 0 }
 	{}
 	~Map() {}
 

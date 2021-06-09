@@ -55,6 +55,9 @@
     <ClCompile Include="cpp\EnemyManager.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\Animation.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Player.h">

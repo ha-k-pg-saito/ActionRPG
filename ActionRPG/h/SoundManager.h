@@ -39,6 +39,4 @@ private:
 	~SoundMng() { AllRelease(); }
 
 };
-
-
 #endif

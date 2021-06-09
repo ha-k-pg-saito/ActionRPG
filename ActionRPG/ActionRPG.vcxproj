@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cpp\Animation.cpp" />
     <ClCompile Include="cpp\Base.cpp" />
     <ClCompile Include="cpp\Camera.cpp" />
     <ClCompile Include="cpp\Collision.cpp" />
