@@ -8,7 +8,7 @@ extern SceneStep g_SceneStep;
 void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;
-
+	GrHandle = LoadGraph("Tex/GameOver.png");
 	IsPush = true;
 }
 
@@ -25,6 +25,7 @@ void ResultScene::RunResultScene()
 		}
 	}
 
+	DrawGraph(0, 0, GrHandle, FALSE);
 }
 
 void ResultScene::FinishResultScene()

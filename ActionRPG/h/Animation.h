@@ -24,7 +24,7 @@ public:
 
 	//アニメーションの読み込み・アタッチ・総再生時間取得
 	//引数ー＞モデルハンドル、文字列
-	void AnimInit(int mhandle, const char* filename[]);
+	void InitAnimation(int mhandle, const char* filename[]);
 
 	//アニメーションを切り替えるための関数
 	//引数ー＞モデルハンドル、アニメーション番号、総再生時間

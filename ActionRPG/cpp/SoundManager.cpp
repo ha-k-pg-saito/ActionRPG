@@ -25,6 +25,7 @@ void SoundMng::Play(std::string keyword, int playtype, int toppositionflag)
 	if (CheckSoundMem(handle) == SoundState::State_None)
 	{
 		PlaySoundMem(handle, playtype, toppositionflag);
+		ChangeVolumeSoundMem(155, handle);
 	}
 }
 

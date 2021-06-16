@@ -47,6 +47,7 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 		 NormalVec2 = VNorm(vec2);
 	}
 	//二つのベクトルの角度
+	//内積・外積を求めるときはドット積
 	float d = VDot(NormalVec1, NormalVec2);
 	Clamp(d, -1.f, 1.f);
 	float angle = acosf(d);

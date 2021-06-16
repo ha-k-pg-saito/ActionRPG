@@ -7,7 +7,8 @@ class ResultScene
 {
 public:
 	ResultScene() :
-		IsPush{ true }
+		IsPush{ true },
+		GrHandle{ 0 }
 	{}
 	~ResultScene() {}
 
@@ -20,5 +21,6 @@ public:
 
 private:
 	bool IsPush;
+	int GrHandle;
 };
 #endif

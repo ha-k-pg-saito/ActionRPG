@@ -11,74 +11,77 @@
     <Filter Include="ソース ファイル\h">
       <UniqueIdentifier>{199005c5-06f7-478b-be6e-69f44773a03e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{f82d9023-4823-4041-9dde-9ead34cae817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{6a453757-1964-4c4a-b806-8fce832dc9ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{f10f9f59-52ec-4572-950c-3aca2d90f8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{5074439c-602f-43cb-8a7e-b7c23b73f787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utillity">
+      <UniqueIdentifier>{d86bd503-05e3-4b14-9d8b-554860053057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{9f8d99f5-3acb-4c55-a182-ed0f0acbec3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{9950a940-f05f-4675-8dbd-5fa1ec1fe09f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Player.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\Camera.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\Base.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\Scene.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\TitleScene.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\GameScene.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\ResultScene.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\Enemy.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
     <ClCompile Include="cpp\Map.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\ResultScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\GameScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="cpp\Collision.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\SoundManager.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\OnCollision.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\EnemyManager.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
+      <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
     <ClCompile Include="cpp\Animation.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
+      <Filter>ソース ファイル\utillity</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Scene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\SoundManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\EnemyManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="h\Player.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\Camera.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\Base.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\GameScene.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\ResultScene.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\Scene.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\Enemy.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
     <ClInclude Include="h\Map.h">
@@ -87,23 +90,41 @@
     <ClInclude Include="h\Collision.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\SoundManager.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\TitleScene.h">
-      <Filter>ソース ファイル\h</Filter>
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\ResultScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\GameScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Camera.h">
+      <Filter>ソース ファイル\Camera</Filter>
     </ClInclude>
     <ClInclude Include="h\OnCollision.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
-    <ClInclude Include="h\EnemyManager.h">
-      <Filter>ソース ファイル\h</Filter>
+      <Filter>ソース ファイル\Collision</Filter>
     </ClInclude>
     <ClInclude Include="h\Calculation.h">
-      <Filter>ソース ファイル\h</Filter>
+      <Filter>ソース ファイル\utillity</Filter>
     </ClInclude>
     <ClInclude Include="h\Animation.h">
-      <Filter>ソース ファイル\h</Filter>
+      <Filter>ソース ファイル\utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Enemy.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Scene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\SoundManager.h">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\EnemyManager.h">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

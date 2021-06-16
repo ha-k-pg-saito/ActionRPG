@@ -12,7 +12,7 @@ class GameScene
 public:
 	GameScene() :
 		m_SoundHandle{ 0 },
-		IsPush{ true },
+		IsAlive{ true },
 		Player(&Map)
 	{}
 	~GameScene() {}
@@ -25,11 +25,10 @@ public:
 
 private:
 	int          m_SoundHandle;
-	bool         IsPush;
+	bool         IsAlive;
 	Map          Map;
 	Player       Player;
 	Camera       Camera;
 	EnemyManager EnemyMng;
-	OnColl		 OnColl;
 };
 #endif

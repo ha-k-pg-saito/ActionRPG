@@ -1,11 +1,16 @@
 #include<Math.h>
 #include "../h/Player.h"
 #include"../h/Calculation.h"
+#include"../h/OnCollision.h"
 
 void Player::Init()
 {
+	m_Pos={ 0.f };
+	m_HitCounter = 0;
+	IsAlive = true;
+
 #pragma region モデル・テクスチャ文字列
-	const char* file_names[] =
+	const char* tex_names[] =
 	{
 		"Tex/Player/sister_body.png",
 		"Tex/Player/sister_hood.png",
@@ -16,15 +21,15 @@ void Player::Init()
 		"Tex/Player/sister_ahoge.png",
 		"Tex/Player/sister_rod.png"
 	};
-
+	
 	m_ModelHandle = MV1LoadModel("Tex/Player/sister.mv1");
 	//デバッグ用モデル
 	//m_ModelHandle =MV1LoadModel("Tex/Cat/catoriginal.mv1"); 
-
+	
 	//テクスチャの数だけ、for文を回している
 	for (int i = 0; i <PLAYER_TEX_NUM; i++)
 	{
-		m_GrHandle[i] = LoadGraph(file_names[i]);
+		m_GrHandle[i] = LoadGraph(tex_names[i]);
 		MV1SetTextureGraphHandle(m_ModelHandle, i, m_GrHandle[i], FALSE);
 		MV1SetMaterialAmbColor(m_ModelHandle, i ,GetColorF(0.5f, 0.5f, 0.5f, 1.f));
 	}
@@ -35,17 +40,17 @@ void Player::Init()
 	MV1SetMaterialEmiColor(m_ModelHandle, 2, GetColorF(0.f, 1.f, 0.f, 1.f));
 
 #pragma region アニメーション用文字列
-	const char* anim_names[]=
+	const char* anim_names[] =
 	{
 		"Tex/Cat/catwait.mv1",
-		"Tex/Cat/catwalk.mv1",
+		"Tex/Cat/catwalk.mv1"
 		"Tex/Cat/catattack.mv1",
 		"Tex/Cat/catdamage.mv1",
 		"Tex/Cat/catdied.mv1"
 	};
 	
 	//文字列の先頭を選べる
-	Anim.AnimInit(m_ModelHandle, anim_names);
+	Anim.InitAnimation(m_ModelHandle, anim_names);
 #pragma endregion
 
 //playerのモデルハンドル,フレーム番号,XYZの空間分割
@@ -55,16 +60,12 @@ void Player::Init()
 void Player::Update()
 {
 	m_PlayTime++;
-	Rotate();
 	Move();
+	Rotate();
 	Attack();
 
-//デバッグ用ダメージ関数の呼び出し
-	if (CheckHitKey(KEY_INPUT_RETURN)) Damage();
-
 //現在の再生時間が総再生時間を超えたら再生時間を0に戻す
-	if (m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_RUN]|| 
-		m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_WAIT])
+	if (m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_RUN]|| m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_ATTACK])
 	{
 		m_PlayTime = 0.f;
 	}
@@ -76,12 +77,15 @@ void Player::Update()
 //プレイヤー描画
 void Player::Draw()
 {	
-	MV1DrawModel(m_ModelHandle);
+	if (IsAlive)
+	{
+		MV1DrawModel(m_ModelHandle);
 #ifdef _DEBUG
-	DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
-	DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
+		DrawLine3D(m_Pos, m_StartLine, GetColor(0, 0, 255));
+		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
 #endif
-	DrawHP();
+		DrawHP();
+	}
 }
 
 //プレイヤーの回転
@@ -90,9 +94,10 @@ void Player::Rotate()
 	float Angle{ 0.f };
 
 	//特定のキーを押したときにプレイヤーを回転させる
-	if (CheckHitKey(KEY_INPUT_D))       Angle += m_RotateSpeed;
+	if      (CheckHitKey(KEY_INPUT_D))  Angle += m_RotateSpeed;
 	else if (CheckHitKey(KEY_INPUT_A))  Angle -= m_RotateSpeed;
 
+	//角度が０ではない場合
 	if (Angle != PlayerState::None)
 	{
 		m_Digree_Y += Angle;
@@ -142,7 +147,7 @@ void Player::Move()
 	if (VSize(MoveVec) >= 0.1f)
 	{
 		//atan2を使うことで現在の向いている方向から180振り向く
-		float Rad = atan2(-MoveVec.x, -MoveVec.z);
+		float Rad = (float)atan2(-MoveVec.x, -MoveVec.z);
 
 		//m_Digree_Y = Rad * 180.f / DX_PI_F;
 		MV1SetRotationXYZ(m_ModelHandle, VGet(0.f, Rad, 0.f));
@@ -156,7 +161,7 @@ void Player::Move()
 		if (m_MapRef->CollisionToModel(CenterPos, VAdd(CenterPos, MoveVec), &HitPos))	return;
 
 		//初期始点値からどれくらいずらすのか
-		VECTOR vertical{ 0.f,6.f,0.f };
+		VECTOR vertical{ 0.f,4.f,0.f };
 		//始点は現在のポジションと移動量を保存している変数を足している
 		m_StartLine = VAdd(m_Pos, MoveVec);
 		m_StartLine.y +=vertical.y ;
@@ -183,16 +188,18 @@ void Player::DrawHP()
 {
 	const int HPX = 75;
 	const int HPY = 65;
+	int color = GetColor(0, 255, 0);
 	//HPゲージ描画
-	if (m_HitCounter == 0)       m_Hp = DrawBox(HPX, HPY, 920, 140, GetColor(0, 255, 0), TRUE);
-	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140, GetColor(0, 255, 0), TRUE); 
-	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140, GetColor(0, 255, 0), TRUE); 
-	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140, GetColor(0, 255, 0), TRUE);
+	if      (m_HitCounter == 0)  m_Hp = DrawBox(HPX, HPY, 920, 140, color, TRUE);
+	else if (m_HitCounter == 1)  m_Hp = DrawBox(HPX, HPY, 709, 140,color, TRUE); 
+	else if (m_HitCounter == 2)  m_Hp = DrawBox(HPX, HPY, 498, 140,color, TRUE); 
+	else if (m_HitCounter == 3)  m_Hp = DrawBox(HPX, HPY, 287, 140,color, TRUE);
 	else
 	{
-		m_Hp = DrawBox(HPX, HPY, 75, 140, GetColor(0, 255, 0), TRUE);
+		m_Hp = DrawBox(HPX, HPY, 75, 140, color, TRUE);
 		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_DIED, m_PlayTime);
 		if (m_PlayTime >= Anim.m_AnimAttachIndex[Anim.ANIM_LIST::ANIM_DIED])  Release();
+		IsAlive = false;
 	}
 	//HPゲージ読み込み描画
 	LoadGraphScreen(0, 0, "Tex/HPGauge.png", TRUE);
@@ -215,6 +222,7 @@ void Player::Attack()
 	{
 		//攻撃アニメーション
 		Anim.SetAnimation(m_ModelHandle, Anim.ANIM_LIST::ANIM_ATTACK, m_PlayTime);
+		OnColl::Inatance()->OnCollitionSphereToCap(this, &Enemy);
 	}
 }
 

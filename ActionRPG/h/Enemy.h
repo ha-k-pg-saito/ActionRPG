@@ -9,9 +9,26 @@ class Enemy :public CharBase
 {
 public:
 	Enemy() :
-		CharBase({ 0.f, 0.9f, 0.f }, 3, 0.5f)
+		CharBase({ 0.f, 0.9f, 0.f }, 3, 35.f),
+		m_EnemyHeight{ 0.f,2.f,0 },
+		m_Enemy_Angle{ 0.f },
+		m_Initial_EnemyAngle{ 0.f },
+		m_Enemy_MoveFlag{ true },
+		m_Enemy_MoveAnimFrameIndex{ 0 },
+		m_Enemy_Position{ 0.f },
+		m_Rand_Pos{ 0.f },
+		m_Enemy_InitialPosition{ 0.f },
+		m_Vector{ 0.f },
+		m_Initial_EnemyVector{ 0.f },
+		m_Distance_Pos{ 0.f },
+		m_SetEnemy_Pos{ 0.f },
+		m_Enemy_direction_x{ 0 },
+		m_Enemy_direction_z{ 0 },
+		m_Setenemy_direction_x{ 0 },
+		m_Setenemy_direction_z{ 0 },
+		m_StartLine{0.f},
+		m_EndLine{0.f}
 	{
-		m_EnemyHeight = { 0.f,2.f,0 };
 	}
 
 	~Enemy() {}
@@ -27,7 +44,6 @@ public:
 	int GetModel() { return m_Enemy_ModelHandle; }
 	VECTOR GetPos() { return m_Enemy_Position; }
 	VECTOR GetHeight() { return m_EnemyHeight; }
-	void SetPos(VECTOR setpos) { m_Enemy_Position = setpos; }
 
 private:
 	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
@@ -55,9 +71,11 @@ private:
 	VECTOR m_StartLine;
 	VECTOR m_EndLine;
 
+	//当たり判定のカプセルの高さ
+	VECTOR m_EnemyHeight;
+
 	Map m_MapRef;
 	Animation Anim;
 
-	VECTOR m_EnemyHeight;
 };
 #endif

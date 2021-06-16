@@ -10,9 +10,9 @@ void GameScene::InitGameScene()
 	Map.Init();
 	Player.Init();
 	EnemyMng.Init();
-	m_SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "ƒQ[ƒ€");
-	//SoundMng::Instance()->Play("ƒQ[ƒ€", DX_PLAYTYPE_LOOP);
-	IsPush = true;
+	//BGM‚Ì“Ç‚Ýž‚ÝAƒL[‚ÌÝ’è
+	m_SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "Game");
+	SoundMng::Instance()->Play("Game", DX_PLAYTYPE_LOOP);
 	g_SceneStep = SceneStep::Run;
 }
 
@@ -23,17 +23,12 @@ void GameScene::RunGameScene()
 	Camera.Update(&Player);
 	for (int i=0;i<EnemyMng.GetEnemyNum();++i)
 	{
-		OnColl.Update(&Player, EnemyMng.GetEnemy(i));
+		OnColl::Inatance()->Update(&Player, EnemyMng.GetEnemy(i));
 	}
-	IsPush = false;
-	
-	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
+	IsAlive = Player.GetAliveFlag();
+	if (IsAlive == false)
 	{
-		if (IsPush == false)
-		{
-			IsPush = true;
-			g_SceneStep = SceneStep::Finish;
-		}
+		g_SceneStep = SceneStep::Finish;
 	}
 
 	EnemyMng.CreateEnemy();
@@ -43,14 +38,14 @@ void GameScene::RunGameScene()
 	EnemyMng.Draw();
 	for (int i = 0; i < EnemyMng.GetEnemyNum(); ++i)
 	{
-		OnColl.Draw(&Player, EnemyMng.GetEnemy(i));
+		OnColl::Inatance()->Draw(&Player, EnemyMng.GetEnemy(i));
 	}
 }
 
 void GameScene::FinishGameScene()
 {
-	SoundMng::Instance()->Stop("ƒQ[ƒ€");
-	SoundMng::Instance()->Release("ƒQ[ƒ€");
+	SoundMng::Instance()->Stop("Game");
+	SoundMng::Instance()->Release("Game");
 	g_SceneKind = SceneKind::SceneKind_Result;
 	g_SceneStep = SceneStep::Init;
 }

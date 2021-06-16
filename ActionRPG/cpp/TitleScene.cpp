@@ -13,6 +13,7 @@ void TitleScene::InitTitleScene()
 	IsPush = true;
 	m_FrameCounter = 0;
 
+	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 	g_SceneStep = SceneStep::Run;
 }
 
@@ -45,7 +46,6 @@ void TitleScene::RunTitleScene()
 	DrawStringToHandle(1600, 30, "ESC‚ÅƒQ[ƒ€I—¹", GetColor(0,0,0), FontHandle);
 	DeleteFontToHandle(FontHandle);
 
-	//SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 }
 
 void TitleScene::FinishTitleScene()

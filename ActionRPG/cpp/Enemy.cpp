@@ -13,7 +13,7 @@ void Enemy::Init()
 		"Tex/Cat/catdied.mv1"
 	};
 	m_Enemy_ModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
-	Anim.AnimInit(m_Enemy_ModelHandle, anim_names);
+	Anim.InitAnimation(m_Enemy_ModelHandle, anim_names);
 	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
@@ -100,12 +100,12 @@ void Enemy::Update(VECTOR player_pos)
 		// 一定距離になるとPlayerの方に移動
 		if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
 		{
-			if (m_Distance_Pos.x >= 5.0f) {
-				m_Enemy_Position.x += m_Enemy_direction_x * m_Speed;
+			if (m_Distance_Pos.x >= 4.0f) {
+				m_Enemy_Position.x += m_Enemy_direction_x * (m_Speed * 1.f / 60.f);
 				m_Enemy_MoveFlag = TRUE;
 			}
-			if (m_Distance_Pos.z >= 5.0f) {
-				m_Enemy_Position.z += m_Enemy_direction_z * m_Speed;
+			if (m_Distance_Pos.z >= 4.0f) {
+				m_Enemy_Position.z += m_Enemy_direction_z * (m_Speed * 1.f / 60.f);
 				m_Enemy_MoveFlag = TRUE;
 			}
 		}
@@ -115,11 +115,11 @@ void Enemy::Update(VECTOR player_pos)
 		MV1SetRotationXYZ(m_Enemy_ModelHandle, VGet(0.0f, m_Initial_EnemyAngle + DX_PI_F, 0.0f));
 
 		if (m_SetEnemy_Pos.x >= 0.1f) {
-			m_Enemy_Position.x += m_Setenemy_direction_x * m_Speed;
+			m_Enemy_Position.x += m_Setenemy_direction_x * (m_Speed * 1.f / 60.f);
 			m_Enemy_MoveFlag = TRUE;
 		}
 		if (m_SetEnemy_Pos.z >= 0.1f) {
-			m_Enemy_Position.z += m_Setenemy_direction_z * m_Speed;
+			m_Enemy_Position.z += m_Setenemy_direction_z * (m_Speed * 1.f / 60.f);
 			m_Enemy_MoveFlag = TRUE;
 		}
 	}
@@ -163,6 +163,10 @@ void Enemy::Update(VECTOR player_pos)
 
 void Enemy::Draw()
 {
+	//画面内に座標が入っているかどうか
+	//入っているー＞描画　入っていないー＞描画しない
+	if (CheckCameraViewClip(m_Enemy_Position) == FALSE)
+	{
 		// 新しいアニメーションをアタッチ
 		if (m_Enemy_MoveFlag)
 		{
@@ -174,7 +178,8 @@ void Enemy::Draw()
 			Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_WAIT, m_PlayTime);
 		}
 
-	MV1DrawModel(m_Enemy_ModelHandle);
+		MV1DrawModel(m_Enemy_ModelHandle);
+	}
 }
 
 

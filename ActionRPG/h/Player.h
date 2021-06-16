@@ -1,7 +1,7 @@
 #ifndef Player_h_
 #define Player_h_
-#include"Base.h"
 #include"DxLib.h"
+#include"../h/Base.h"
 #include"../h/Map.h"
 #include"../h/Enemy.h"
 #include"../h/Animation.h"
@@ -15,8 +15,9 @@ class Player :public CharBase
 		OnMove
 	};
 public:
+	//プレイヤ内でマップ情報を更新している
 	Player(Map* map) :
-	//CharBase({pos},hp,speed)を初期化している
+		//CharBase({pos},hp,speed)を初期化している
 		CharBase({ 0.f, 0.f, 0.f }, 0, 40.f),
 		m_ModelHandle{ 0 },
 		m_Radian{ 0.f },
@@ -24,11 +25,12 @@ public:
 		m_Direction{ 0.f,0.f,1.f },
 		m_Digree_Y{ 0.f },
 		m_StartLine{ 0.f },
-		m_EndLine{ 0.f }, 
+		m_EndLine{ 0.f },
 		m_HitCounter{ 0 },
 		m_OldMoveVec{ 0.f },
 		m_HeightCapsule{ 0.f,6.f,0.f },
-		m_RotateSpeed{ 5.f }
+		m_RotateSpeed{ 5.f },		
+		IsAlive{ true }
 	{
 		m_MapRef = map;
 	}
@@ -38,6 +40,8 @@ public:
 public:
 // プレイヤーのモデル取得
 	int    GetModel() { return m_ModelHandle; }
+//プレイヤのHpカウンタ―取得
+	int GetAliveFlag() { return IsAlive; }
 //pos変数に反映させる
 	void SetPos(VECTOR setpos) { m_Pos = setpos; }
 //プレイヤーの座標取取得
@@ -47,6 +51,7 @@ public:
 //プレイヤの高さを取得
 	VECTOR GetHeight() { return m_HeightCapsule; }
 
+
 public:
 	void Init();
 	void Update();
@@ -54,16 +59,16 @@ public:
 	void DrawHP(); 
 	void Release();
 	void Attack();
+	void Damage();
 
 private:
-//playerの関数内で呼び出す関数
 	void Rotate();
 	void Move();
-	void Damage();
 
 private:
 //Playerのテクスチャ数
 #define PLAYER_TEX_NUM  8
+//Playerのアニメーション数
 #define PLAYER_ANIM_NUM 6
 
 // 3Dモデルを保存する変数
@@ -81,6 +86,8 @@ private:
 
 //当たった回数を保存する変数
 	int m_HitCounter;
+//生存フラグ
+	bool IsAlive;
 //キャラの移動量保存変数
 	VECTOR m_OldMoveVec;       
 //レイの始点に使う変数
@@ -94,7 +101,8 @@ private:
 
 //マップモデル初期化
 	Map* m_MapRef;
+	Enemy Enemy;
 	Animation Anim;
-
+	
 };
 #endif // !Player_h_
