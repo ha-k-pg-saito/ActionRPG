@@ -38,9 +38,11 @@ public:
 	void Update(VECTOR player_pos);
 	void Draw();
 	void DrawHp();
+	void Damage();
 
 	bool IsActive;
 
+	int GetHp() { return m_Hp; }
 	int GetModel() { return m_Enemy_ModelHandle; }
 	VECTOR GetPos() { return m_Enemy_Position; }
 	VECTOR GetHeight() { return m_EnemyHeight; }

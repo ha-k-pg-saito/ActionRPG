@@ -187,4 +187,8 @@ void Enemy::DrawHp()
 {
 }
 
-
+void Enemy::Damage()
+{
+	m_Hp--;
+	Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_DAMAGE, m_PlayTime);
+}
