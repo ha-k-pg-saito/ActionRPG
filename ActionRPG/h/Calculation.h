@@ -58,10 +58,8 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 	float Pe = sinf(angle * time);
 
 	NormalVec1.x *= Ps;
-	//NormalVec1.y *= Ps;
 	NormalVec1.z *= Ps;
 	NormalVec2.x *= Pe;
-	//NormalVec2.y *= Pe;
 	NormalVec2.z *= Pe;
 
 	VECTOR v = VAdd(NormalVec1, NormalVec2);

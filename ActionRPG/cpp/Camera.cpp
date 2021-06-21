@@ -64,8 +64,6 @@ void Camera::Update(Player* player)
 
     MATRIX RotZ, RotY;
     float Camera_Plam_BeforeMouseYer_Length;
-    MV1_COLL_RESULT_POLY_DIM HRes;
-    int HitNum;
 
     // …•½•ûŒü‚Ì‰ñ“]‚Í‚x²‰ñ“]
     RotY = MGetRotY(m_AngleH);

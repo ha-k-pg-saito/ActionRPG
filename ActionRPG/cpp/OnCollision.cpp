@@ -16,7 +16,7 @@ void OnColl::Update(Player* player,Enemy* enemy)
     {
 //“–‚½‚Á‚Ä‚¢‚é‚È‚çˆÚ“®‘O‚ÌÀ•W‚ð•Ô‚·
         player->SetPos(m_OldPlayerPos);
-        //player->Damage();
+        player->Damage();
 #ifdef _DEBUG
 
         DrawString(1700, 100, "Hit", GetColor(255, 255, 255));

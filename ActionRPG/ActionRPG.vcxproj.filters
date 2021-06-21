@@ -14,9 +14,6 @@
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{f82d9023-4823-4041-9dde-9ead34cae817}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Player">
-      <UniqueIdentifier>{6a453757-1964-4c4a-b806-8fce832dc9ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{f10f9f59-52ec-4572-950c-3aca2d90f8e4}</UniqueIdentifier>
     </Filter>
@@ -31,6 +28,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Manager">
       <UniqueIdentifier>{9950a940-f05f-4675-8dbd-5fa1ec1fe09f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{6a453757-1964-4c4a-b806-8fce832dc9ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +58,6 @@
     <ClCompile Include="cpp\Camera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Collision.cpp">
-      <Filter>ソース ファイル\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\OnCollision.cpp">
       <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
@@ -87,9 +84,6 @@
     <ClInclude Include="h\Map.h">
       <Filter>ソース ファイル\h</Filter>
     </ClInclude>
-    <ClInclude Include="h\Collision.h">
-      <Filter>ソース ファイル\h</Filter>
-    </ClInclude>
     <ClInclude Include="h\TitleScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -98,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="h\GameScene.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="h\Player.h">
-      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="h\Camera.h">
       <Filter>ソース ファイル\Camera</Filter>
@@ -125,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="h\EnemyManager.h">
       <Filter>ソース ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

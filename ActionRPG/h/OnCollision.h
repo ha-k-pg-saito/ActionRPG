@@ -19,7 +19,7 @@ public:
 
 //各モデルの半径
 #define PLATER_HIT_SIZE_R 2.f
-#define ENEMY_HIT_SIZE_R  4.3f
+#define ENEMY_HIT_SIZE_R  4.2f
 //カプセルポリゴンの細かさ
 #define POLYGON_FINENESS  4
 	

@@ -66,16 +66,16 @@ private:
 	void Move();
 
 private:
-//Playerのテクスチャ数
-#define PLAYER_TEX_NUM  8
 //Playerのアニメーション数
 #define PLAYER_ANIM_NUM 6
 
 // 3Dモデルを保存する変数
 	int m_ModelHandle;
 //3Dモデルに貼るテクスチャ保存変数
-	int m_GrHandle[PLAYER_TEX_NUM];
-
+	int m_GrHandle;
+	int m_SwordGrHandle;
+//Ekardにつける剣のモデル保存変数
+	int m_SwordHandle;
 //アニメーション時間
 	float m_PlayTime;						
 
@@ -84,6 +84,7 @@ private:
 	float  m_Digree_Y;	
 	VECTOR m_Direction;	
 
+	VECTOR m_InitRad;
 //当たった回数を保存する変数
 	int m_HitCounter;
 //生存フラグ
@@ -98,6 +99,10 @@ private:
 
 //回転スピード
 	float m_RotateSpeed;
+//スケール保存変数
+	VECTOR Scale;
+	 
+	VECTOR m_SwordPos;
 
 //マップモデル初期化
 	Map* m_MapRef;

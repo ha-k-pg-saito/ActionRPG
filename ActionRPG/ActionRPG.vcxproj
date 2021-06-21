@@ -154,7 +154,6 @@
     <ClCompile Include="cpp\Animation.cpp" />
     <ClCompile Include="cpp\Base.cpp" />
     <ClCompile Include="cpp\Camera.cpp" />
-    <ClCompile Include="cpp\Collision.cpp" />
     <ClCompile Include="cpp\Enemy.cpp" />
     <ClCompile Include="cpp\EnemyManager.cpp" />
     <ClCompile Include="cpp\GameScene.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="h\Base.h" />
     <ClInclude Include="h\Calculation.h" />
     <ClInclude Include="h\Camera.h" />
-    <ClInclude Include="h\Collision.h" />
     <ClInclude Include="h\Enemy.h" />
     <ClInclude Include="h\EnemyManager.h" />
     <ClInclude Include="h\GameScene.h" />
