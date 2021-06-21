@@ -33,6 +33,29 @@ void GameScene::RunGameScene()
 
 	EnemyMng.CreateEnemy();
 
+	for (int i = 0; i < EnemyMng.GetEnemyNum(); i++)
+	{
+		if (/*“–‚½‚è”»’è  ‰¼=> */CheckHitKey(KEY_INPUT_C) == 1)
+		{
+			m_IsCollision = true;
+		}
+		else
+		{
+			m_IsCollision = false;
+		}
+
+		// UŒ‚”»’è & “–‚½‚è”»’è & Enemy‚ª‚¢‚é‚©
+		if (/*UŒ‚”»’è &&*/m_IsCollision == true && EnemyMng.GetEnemy(i)->IsActive == true)
+		{
+			EnemyMng.GetEnemy(i)->Damage();
+		}
+
+		if (EnemyMng.GetEnemy(i)->GetHp() <= 0)
+		{
+			EnemyMng.GetEnemy(i)->IsActive = false;
+		}
+	}
+
 	Map.Draw();
 	Player.Draw();
 	EnemyMng.Draw();

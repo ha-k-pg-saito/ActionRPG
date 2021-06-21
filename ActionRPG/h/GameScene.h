@@ -26,6 +26,7 @@ public:
 private:
 	int          m_SoundHandle;
 	bool         IsAlive;
+	bool		 m_IsCollision;
 	Map          Map;
 	Player       Player;
 	Camera       Camera;
