@@ -16,7 +16,7 @@ void OnColl::Update(Player* player,Enemy* enemy)
     {
 //“–‚½‚Á‚Ä‚¢‚é‚È‚çˆÚ“®‘O‚ÌÀ•W‚ð•Ô‚·
         player->SetPos(m_OldPlayerPos);
-        player->Damage();
+        //player->Damage();
 #ifdef _DEBUG
 
         DrawString(1700, 100, "Hit", GetColor(255, 255, 255));
@@ -28,10 +28,10 @@ void OnColl::Update(Player* player,Enemy* enemy)
 
 bool OnColl::OnCollitionSphereToCap(Player* player, Enemy* enemy)
 {
-    VECTOR AttackPos = VAdd(player->GetPos(), VGet(0.f, 0.f, 4.f));
+    VECTOR AttackPos = VAdd(player->GetPos(), VGet(1.f, 0.f, 1.f));
     if (HitCheck_Sphere_Capsule(AttackPos, 2.f, enemy->GetPos(), m_EnemyTop, ENEMY_HIT_SIZE_R))
     {
-        //enemy->Damage();
+        enemy->Damage();
     }
     DrawSphere3D(AttackPos, 2.f, 4, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 

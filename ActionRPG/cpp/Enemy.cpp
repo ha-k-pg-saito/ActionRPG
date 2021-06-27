@@ -13,6 +13,9 @@ void Enemy::Init()
 		"Tex/Cat/catdied.mv1"
 	};
 	m_Enemy_ModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
+	m_GrHandle = LoadGraph("Tex/Cat/uvtexture.png");
+	int texindex = MV1GetMaterialDifMapTexture(m_Enemy_ModelHandle, 0);
+	int hand = MV1SetTextureGraphHandle(m_Enemy_ModelHandle, texindex, m_GrHandle, FALSE);
 	Anim.InitAnimation(m_Enemy_ModelHandle, anim_names);
 	m_Enemy_MoveFlag = FALSE;
 
@@ -36,8 +39,8 @@ void Enemy::Update(VECTOR player_pos)
 	m_Initial_EnemyVector = VSub(m_Enemy_InitialPosition, m_Enemy_Position);
 
 	// atan2 ‚ðŽg—p‚µ‚ÄŠp“x‚ðŽæ“¾
-	m_Enemy_Angle = atan2(m_Vector.x, m_Vector.z);
-	m_Initial_EnemyAngle = atan2(m_Initial_EnemyVector.x, m_Initial_EnemyVector.z);
+	m_Enemy_Angle = atan2f(m_Vector.x, m_Vector.z);
+	m_Initial_EnemyAngle = atan2f(m_Initial_EnemyVector.x, m_Initial_EnemyVector.z);
 
 	// Player‚ÆEnemy‚Ì‹——£
 	m_Distance_Pos.x = player_pos.x - m_Enemy_Position.x;
@@ -100,11 +103,11 @@ void Enemy::Update(VECTOR player_pos)
 		// ˆê’è‹——£‚É‚È‚é‚ÆPlayer‚Ì•û‚ÉˆÚ“®
 		if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
 		{
-			if (m_Distance_Pos.x >= 4.0f) {
+			if (m_Distance_Pos.x >= 4.2f) {
 				m_Enemy_Position.x += m_Enemy_direction_x * (m_Speed * 1.f / 60.f);
 				m_Enemy_MoveFlag = TRUE;
 			}
-			if (m_Distance_Pos.z >= 4.0f) {
+			if (m_Distance_Pos.z >= 4.2f) {
 				m_Enemy_Position.z += m_Enemy_direction_z * (m_Speed * 1.f / 60.f);
 				m_Enemy_MoveFlag = TRUE;
 			}
@@ -152,11 +155,7 @@ void Enemy::Update(VECTOR player_pos)
 		DrawLine3D(m_StartLine, m_EndLine, GetColor(0, 0, 255));
 	}
 
-	m_PlayTime++;
-	if (m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_RUN] || m_PlayTime >= Anim.m_AnimTotalTime[Anim.ANIM_LIST::ANIM_WAIT])
-	{
-		m_PlayTime = 0.f;
-	}
+
 	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
 	MV1RefreshCollInfo(m_Enemy_ModelHandle, -1);
 }
@@ -171,11 +170,11 @@ void Enemy::Draw()
 		if (m_Enemy_MoveFlag)
 		{
 			// ˆÚ“®
-			Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_RUN, m_PlayTime);
+			Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_RUN);
 		}
 		else
 		{
-			Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_WAIT, m_PlayTime);
+			Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_IDLE);
 		}
 
 		MV1DrawModel(m_Enemy_ModelHandle);
@@ -190,5 +189,5 @@ void Enemy::DrawHp()
 void Enemy::Damage()
 {
 	m_Hp--;
-	Anim.SetAnimation(m_Enemy_ModelHandle, Anim.ANIM_LIST::ANIM_DAMAGE, m_PlayTime);
+	Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_DAMAGE);
 }

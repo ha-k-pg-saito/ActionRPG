@@ -10,9 +10,10 @@ void GameScene::InitGameScene()
 	Map.Init();
 	Player.Init();
 	EnemyMng.Init();
+	MiniMap.Init();
 	//BGM‚Ì“Ç‚Ýž‚ÝAƒL[‚ÌÝ’è
 	m_SoundHandle=SoundMng::Instance()->Load("Sound/Stage.mp3", "Game");
-	SoundMng::Instance()->Play("Game", DX_PLAYTYPE_LOOP);
+	//SoundMng::Instance()->Play("Game", DX_PLAYTYPE_LOOP);
 	g_SceneStep = SceneStep::Run;
 }
 
@@ -21,6 +22,7 @@ void GameScene::RunGameScene()
 	EnemyMng.Update(Player.GetPos());
 	Player.Update();
 	Camera.Update(&Player);
+	MiniMap.Update(&Player);
 	for (int i=0;i<EnemyMng.GetEnemyNum();++i)
 	{
 		OnColl::Inatance()->Update(&Player, EnemyMng.GetEnemy(i));
@@ -56,13 +58,14 @@ void GameScene::RunGameScene()
 		}
 	}
 
-	Map.Draw();
-	Player.Draw();
-	EnemyMng.Draw();
 	for (int i = 0; i < EnemyMng.GetEnemyNum(); ++i)
 	{
 		OnColl::Inatance()->Draw(&Player, EnemyMng.GetEnemy(i));
 	}
+	Map.Draw();
+	Player.Draw();
+	EnemyMng.Draw();
+	MiniMap.Draw();
 }
 
 void GameScene::FinishGameScene()

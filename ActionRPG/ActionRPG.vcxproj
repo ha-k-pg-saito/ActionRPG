@@ -158,6 +158,7 @@
     <ClCompile Include="cpp\EnemyManager.cpp" />
     <ClCompile Include="cpp\GameScene.cpp" />
     <ClCompile Include="cpp\Map.cpp" />
+    <ClCompile Include="cpp\MiniMap.cpp" />
     <ClCompile Include="cpp\OnCollision.cpp" />
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\ResultScene.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="h\EnemyManager.h" />
     <ClInclude Include="h\GameScene.h" />
     <ClInclude Include="h\Map.h" />
+    <ClInclude Include="h\MiniMap.h" />
     <ClInclude Include="h\OnCollision.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\ResultScene.h" />

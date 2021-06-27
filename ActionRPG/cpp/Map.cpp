@@ -24,7 +24,6 @@ void Map::Init()
 
 	//初期マップモデル
 	m_MapHandle = MV1LoadModel("Tex/Stage/map2.mv1");
-	//初期マップテクスチャ
 
 #pragma endregion
 	//モデルに貼るテクスチャの数分だけfor文を回す

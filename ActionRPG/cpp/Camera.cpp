@@ -78,7 +78,7 @@ void Camera::Update(Player* player)
     m_Pos = VAdd(VTransform(VTransform(VGet(-Camera_Plam_BeforeMouseYer_Length, 0.0f, 0.0f), RotZ), RotY), m_Target);
 
     //カメラの手前と奥クリップの距離
-    SetCameraNearFar(1.f, 1000.f);	
+    SetCameraNearFar(1.f, 1500.f);	
 
     //カメラの座標更新
     SetCameraPositionAndTarget_UpVecY(

@@ -50,12 +50,12 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 	//内積・外積を求めるときはドット積
 	float d = VDot(NormalVec1, NormalVec2);
 	Clamp(d, -1.f, 1.f);
-	float angle = acosf(d);
+	float angle = acos(d);
 	//sinθ
-	float SinTh = sinf(angle);
+	float SinTh = sin(angle);
 	
-	float Ps = sinf(angle * (1 - time));
-	float Pe = sinf(angle * time);
+	float Ps = sin(angle * (1 - time));
+	float Pe = sin(angle * time);
 
 	NormalVec1.x *= Ps;
 	NormalVec1.z *= Ps;

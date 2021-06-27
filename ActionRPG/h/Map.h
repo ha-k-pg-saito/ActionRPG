@@ -25,6 +25,7 @@ public:
 private:
 	//マップモデル保存用変数
 	int    m_MapHandle;
+	int    m_MiniMHandle;
 	//マップに貼るテクスチャ保存変数
 	int    m_GrHandle[10];
 	VECTOR m_StagePos;

@@ -6,6 +6,7 @@
 #include"Map.h"
 #include"../h/EnemyManager.h"
 #include"../h/OnCollision.h"
+#include"../h/MiniMap.h"
 
 class GameScene
 {
@@ -31,5 +32,6 @@ private:
 	Player       Player;
 	Camera       Camera;
 	EnemyManager EnemyMng;
+	MiniMap      MiniMap;
 };
 #endif

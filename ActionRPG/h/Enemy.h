@@ -10,6 +10,8 @@ class Enemy :public CharBase
 public:
 	Enemy() :
 		CharBase({ 0.f, 0.9f, 0.f }, 3, 35.f),
+		m_Enemy_ModelHandle{ 0 },
+		m_GrHandle{ 0 },
 		m_EnemyHeight{ 0.f,2.f,0 },
 		m_Enemy_Angle{ 0.f },
 		m_Initial_EnemyAngle{ 0.f },
@@ -26,8 +28,8 @@ public:
 		m_Enemy_direction_z{ 0 },
 		m_Setenemy_direction_x{ 0 },
 		m_Setenemy_direction_z{ 0 },
-		m_StartLine{0.f},
-		m_EndLine{0.f}
+		m_StartLine{ 0.f },
+		m_EndLine{ 0.f }
 	{
 	}
 
@@ -49,7 +51,7 @@ public:
 
 private:
 	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
-
+	int m_GrHandle;
 	float m_PlayTime;				//アニメーション時間
 
 	//計算で使う変数

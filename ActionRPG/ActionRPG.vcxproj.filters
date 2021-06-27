@@ -76,6 +76,9 @@
     <ClCompile Include="cpp\EnemyManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\MiniMap.cpp">
+      <Filter>ソース ファイル\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Base.h">
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="h\Player.h">
       <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h\MiniMap.h">
+      <Filter>ソース ファイル\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
