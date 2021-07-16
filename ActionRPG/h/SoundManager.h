@@ -1,10 +1,8 @@
 #ifndef SoundManager_h_
 #define SoundManager_h_
 
-#include<map>
+#include<unordered_map>
 #include<string>
-
-
 
 class SoundMng
 {
@@ -32,9 +30,12 @@ public:
 	void AllRelease();
 
 private:
-	//mapを使ってサウンドを管理している
-	//stging型のキーがintで帰ってくる変数
-	std::map<std::string, int>m_SoundList;
+	/*
+		mapを使ってサウンドを管理している
+		stging型のキーがintで帰ってくる変数
+		unordered_mapを使うことによって、mapの時のような整列がないため処理が速くなる
+	*/
+	std::unordered_map<std::string, int>m_SoundList;
 	SoundMng() {}
 	~SoundMng() { AllRelease(); }
 

@@ -14,7 +14,6 @@ public:
 	int  GetEnemyNum() { return Enemy_Num; }
 
 private:
-
 	int Enemy_Num = 10;
 	Enemy Enemies[10];	// []‚Ì’†‚ÆEnemy_Num‚ð“¯‚¶‚É‚·‚é
 };

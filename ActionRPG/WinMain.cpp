@@ -8,9 +8,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(TRUE);					//ウィンドウモード
 	SetGraphMode(1920, 1080, 32);			//画面モード変更
-	SetBackgroundColor(120, 120, 120);			//背景色
+	SetBackgroundColor(120, 120, 120);		//背景色
 	SetFontSize(40);						//フォントサイズ
-	SetUseLighting(TRUE);					//ライト
+	SetUseLighting(TRUE);	                //ライト
+	SetUsePremulAlphaConvertLoad(FALSE);	//乗算済みα画像に変換するかどうか
+	SetUseTransColor(FALSE);				//透明色を使用するかどうか
 
 	if (DxLib_Init() == -1)					//ＤＸライブラリ初期化処理
 	{

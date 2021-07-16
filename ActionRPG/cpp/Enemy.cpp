@@ -1,22 +1,20 @@
-#include"../h/Enemy.h"
 #include<Math.h>
+#include"../h/Enemy.h"
+#include"../h/OnCollision.h"
 
 void Enemy::Init()
 {
-	
-	const char* anim_names[] =
+
+	m_ModelHandle = MV1LoadModel("Tex/Enemy/goblin-sapper.mv1");
+	m_GrHandle = LoadGraph("Tex/Enemy/goblin.jpg");
+	if (m_GrHandle != -1)
 	{
-		"Tex/Cat/catwait.mv1",
-		"Tex/Cat/catwalk.mv1",
-		"Tex/Cat/catattack.mv1",
-		"Tex/Cat/catdamage.mv1",
-		"Tex/Cat/catdied.mv1"
-	};
-	m_Enemy_ModelHandle = MV1LoadModel("Tex/Cat/catoriginal.mv1");
-	m_GrHandle = LoadGraph("Tex/Cat/uvtexture.png");
-	int texindex = MV1GetMaterialDifMapTexture(m_Enemy_ModelHandle, 0);
-	int hand = MV1SetTextureGraphHandle(m_Enemy_ModelHandle, texindex, m_GrHandle, FALSE);
-	Anim.InitAnimation(m_Enemy_ModelHandle, anim_names);
+		int texindex = MV1GetMaterialDifMapTexture(m_ModelHandle, 0);
+		int hand = MV1SetTextureGraphHandle(m_ModelHandle, texindex, m_GrHandle, FALSE);
+	}
+	VECTOR Scale = { 3.f,3.f,3.f };
+	MV1SetScale(m_ModelHandle, Scale);
+	Anim.InitAnimation(m_ModelHandle, "idle_1");
 	m_Enemy_MoveFlag = FALSE;
 
 	// ３Ｄモデルの座標を初期化
@@ -26,13 +24,20 @@ void Enemy::Init()
 	m_Enemy_Position = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 	m_Enemy_InitialPosition = VGet(m_Rand_Pos.x, m_Rand_Pos.y, m_Rand_Pos.z);
 
+	//カプセルの初期化
+	m_Capsule.OldPos = m_Enemy_Position;
+	m_Capsule.Bottom = m_Enemy_Position;
+	m_Capsule.Top = VAdd(m_Enemy_Position, m_EnemyHeight);
+	m_Capsule.Radius = ENEMY_HIT_SIZE_R;
 	m_Hp = 3;
 	IsActive = true;
-	MV1SetupCollInfo(m_Enemy_ModelHandle, -1, 1, 1, 1);
+	MV1SetupCollInfo(m_ModelHandle, -1, 1, 1, 1);
 }
 
 void Enemy::Update(VECTOR player_pos)
 {
+	m_AABB.Update(m_Enemy_Position);
+	m_Capsule.Update(m_Enemy_Position);
 	// ３ＤモデルEnemyから３ＤモデルPlayerに向かうベクトルを算出
 	m_Vector = VSub(player_pos, m_Enemy_Position);
 	// ３ＤモデルEnemyから初期地点へのベクトルを算出
@@ -98,7 +103,7 @@ void Enemy::Update(VECTOR player_pos)
 	{
 		// atan2 で取得した角度に３Ｄモデルを正面に向かせるための補正値( DX_PI_F )を
 		// 足した値を３Ｄモデルの Y軸回転値として設定
-		MV1SetRotationXYZ(m_Enemy_ModelHandle, VGet(0.0f, m_Enemy_Angle + DX_PI_F, 0.0f));
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, m_Enemy_Angle + DX_PI_F, 0.0f));
 
 		// 一定距離になるとPlayerの方に移動
 		if (m_Distance_Pos.x <= 50.0f && m_Distance_Pos.z <= 50.0f)
@@ -115,7 +120,7 @@ void Enemy::Update(VECTOR player_pos)
 	}
 	else // 探知範囲外になると初期位置に戻る
 	{
-		MV1SetRotationXYZ(m_Enemy_ModelHandle, VGet(0.0f, m_Initial_EnemyAngle + DX_PI_F, 0.0f));
+		MV1SetRotationXYZ(m_ModelHandle, VGet(0.0f, m_Initial_EnemyAngle + DX_PI_F, 0.0f));
 
 		if (m_SetEnemy_Pos.x >= 0.1f) {
 			m_Enemy_Position.x += m_Setenemy_direction_x * (m_Speed * 1.f / 60.f);
@@ -156,8 +161,8 @@ void Enemy::Update(VECTOR player_pos)
 	}
 
 
-	MV1SetPosition(m_Enemy_ModelHandle, m_Enemy_Position);
-	MV1RefreshCollInfo(m_Enemy_ModelHandle, -1);
+	MV1SetPosition(m_ModelHandle, m_Enemy_Position);
+	MV1RefreshCollInfo(m_ModelHandle, -1);
 }
 
 void Enemy::Draw()
@@ -170,14 +175,14 @@ void Enemy::Draw()
 		if (m_Enemy_MoveFlag)
 		{
 			// 移動
-			Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_RUN);
+			//Anim.SetAnimation(m_ModelHandle, ANIM_LIST::ANIM_RUN);
 		}
 		else
 		{
-			Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_IDLE);
+			//Anim.SetAnimation(m_ModelHandle, ANIM_LIST::ANIM_IDLE);
 		}
 
-		MV1DrawModel(m_Enemy_ModelHandle);
+		MV1DrawModel(m_ModelHandle);
 	}
 }
 
@@ -189,5 +194,5 @@ void Enemy::DrawHp()
 void Enemy::Damage()
 {
 	m_Hp--;
-	Anim.SetAnimation(m_Enemy_ModelHandle, ANIM_LIST::ANIM_DAMAGE);
+	//Anim.SetAnimation(m_ModelHandle, ANIM_LIST::ANIM_DAMAGE);
 }

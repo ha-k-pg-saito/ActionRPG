@@ -21,7 +21,7 @@ void Clamp(float& value,float min,float max)
 //引数ー＞移動前の座標、移動後の座標
 VECTOR Lerp(VECTOR vec1, VECTOR vec2, float time)
 {
-	Clamp(time, 0.f, 1.f);
+	Clamp(time, 0.1f, 1.f);
 	VECTOR c;
 	c.x = vec1.x * (1 - time) + vec2.x * time;
 	c.y = vec1.y * (1 - time) + vec2.y * time;
@@ -36,12 +36,12 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 {
 	Clamp(time, -1.f, 1.f);
 	VECTOR NormalVec1, NormalVec2;
-	if (vec1.x != 0.f || vec1.y != 0.f || vec1.z != 0)
+	if (vec1.x != 0.f || vec1.y != 0.f || vec1.z != 0.f)
 	{
 		//ベクトルの正規化
 		 NormalVec1 = VNorm(vec1);
 	}
-	if (vec2.x != 0.f || vec2.y != 0.f || vec2.z != 0)
+	if (vec2.x != 0.f || vec2.y != 0.f || vec2.z != 0.f)
 	{
 		//ベクトルの正規化
 		 NormalVec2 = VNorm(vec2);
@@ -50,12 +50,12 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 	//内積・外積を求めるときはドット積
 	float d = VDot(NormalVec1, NormalVec2);
 	Clamp(d, -1.f, 1.f);
-	float angle = acos(d);
+	float angle = acosf(d);
 	//sinθ
-	float SinTh = sin(angle);
+	float SinTh = sinf(angle);
 	
-	float Ps = sin(angle * (1 - time));
-	float Pe = sin(angle * time);
+	float Ps = sinf(angle * (1 - time));
+	float Pe = sinf(angle * time);
 
 	NormalVec1.x *= Ps;
 	NormalVec1.z *= Ps;
@@ -66,9 +66,9 @@ VECTOR Slerp(VECTOR vec1, VECTOR vec2, float time)
 	if (SinTh != 0.f)
 	{
 		v.x /= SinTh;
-		//v.y /= SinTh;
 		v.z /= SinTh;
 	}
+
 	return v;
 }
 #endif

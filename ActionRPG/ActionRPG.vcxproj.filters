@@ -32,6 +32,9 @@
     <Filter Include="ソース ファイル\Player">
       <UniqueIdentifier>{6a453757-1964-4c4a-b806-8fce832dc9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{66665e80-2da3-4d33-bb47-52a04bf61f0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -79,6 +82,9 @@
     <ClCompile Include="cpp\MiniMap.cpp">
       <Filter>ソース ファイル\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\EffectBoll.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Base.h">
@@ -125,6 +131,15 @@
     </ClInclude>
     <ClInclude Include="h\MiniMap.h">
       <Filter>ソース ファイル\h</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Shape.h">
+      <Filter>ソース ファイル\utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Particle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="h\EffectBoll.h">
+      <Filter>ソース ファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,21 +2,22 @@
 
 void MiniMap::Init()
 {
-	//CreateMaskScreen();
 	m_MiniHandle = LoadGraph("Tex/MiniMap.png");
-	m_CircleHandle = LoadMask("Tex/Circle.png");
+//テクスチャの縦・横/マップの縦・横
+	m_Wide = TEX_WIDE / MAP_WIDE;
+	m_Height = TEX_HEIGHT / MAP_HEIGHT;
 }
 
 void MiniMap::Update(Player* player)
 {
-	m_PlayerPos = player->GetPos();
+	
+	m_PlayerPos = player->GetAfterPos();
 }
 
 void MiniMap::Draw()
 {
-	DrawExtendGraph(m_MapPos.x, m_MapPos.z, 300, 300, m_MiniHandle, FALSE);
-	//DrawGraph(m_MapPos.x, m_MapPos.z, m_MiniHandle,TRUE);
-	//DrawMask(m_CirPos.x, m_CirPos.z, m_CircleHandle, DX_MASKTRANS_BLACK);
-	//プレイヤのポジションを表示
-	DrawCircle(m_PlayerPos.x, m_PlayerPos.z, CIRCLE_RAD, GetColor(255, 255, 255), TRUE);
+//テクスチャを切り抜いて描画
+	DrawRectGraph(INIT_TEX_POS, INIT_TEX_POS, m_PlayerPos.x, m_PlayerPos.z, TEXUV_SIZE, TEXUV_SIZE, m_MiniHandle, TRUE, FALSE);
+//プレイヤのポジションを表示
+	DrawCircle(m_PlayerPos.x / m_Wide ,m_PlayerPos.z / m_Height, CIRCLE_RAD, GetColor(0, 0, 255), TRUE);
 }

@@ -26,5 +26,6 @@ private:
 	int  m_FrameCounter;			
 	int  m_GrHandle;
 	int  m_SoundHandle;
+	int m_FontHandle;
 };
 #endif

@@ -1,7 +1,7 @@
 #ifndef OnCollision_h_
 #define OnCollision_h_
-#include"../h/Player.h"
-#include"../h/Enemy.h"
+
+#include"../h/Shape.h"
 
 class OnColl
 {
@@ -13,13 +13,13 @@ public:
 	}
 
 	//PlayerとEnemyの情報を渡している
-	void Update(Player* player, Enemy* enemy);
-	bool OnCollitionSphereToCap(Player* player,Enemy* enemy);
-	void Draw(Player* player,Enemy* enemy);
+	bool Update(const Capsule* player, const Capsule* enemy);
+	bool OnCollisionAABB(const AABB& player, const AABB& enemy);
+	void Draw(Capsule* capsule);
 
 //各モデルの半径
-#define PLATER_HIT_SIZE_R 2.f
-#define ENEMY_HIT_SIZE_R  4.2f
+#define PLATER_HIT_SIZE_R 2.
+#define ENEMY_HIT_SIZE_R  4.2
 //カプセルポリゴンの細かさ
 #define POLYGON_FINENESS  4
 	

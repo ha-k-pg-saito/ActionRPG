@@ -154,6 +154,7 @@
     <ClCompile Include="cpp\Animation.cpp" />
     <ClCompile Include="cpp\Base.cpp" />
     <ClCompile Include="cpp\Camera.cpp" />
+    <ClCompile Include="cpp\EffectBoll.cpp" />
     <ClCompile Include="cpp\Enemy.cpp" />
     <ClCompile Include="cpp\EnemyManager.cpp" />
     <ClCompile Include="cpp\GameScene.cpp" />
@@ -172,15 +173,18 @@
     <ClInclude Include="h\Base.h" />
     <ClInclude Include="h\Calculation.h" />
     <ClInclude Include="h\Camera.h" />
+    <ClInclude Include="h\EffectBoll.h" />
     <ClInclude Include="h\Enemy.h" />
     <ClInclude Include="h\EnemyManager.h" />
     <ClInclude Include="h\GameScene.h" />
     <ClInclude Include="h\Map.h" />
     <ClInclude Include="h\MiniMap.h" />
     <ClInclude Include="h\OnCollision.h" />
+    <ClInclude Include="h\Particle.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\ResultScene.h" />
     <ClInclude Include="h\Scene.h" />
+    <ClInclude Include="h\Shape.h" />
     <ClInclude Include="h\SoundManager.h" />
     <ClInclude Include="h\TitleScene.h" />
   </ItemGroup>

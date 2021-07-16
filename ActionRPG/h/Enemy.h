@@ -4,13 +4,14 @@
 #include"Base.h"
 #include"../h/Map.h"
 #include"../h/Animation.h"
+#include"../h/Shape.h"
 
 class Enemy :public CharBase
 {
 public:
 	Enemy() :
 		CharBase({ 0.f, 0.9f, 0.f }, 3, 35.f),
-		m_Enemy_ModelHandle{ 0 },
+		m_ModelHandle{ 0 },
 		m_GrHandle{ 0 },
 		m_EnemyHeight{ 0.f,2.f,0 },
 		m_Enemy_Angle{ 0.f },
@@ -45,12 +46,12 @@ public:
 	bool IsActive;
 
 	int GetHp() { return m_Hp; }
-	int GetModel() { return m_Enemy_ModelHandle; }
+	int GetModel() { return m_ModelHandle; }
 	VECTOR GetPos() { return m_Enemy_Position; }
 	VECTOR GetHeight() { return m_EnemyHeight; }
 
 private:
-	int    m_Enemy_ModelHandle;		//モデル情報を保存する変数
+	int    m_ModelHandle;		//モデル情報を保存する変数
 	int m_GrHandle;
 	float m_PlayTime;				//アニメーション時間
 
@@ -80,6 +81,6 @@ private:
 
 	Map m_MapRef;
 	Animation Anim;
-
+	AABB m_AABB;
 };
 #endif

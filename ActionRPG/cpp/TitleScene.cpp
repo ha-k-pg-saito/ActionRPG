@@ -12,7 +12,6 @@ void TitleScene::InitTitleScene()
 
 	IsPush = true;
 	m_FrameCounter = 0;
-
 	SoundMng::Instance()->Play("Title", DX_PLAYTYPE_LOOP);
 	g_SceneStep = SceneStep::Run;
 }
@@ -25,13 +24,11 @@ void TitleScene::RunTitleScene()
 	{
 		if (IsPush == false)
 		{
-			IsPush = true;
-			g_SceneStep = SceneStep::Finish;
+				IsPush = true;
+				g_SceneStep = SceneStep::Finish;
 		}
 	}
-
 	DrawGraph(0, 0, m_GrHandle, TRUE);
-
 	if (m_FrameCounter <= 20)
 	{
 		DrawString(750, 890, "左クリックでゲームスタート", GetColor(0, 0, 0));
@@ -42,10 +39,9 @@ void TitleScene::RunTitleScene()
 		m_FrameCounter = 0;
 	}
 	
-	int FontHandle = CreateFontToHandle(NULL, 30, 0);
-	DrawStringToHandle(1600, 30, "ESCでゲーム終了", GetColor(0,0,0), FontHandle);
-	DeleteFontToHandle(FontHandle);
-
+	 m_FontHandle = CreateFontToHandle(NULL, 30, 0);
+	DrawStringToHandle(1600, 30, "ESCでゲーム終了", GetColor(0,0,0), m_FontHandle);
+	DeleteFontToHandle(m_FontHandle);
 }
 
 void TitleScene::FinishTitleScene()
@@ -53,6 +49,9 @@ void TitleScene::FinishTitleScene()
 	SoundMng::Instance()->Stop("Title");
 	SoundMng::Instance()->Release("Title");
 	DeleteGraph(m_GrHandle);
+	// 作成したフォントデータを削除する
+	DeleteFontToHandle(m_FontHandle);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	g_SceneKind = SceneKind::SceneKind_Game;
 	g_SceneStep = SceneStep::Init;
 }

@@ -1,10 +1,12 @@
 #ifndef Player_h_
 #define Player_h_
+
+#include<unordered_map>
 #include"DxLib.h"
 #include"../h/Base.h"
 #include"../h/Map.h"
-#include"../h/Enemy.h"
 #include"../h/Animation.h"
+#include"../h/Shape.h"
 
 class Player :public CharBase
 {
@@ -21,17 +23,20 @@ public:
 		CharBase({ 0.f, -3.f, 0.f }, 4, 40.f),
 		m_ModelHandle{ 0 },
 		m_Radian{ 0.f },
-		m_PlayTime{ 0.f },
+		m_PlayTime{ 1380.f },
 		m_Direction{ 0.f,0.f,1.f },
 		m_Digree_Y{ 0.f },
 		m_HitCounter{ 0 },
 		m_OldMoveVec{ 0.f },
+		m_OldPos{ 0.f },
 		m_HeightCapsule{ 0.f,9.f,0.f },
 		m_RotateSpeed{ 5.f },
-		m_InitRad{0.f},
-		IsAlive{ true }
+		m_InitRad{ 0.f },
+		IsAlive{ true },
+		m_AfterPos{ 0.f },
+		m_OffSet{ 200.f,0.f,200.f }
 	{
-		m_MapRef = map;
+		MapRef = map;
 	}
 
 	~Player() { Release(); }
@@ -45,11 +50,7 @@ public:
 	void SetPos(VECTOR setpos) { m_Pos = setpos; }
 //プレイヤーの座標取取得
 	VECTOR GetPos() { return m_Pos; }
-// プレイヤーの移動ベクトル取得
-	VECTOR GetMoveVec() { return m_OldMoveVec; }
-//プレイヤの高さを取得
-	VECTOR GetHeight() { return m_HeightCapsule; }
-
+	VECTOR GetAfterPos() { return m_AfterPos; }
 public:
 	void Init();			   //初期化
 	void Update();			   //更新（統括）
@@ -59,12 +60,14 @@ public:
 	void Release();			   //削除する
 	void Attack();			   //攻撃する
 	void Damage();			   //ダメージカウンタ―増やす->HP変動
+	void NoticeHit();          //あたったことを通知する
 
 private:
 	void Rotate();			   //回転する
 	void Move();			   //行動する
+	void InitAnim();           //時間に応じてほしいアニメーションを選択する関数
+	void ChangeAnim(ANIM_LIST type);
 
-private:
 //Playerのアニメーション数
 #define PLAYER_ANIM_NUM 6
 //60フレームで割るときに使う
@@ -81,7 +84,7 @@ private:
 	int m_SwordHandle;
 //アニメーション時間
 	float m_PlayTime;						
-//計算で使う変数
+//計算で使う変数(方向ベクトル用)
 	float  m_Radian;		
 	float  m_Digree_Y;	
 	VECTOR m_Direction;	
@@ -90,7 +93,9 @@ private:
 //生存フラグ
 	bool IsAlive;
 //キャラの移動量保存変数
-	VECTOR m_OldMoveVec;       
+	VECTOR m_OldMoveVec;      
+
+	VECTOR m_OldPos;
 //レイの始点に使う変数
 	VECTOR m_StartLine;
 	VECTOR m_EndLine;
@@ -100,19 +105,18 @@ private:
 	VECTOR m_InitRad;
 //回転スピード
 	float m_RotateSpeed;
-
-//スケール保存変数
-	VECTOR Scale;
-	 
-	VECTOR m_SwordPos;
-
+//移動後の座標からオフセット値引いた値を保存する変数
+	VECTOR m_AfterPos;
+//オフセット値
+	VECTOR m_OffSet;
 //マップモデル初期化
-	Map* m_MapRef;
-//インスタンス化
-	Enemy Enemy;
-	Animation Anim;
-	
-//アニメーションリスト変数化
+	Map* MapRef;
+	Animation m_Anim;
+	AABB m_AABB;
+
+	//enumのANIM_LISTと構造体MotionParamを紐づけている
+	std::unordered_map<ANIM_LIST, MotionParam>m_MotionList;
+
 	ANIM_LIST m_AnimKind;
 };
 #endif // !Player_h_

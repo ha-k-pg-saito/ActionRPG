@@ -2,6 +2,7 @@
 #define Base_h_
 
 #include"DxLib.h"
+#include"../h/Shape.h"
 
 class CharBase
 {
@@ -14,10 +15,12 @@ public:
 
 	virtual ~CharBase() {}		
 
+	Capsule* GetCapsule() { return &m_Capsule; }
 //継承関連はprotectedを使用
 protected:				
 	VECTOR m_Pos;		//ポジション
 	int    m_Hp;		//Hp
 	float  m_Speed;		//スピード
+	Capsule m_Capsule;  //カプセル作製
 };
 #endif
