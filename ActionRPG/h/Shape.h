@@ -10,8 +10,11 @@ struct AABB
 	VECTOR OldPos;			 //前の座標保存
 
 //defaultで初期化することで明示的に定義できる
-	AABB() = default;
 	~AABB() = default;
+	AABB()
+	{
+		ZeroMemory(this, sizeof(AABB));
+	}
 	AABB(VECTOR minvalue, VECTOR maxvalue, VECTOR postpos) :
 		Min{ minvalue },
 		Max{ maxvalue },

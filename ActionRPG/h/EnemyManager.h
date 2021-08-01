@@ -1,5 +1,5 @@
-#ifndef Enemy_Manager_h_
-#define Enemy_Manaager_h_
+#ifndef EnemyManager_h_
+#define EnemyManager_h_
 
 #include "../h/Enemy.h"
 

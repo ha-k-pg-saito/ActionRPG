@@ -71,6 +71,7 @@ void GameScene::RunGameScene()
     m_MiniMap.Draw();
 	m_Player.Draw();
 	m_EnemyMng.Draw();
+	
 }
 
 void GameScene::FinishGameScene()

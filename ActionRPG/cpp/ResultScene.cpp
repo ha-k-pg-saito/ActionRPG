@@ -8,14 +8,15 @@ extern SceneStep g_SceneStep;
 void ResultScene::InitResultScene()
 {
 	g_SceneStep = SceneStep::Run;
-	GrHandle = LoadGraph("Tx/GameOver.png");
-	Boll.Init();
+	//GrHandle = LoadGraph("Tx/GameOver.png");
+	m_Emitter.Init();
 	IsPush = true;
 }
 
 void ResultScene::RunResultScene()
 {
-	Boll.Update();
+	m_Emitter.Update();
+	//m_Emitter.CreateBoll();
 	IsPush = false;
 	
 	if (CheckHitKey(KEY_INPUT_RETURN) != 0)
@@ -26,11 +27,9 @@ void ResultScene::RunResultScene()
 			g_SceneStep = SceneStep::Finish;
 		}
 	}
+
 	DrawGraph(0, 0, GrHandle, FALSE);
-	for (int i = 0; i <= 50; i++)
-	{
-		Boll.Draw();
-	}
+	m_Emitter.Draw();
 }
 
 void ResultScene::FinishResultScene()

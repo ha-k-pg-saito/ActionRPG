@@ -6,7 +6,7 @@
 #include"../h/Base.h"
 #include"../h/Map.h"
 #include"../h/Animation.h"
-#include"../h/Shape.h"
+#include"../h/Enemy.h"
 
 class Player :public CharBase
 {
@@ -18,7 +18,7 @@ class Player :public CharBase
 	};
 public:
 	//プレイヤ内でマップ情報を更新している
-	Player(Map* map) :
+	Player(Map* map,Enemy* enemy) :
 		//CharBase({pos},hp,speed)を初期化している
 		CharBase({ 0.f, -3.f, 0.f }, 4, 40.f),
 		m_ModelHandle{ 0 },
@@ -34,9 +34,12 @@ public:
 		m_InitRad{ 0.f },
 		IsAlive{ true },
 		m_AfterPos{ 0.f },
-		m_OffSet{ 200.f,0.f,200.f }
+		m_OffSet{ 200.f,0.f,200.f },
+		IsPushed{ false },
+		m_RadSize{ 2.f }
 	{
 		MapRef = map;
+		m_Enemy = enemy;
 	}
 
 	~Player() { Release(); }
@@ -68,6 +71,7 @@ private:
 	void InitAnim();           //時間に応じてほしいアニメーションを選択する関数
 	void ChangeAnim(ANIM_LIST type);
 
+private:
 //Playerのアニメーション数
 #define PLAYER_ANIM_NUM 6
 //60フレームで割るときに使う
@@ -92,9 +96,13 @@ private:
 	int m_HitCounter;
 //生存フラグ
 	bool IsAlive;
+//入力判定
+	bool IsPushed;
 //キャラの移動量保存変数
 	VECTOR m_OldMoveVec;      
-
+//プレイヤのサイズ(固定値)
+	const float m_RadSize;
+//過去のポジション
 	VECTOR m_OldPos;
 //レイの始点に使う変数
 	VECTOR m_StartLine;
@@ -112,8 +120,7 @@ private:
 //マップモデル初期化
 	Map* MapRef;
 	Animation m_Anim;
-	AABB m_AABB;
-
+	Enemy* m_Enemy;
 	//enumのANIM_LISTと構造体MotionParamを紐づけている
 	std::unordered_map<ANIM_LIST, MotionParam>m_MotionList;
 

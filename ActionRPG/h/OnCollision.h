@@ -14,15 +14,11 @@ public:
 
 	//PlayerとEnemyの情報を渡している
 	bool Update(const Capsule* player, const Capsule* enemy);
-	bool OnCollisionAABB(const AABB& player, const AABB& enemy);
+	bool OnCollisionAABB(const AABB* player, const AABB* enemy);
 	void Draw(Capsule* capsule);
 
-//各モデルの半径
-#define PLATER_HIT_SIZE_R 2.
-#define ENEMY_HIT_SIZE_R  4.2
-//カプセルポリゴンの細かさ
-#define POLYGON_FINENESS  4
-	
+	const float m_PolyFine;
+
 //モデルの過去のポジション保存用変数
 	VECTOR m_OldPlayerPos;
 	VECTOR m_PlayerPos;
@@ -32,7 +28,8 @@ private:
 	OnColl() :
 		m_OldPlayerPos{ 0.f },
 		m_PlayerPos{ 0.f },
-		m_EnemyTop{ 0.f }
+		m_EnemyTop{ 0.f },
+		m_PolyFine{ 4.f }
 	{}
 	~OnColl() {}
 };

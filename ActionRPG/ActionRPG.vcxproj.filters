@@ -85,6 +85,9 @@
     <ClCompile Include="cpp\EffectBoll.cpp">
       <Filter>ソース ファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\Emitter.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Base.h">
@@ -139,6 +142,9 @@
       <Filter>ソース ファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="h\EffectBoll.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Emitter.h">
       <Filter>ソース ファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>

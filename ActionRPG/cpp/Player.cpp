@@ -13,7 +13,11 @@ void Player::Init()
 	m_Capsule.OldPos = m_Pos;
 	m_Capsule.Bottom = m_Pos;
 	m_Capsule.Top = VAdd(m_Pos,m_HeightCapsule);
-	m_Capsule.Radius = PLATER_HIT_SIZE_R;
+	m_Capsule.Radius = m_RadSize;
+	//AABBの初期化
+	m_AABB.OldPos = m_Pos;
+	m_AABB.Max = m_Capsule.Top;
+	m_AABB.Min = m_Pos;
 	m_AnimKind = ANIM_LIST::ANIM_IDLE;		//初期状態（待機）
 
 #pragma region モデル・テクスチャ読み込み
@@ -69,13 +73,12 @@ void Player::UpdateAnimation()
 	InitAnim();
 	m_PlayTime++;
 //現在の状態を見てアニメーションを切り替える
-	
 	float CurrentFrame = m_MotionList[m_AnimKind].StartFrame;
 		switch (m_AnimKind)
 		{
 		case ANIM_IDLE:						//待機モーション->走りモーション or攻撃モーション
 			//移動量が0では無いとき
-			if (m_OldMoveVec.x != PlayerState::None || m_OldMoveVec.z != PlayerState::None)
+			if (m_OldMoveVec.x != PlayerState::None && m_OldMoveVec.z != PlayerState::None)
 			{
 				ChangeAnim(ANIM_RUN);
 			}
@@ -83,6 +86,7 @@ void Player::UpdateAnimation()
 			else if ((GetMouseInput() & MOUSE_INPUT_LEFT) != PlayerState::None)
 			{
 				ChangeAnim(ANIM_ATTACK);
+				IsPushed = true;
 			}
 			if (m_PlayTime >= m_MotionList[m_AnimKind].FinishFrame)
 			{
@@ -102,6 +106,7 @@ void Player::UpdateAnimation()
 			{
 				//攻撃モーションへ
 				ChangeAnim(ANIM_ATTACK);
+				IsPushed = true;
 			}
 			if (m_PlayTime >= m_MotionList[m_AnimKind].FinishFrame)
 			{
@@ -109,12 +114,12 @@ void Player::UpdateAnimation()
 				m_PlayTime = CurrentFrame;
 			}
 			break;
-		case ANIM_ATTACK:					//攻撃モーションー＞待機モーション or 走りモーション
-			if (m_OldMoveVec.x <= PlayerState::None && m_OldMoveVec.z <= PlayerState::None)
+		case ANIM_ATTACK:					
+			if (VSize(m_OldMoveVec) >= 0.1f && IsPushed == false)
 			{
 				ChangeAnim(ANIM_IDLE);
 			}
-			else if (m_OldMoveVec.x != PlayerState::None && m_OldMoveVec.z != PlayerState::None)
+			else if (VSize(m_OldMoveVec) <= 0.1f && IsPushed == false)
 			{
 				ChangeAnim(ANIM_RUN);
 			}
@@ -122,6 +127,7 @@ void Player::UpdateAnimation()
 			{
 				CurrentFrame = m_MotionList[m_AnimKind].StartFrame;
 				m_PlayTime = CurrentFrame;
+				IsPushed = false;
 			}
 			break;
 		default:
@@ -284,8 +290,11 @@ void Player::Attack()
 {
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != PlayerState::None)
 	{
-		//if (OnColl::Inatance()->OnCollisionAABB(this,&Enemy));
+		if (OnColl::Inatance()->OnCollisionAABB(this->GetAABB(),m_Enemy->GetAABB()));
 		{
+			DrawString(1700, 200, "Hit", GetColor(255, 255, 255));
+
+			m_Enemy->Release();
 		}
 	}
 }

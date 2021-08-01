@@ -15,7 +15,7 @@ public:
 	GameScene() :
 		m_SoundHandle{ 0 },
 		IsAlive{ true },
-		m_Player(&m_Map)
+		m_Player(&m_Map, &m_Enemy)
 	{}
 	~GameScene() {}
 	void InitGameScene();
@@ -34,5 +34,6 @@ private:
 	Camera       m_Camera;
 	EnemyManager m_EnemyMng;
 	MiniMap      m_MiniMap;
+	Enemy        m_Enemy;
 };
 #endif

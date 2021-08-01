@@ -1,6 +1,6 @@
 #ifndef ResultScene_h_
 #define ResultScene_h_
-#include"../h/EffectBoll.h"
+#include"../h/Emitter.h"
 
 #include"DxLib.h"
 
@@ -10,9 +10,7 @@ public:
 	ResultScene() :
 		IsPush{ true },
 		GrHandle{ 0 }
-	{
-		//Boll = EffBoll;
-	}
+	{}
 	~ResultScene() {}
 
 	void InitResultScene();
@@ -25,6 +23,6 @@ public:
 private:
 	bool IsPush;
 	int GrHandle;
-	EffBoll Boll;
+	Emitter m_Emitter;
 };
 #endif
